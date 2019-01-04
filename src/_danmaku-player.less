@@ -1,0 +1,43 @@
+:host{
+  display: inline-block;
+  user-select:none;
+  background-color:black;
+}
+.danmaku_player_wrap{
+  position: relative;
+  width:100%;
+  height:100%;
+}
+
+.normal_screen{
+  position:'static';
+  top:0;
+  left:0;
+  width:638px;
+  height:359px;
+}
+
+.full_screen{
+  position: fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background: black;
+}
+
+
+.svgicon{
+  fill:rgba(255, 255, 255, 0.9);
+  width:30px;
+  cursor: pointer;
+  height:23px;
+}
+// .svgicon svg:hover{
+//   filter: brightness(1.5);
+// }
+.svgicon svg{
+  width:100%;
+  height:100%;
+  filter: brightness(.9);
+}

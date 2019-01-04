@@ -1,0 +1,12 @@
+{
+  "presets": [
+    "env",
+    "stage-1",
+    "omi"
+  ],
+
+  "plugins": [
+    "transform-decorators-legacy"
+    ,["transform-react-jsx", { "pragma":"Omi.h" }]
+  ]
+}
