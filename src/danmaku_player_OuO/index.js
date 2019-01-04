@@ -751,8 +751,6 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
     
     ,sendDanmaku(text, opt = {mode,fill,fontSize, alpha}={}){
 
-      console.log(text)
-
       // command
       let effect
       if(effect = this._effectAction(text)) {
@@ -845,9 +843,6 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
 
       this.appOuO.resize(scale*V_DEFAULT_W, scale*V_DEFAULT_H)
       this.appOuO.children.forEach(o=>o.scale=[scale,scale])
-
-      //debugger
-
 
       this.$dom_video.style.width = scale*V_DEFAULT_W + 'px'
       this.$dom_video.style.height = scale*V_DEFAULT_H + 'px'

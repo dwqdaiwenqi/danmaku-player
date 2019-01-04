@@ -7,7 +7,7 @@
   <title>demo</title>
 </head>
 <body>
-  <script src="../dist/scripts/danmaku-player.js"></script>
+  <script src="../dist/scripts/danmaku-player.min.js"></script>
   <danmaku-player id="player" 
     thumbnail="//static.xyimg.net/cn/static/fed/common/img/thumbnail-tile-90X1-scale-160X90.png" 
     thumbnailtile="90"
@@ -15,6 +15,15 @@
     src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
   <script>
     var $player = document.querySelector('#player')
+    $player.addEventListener('ended', () => {
+      //...
+    })
+    $player.addEventListener('play', () => {
+      //...
+    })
+
+
+
     
   </script>
 </body>

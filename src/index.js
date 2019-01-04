@@ -218,8 +218,6 @@ window.customElements.define('danmaku-player', class extends window.HTMLElement 
     $sty.textContent = `:host{display:inline-block;} `
 
     this.completeConnectedCallback = true
-    console.log('connectedCallback-----------')
-
     this.makeEvents()
 
     render(

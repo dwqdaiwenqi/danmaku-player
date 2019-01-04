@@ -60276,8 +60276,6 @@ function DanmakuPlayer($video) {
       var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (_ref4 = {}, mode = _ref4.mode, fill = _ref4.fill, fontSize = _ref4.fontSize, alpha = _ref4.alpha, _ref4);
 
 
-      console.log(text);
-
       // command
       var effect = void 0;
       if (effect = this._effectAction(text)) {
@@ -60366,9 +60364,6 @@ function DanmakuPlayer($video) {
       this.appOuO.children.forEach(function (o) {
         return o.scale = [scale, scale];
       });
-
-      //debugger
-
 
       this.$dom_video.style.width = scale * V_DEFAULT_W + 'px';
       this.$dom_video.style.height = scale * V_DEFAULT_H + 'px';
@@ -60959,8 +60954,6 @@ window.customElements.define('danmaku-player', function (_window$HTMLElement) {
       $sty.textContent = ':host{display:inline-block;} ';
 
       this.completeConnectedCallback = true;
-      console.log('connectedCallback-----------');
-
       this.makeEvents();
 
       (0, _omi.render)(Omi.h('danmaku-player-xxx', _extends({
