@@ -23,6 +23,7 @@ npm i danmaku-player
 * [https://unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.js](https://unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.js)
 
 ### HTML
+用法和<video/>标签差不多，直接写入到html中即可
 ```html
   <script src="//unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.min.js"></script>
   <danmaku-player id="player" 
@@ -47,13 +48,34 @@ npm i danmaku-player
 import 'danmaku-player'
 //...
 render(){
+  // react中需要用ref获取到原生dom对象
     return(
       <section>
-        <danmaku-player src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
+        <danmaku-player ref={el=>this.$player=el}src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
       </section>
     )
  }
+ componentDidMount(){
+  this.$player.addEventListener('play',()=>{
+    //...
+  })
+  //...
+ }
 ```
+
+### 属性
+| 属性     | 描述  | 
+| :------------- | :------------- | 
+| src         | 必须，视频的播放地址，目前支持mp4      | 
+| poster         | 不必须，视频海报      | 
+| autoplay         | 不必须，      | 
+| playbackrate         | 不必须，      | 
+| loop         | 不必须，      |
+| volumn     | 不必须，      | 
+
+### 事件
+
+
 
 
 ## License
