@@ -44,12 +44,12 @@ npm i danmaku-player
 ```
 ### React
 ```js
-  import 'danmaku-player'
+import 'danmaku-player'
   render(){
-		return(
-			<section>
-				<danmaku-player ref={el=>this.player=el} src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
-			</section>
-		)
-	}
+    return(
+      <section>
+        <danmaku-player src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
+      </section>
+    )
+ }
 ```
