@@ -263,8 +263,6 @@ window.customElements.define('danmaku-player', class extends window.HTMLElement 
   attributeChangedCallback (name, oldValue, newValue) {
     var observedAttributes = this.constructor.observedAttributes
     if (observedAttributes.some(v => v === name)) {
-      // console.log(name, newValue)
-      // 初次的属性变化需要记录，可能omi中有些方法是异步的，emit不到
       if (!this.completeConnectedCallback) {
         this.firstChangeOfAttr[name] = newValue
       } else {
