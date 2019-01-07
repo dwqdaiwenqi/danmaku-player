@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 import {Danmaku, LinearDanmaku} from './danmakus'
 
-export default class Channel extends PIXI.Container{
+export default class Runway extends PIXI.Container {
   constructor(width, height, strokeColor=0xFF3300, wireframe){
     super()
     if(wireframe){

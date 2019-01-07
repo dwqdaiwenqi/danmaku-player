@@ -1,22 +1,39 @@
-var webpack = require("webpack")
-var path = require("path")
+var webpack = require('webpack')
+var path = require('path')
 
 const ENV = process.env.npm_lifecycle_event
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const pkg = require('./package.json')
 
-var pkg = require('./package.json')
+var filename
+var publicPath
+
+switch(ENV){
+  case 'dev':
+    filename = 'scripts/danmaku-player.js'
+    publicPath = '../dist/'
+    break;
+  case 'pro':
+    filename = 'scripts/danmaku-player.min.js'
+    publicPath = '../dist/'
+    break;
+  case 'site':
+    filename = 'scripts/danmaku-player.min.js'
+    publicPath = '//unpkg.com/danmaku-player@latest/dist/'
+    break;
+}
 
 module.exports = {
   entry:  './src/index.js',
   output: { 
     path: __dirname+'/dist/'
-    ,filename: ENV==='dev'?'scripts/danmaku-player.js':'scripts/danmaku-player.min.js'
+    ,filename
     
     ,library: 'danmaku-player'
     ,libraryTarget: 'umd' 
 
-    ,publicPath: './dist/'
+    ,publicPath
   }
-
   ,devtool: ENV==='dev'?'source-map':''
 
   ,module: {
@@ -27,18 +44,6 @@ module.exports = {
         loader: 'babel-loader' 
       },
       
-      // {
-      //   test: /\.(css|less)$/,
-      //   use:[ 
-      //     'style-loader',
-      //     'css-loader',{
-      //       loader: 'postcss-loader',
-      //       options: {
-      //       plugins: ()=>[require('autoprefixer')]
-      //     }},
-      //     'less-loader'
-      //   ]
-      // }
       {
         test: /[\\|\/]_[\S]*\.(css|less)$/,
         use: [
@@ -52,22 +57,10 @@ module.exports = {
           'less-loader'
         ]
       }
-
-
-     
-
       ,{
         test: /\.(png|jpg|jpeg|gif|webp)$/,
         use: [
           'url-loader?limit=0'
-          // {
-          //   loader: 'file-loader',
-          //   options: {
-          //     publicPath:''
-          //     ,name :'img/[name].[ext]?[hash:6]'
-
-          //   }
-          // }
         ]
       }
     ]
@@ -77,6 +70,12 @@ module.exports = {
     ,new webpack.DefinePlugin({
       __DEV__: JSON.stringify(process.env.npm_lifecycle_event)
       ,__VERSION__: JSON.stringify(require('./package.json').version)
+    })
+    ,new HtmlWebpackPlugin({
+      template: './src/site/index.html',
+      filename: '../site/index.html',
+      inject: 'head',
+      __DEV__: JSON.stringify(process.env.npm_lifecycle_event)
     })
   ]
 

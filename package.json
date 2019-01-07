@@ -28,8 +28,15 @@
     "babel-plugin-htm": "^1.0.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-preset-omi": "^0.1.1",
+    "eslint": "^4.3.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "htm": "^1.0.1",
+    "html-webpack-plugin": "^3.2.0",
     "less-loader": "^4.1.0",
     "lit-html": "^0.14.0",
     "mobx": "^3.3.2",
@@ -38,12 +45,6 @@
     "pixi.js": "^4.8.3",
     "preact": "^8.4.2",
     "to-string": "^0.2.0",
-    "to-string-loader": "^1.1.5",
-    "eslint": "^4.3.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "to-string-loader": "^1.1.5"
   }
 }

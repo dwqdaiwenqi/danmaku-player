@@ -9,7 +9,13 @@ class SplitText extends PIXI.Container{
       let fontSize = opt.fontSize
       let message = new PIXI.Text(v,new PIXI.TextStyle({
         fontSize,
-        fill: opt.fill
+        fill: opt.fill,
+
+        dropShadow: true,
+        dropShadowColor: '#000000',
+        dropShadowBlur: 2,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 1
       }))
       this.addChild(message)
 
@@ -96,9 +102,19 @@ export class CurveDanmaku extends Danmaku {
 export class LinearDanmaku extends Danmaku {
   constructor(text, opt){
     super(text, opt)
-
+   
+    // var message = new PIXI.Text(text, new PIXI.TextStyle({
+    //   fontSize: this.opt.fontSize,
+    //   fill: this.opt.fill
+    // }))
     var message = new PIXI.Text(text, new PIXI.TextStyle({
-      fontSize: this.opt.fontSize, fill: this.opt.fill
+      fontSize: this.opt.fontSize,
+      fill: this.opt.fill,
+      dropShadow: true,
+      dropShadowColor: '#000000',
+      dropShadowBlur: 2,
+      dropShadowAngle: Math.PI / 6,
+      dropShadowDistance: 1
     }))
     this.addChild(message)
     
@@ -147,7 +163,13 @@ export class FixedDanmaku extends Danmaku {
   constructor (text, opt) {
     super(text, opt)
     var message = new PIXI.Text(text, new PIXI.TextStyle({
-      fontSize: this.opt.fontSize, fill: this.opt.fill
+      fontSize: this.opt.fontSize,
+      fill: this.opt.fill,
+      dropShadow: true,
+      dropShadowColor: '#000000',
+      dropShadowBlur: 2,
+      dropShadowAngle: Math.PI / 6,
+      dropShadowDistance: 1
     }))
     this.addChild(message)
     
@@ -155,6 +177,17 @@ export class FixedDanmaku extends Danmaku {
 
     this.pivot.x = this.width*.5
     this.pivot.y = this.height*.5
+    if (this.opt.wireframe) {
+
+      // console.log(this.opt)
+      let rectangle = new PIXI.Graphics()
+      rectangle.lineStyle(1, 0xffffff, 1)
+      rectangle.drawRect(0, 0, this.width, this.height)
+      rectangle.endFill()
+      rectangle.x = 0
+      rectangle.y = 0
+      this.addChild(rectangle)
+    }
   }
   delayRemove(){
     // console.log('destroy...')

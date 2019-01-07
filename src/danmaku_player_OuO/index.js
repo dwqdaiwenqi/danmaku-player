@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 import OuO from './gl-ouo'
-import Channel from './channel'
+import Runway from './runway'
 import { LinearDanmaku, FixedDanmaku, CurveDanmaku } from './danmakus'
 import Snow from './snowflake'
 import TWEEN from '@tweenjs/tween.js'
@@ -344,17 +344,17 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       //现判断有无空通道
       //如果没有空通道，随机选择通道放置
       //有空通道，上至下选择空通道
-      var channel
+      var runway
       var i = 0
       
       // 所有通道已填满
-      if(this.fixed_group.children.every(channel=>channel.danmakus.length!=0)){
-        channel = this.fixed_group.children[Math.random()*this.fixed_group.children.length|0]
+      if(this.fixed_group.children.every(runway=>runway.danmakus.length!=0)){
+        runway = this.fixed_group.children[Math.random()*this.fixed_group.children.length|0]
       }else{
-        channel = this.fixed_group.children[i]
-        while(channel.danmakus.length) channel = this.fixed_group.children[i++]  
+        runway = this.fixed_group.children[i]
+        while(runway.danmakus.length) runway = this.fixed_group.children[i++]  
       }
-      return channel
+      return runway
 
     }
 
@@ -536,7 +536,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
         
         danmakus = []
         runway_i = 0
-        //fixedChannelIdx = 0
+        //fixedRunwayIdx = 0
         danmaku_list[currentTime].data.forEach(o=>{
 
           this.which_runway = this.runway_group.children[runway_i]
@@ -599,7 +599,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       this.app.stage.removeChild(this.user_runway)
       let w_of_runway = this.app.screen.width
       let h_of_runway = this.app.screen.height / this.runway_group.children.length
-      this.user_runway = new Channel(w_of_runway, h_of_runway)
+      this.user_runway = new Runway(w_of_runway, h_of_runway)
       this.app.stage.addChild(this.user_runway)
       this.user_runway.x = 0
       this.user_runway.y = gapY
@@ -608,7 +608,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       this.app.stage.removeChild(this.user_fixed_runway)
       w_of_runway = this.app.screen.width
       h_of_runway =  this.app.screen.height / this.runway_group.children.length
-      this.user_fixed_runway = new Channel(w_of_runway, h_of_runway,0x0000ff,true)
+      this.user_fixed_runway = new Runway(w_of_runway, h_of_runway,0x0000ff,true)
       this.app.stage.addChild(this.user_fixed_runway)
       this.user_fixed_runway.x = 0
       this.user_fixed_runway.y = gapY
@@ -618,7 +618,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       // debugger
       num*=1
 
-      // scroll channel
+      // scroll 
       this.runway_group.removeChild(...this.runway_group.children)
 
       let num_of_runway = num
@@ -628,14 +628,14 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       ;[...Array(num_of_runway)].forEach((v,i)=>{
 
         //if(i!=5) return
-        let runway = new Channel(w_of_runway, h_of_runway,0xff00ff,true)
+        let runway = new Runway(w_of_runway, h_of_runway,0xff00ff,true)
         this.runway_group.addChild(runway)
         runway.x = 0
         runway.y = i/num_of_runway*this.app.screen.height
       })
       
 
-      // fixed channel
+      // fixed 
       this.fixed_group.removeChild(...this.fixed_group.children)
       num_of_runway = num
       w_of_runway = this.app.screen.width
@@ -643,7 +643,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       
       ;[...Array(num_of_runway)].forEach((v,i)=>{
 
-        let runway = new Channel(w_of_runway, h_of_runway)
+        let runway = new Runway(w_of_runway, h_of_runway)
         this.fixed_group.addChild(runway)
         runway.x = 0
         runway.y = i/num_of_runway*this.app.screen.height
@@ -755,7 +755,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       let effect
       if(effect = this._effectAction(text)) {
         if(this.appOuO.canvas.width > EFFECT_COMMAND_RENDERING_MAX_WIDTH) {
-          console.warn('渲染面积过大，可能存在卡顿')
+          console.warn('***渲染面积过大，可能存在卡顿***')
         }
         
         this.handleEffectCommand && this.handleEffectCommand(text) 
@@ -767,14 +767,14 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       var danmaku = this._danmakuFactory(text, opt)
 
       // console.log(danmaku)
-      var channel
+      var runway
 
       if(danmaku instanceof FixedDanmaku){
 
         // debugger
-        channel = this.user_fixed_runway
-        channel.addChild(danmaku)
-
+        runway = this.user_fixed_runway
+        runway.addChild(danmaku)
+        
         // danmaku.x = this.user_fixed_runway.width*.5
         danmaku.x = this.app.screen.width*.5
 
@@ -784,14 +784,14 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
         danmaku.delayRemove()
 
       }else{
-        channel = this.user_runway
-        channel.w_of_sum += danmaku.width
-        channel.addChild(danmaku)
-        danmaku.__idx__ = channel.danmakus.length - 1
+        runway = this.user_runway
+        runway.w_of_sum += danmaku.width
+        runway.addChild(danmaku)
+        danmaku.__idx__ = runway.danmakus.length - 1
   
         this._giveDanmakuStartPo(danmaku,  danmaku.__idx__, danmaku.parent.danmakus)
         this._giveDanmakuEndPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus) 
-        danmaku.y = channel.default_height*.5
+        danmaku.y = runway.default_height*.5
         danmaku.move()
       }
 

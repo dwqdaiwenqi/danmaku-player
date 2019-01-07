@@ -45,8 +45,8 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
     }
   }
   var setValue = (fac, record = true) => {
-    if(record) recordValue = fac
-    if(vertical) {
+    if (record) recordValue = fac
+    if (vertical) {
 
       that.$slider.style.bottom = fac * 100 + '%'
       that.$tooltipCon.textContent =   Math.round( min + fac * (max - min) )
