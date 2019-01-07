@@ -1,5 +1,5 @@
 # danmaku-player [![](https://img.shields.io/npm/v/danmaku-player.svg)](https://www.npmjs.com/package/danmaku-player) 
-融合了WebGl和Web Componet的弹幕播放器
+融合了WebGl和Web Componet的实时图像处理弹幕播放器
 
 ### 特征
 * 基于Web Components ，内部使用的omi作为Web Components的开发框架，omi是个非常棒的现代框架，强力推荐！
