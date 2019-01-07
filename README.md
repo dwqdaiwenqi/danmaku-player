@@ -45,7 +45,8 @@ npm i danmaku-player
 ### React
 ```js
 import 'danmaku-player'
-  render(){
+
+render(){
     return(
       <section>
         <danmaku-player src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
