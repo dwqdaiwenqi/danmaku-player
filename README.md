@@ -1,7 +1,7 @@
 # danmaku-player [![](https://img.shields.io/npm/v/danmaku-player.svg)](https://www.npmjs.com/package/danmaku-player) 
 融合了WebGl和Web Componet的实时图像处理弹幕播放器
 
-### 特征
+## 特征
 * 基于Web Components ，拥抱Web Components标准，内部使用的omi作为Web Components的开发框架，omi是个非常棒的现代框架，强力推荐！
 * 高性能的，使用WebGl进行渲染，同频弹幕数达到5000+，fps依旧坚挺
 * 添加曲线模式的弹幕发送
@@ -9,10 +9,18 @@
 
 Demo located at https://dwqdaiwenqi.github.io/danmaku-player/site/
 
+## 截图
 <img src="./preview1.jpg" style="margin:0 auto; width:699px;">
 
 <img src="./preview2.jpg" style="margin:0 auto; width:699px;">
 
+
+## Usage
+通过npm或者cdn获取
+```js
+npm i danmaku-player
+```
+* [https://unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.js](https://unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.js)
 
 ### HTML
 ```html
