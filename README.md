@@ -1,5 +1,10 @@
-comming soon...
 # danmaku-player [![](https://img.shields.io/npm/v/danmaku-player.svg)](https://www.npmjs.com/package/danmaku-player) 
+结合了Webgl和WebComponet的弹幕播放器
+
+### 特征
+*a
+*b
+
 Demo located at https://dwqdaiwenqi.github.io/danmaku-player/site/
 
 <img src="./preview1.jpg" style="margin:0 auto; width:699px;">
