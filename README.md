@@ -9,6 +9,7 @@ Demo located at https://dwqdaiwenqi.github.io/danmaku-player/site/
 
 ### HTML
 ```html
+  <script src="//unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.min.js"></script>
   <danmaku-player id="player" 
     thumbnail="//static.xyimg.net/cn/static/fed/common/img/thumbnail-tile-90X1-scale-160X90.png" 
     thumbnailtile="90"
