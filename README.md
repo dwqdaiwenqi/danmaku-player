@@ -2,12 +2,12 @@
 融合了WebGl和Web Componet的实时图像处理弹幕播放器
 
 ## 特征
-* 基于Web Components ，拥抱Web Components标准，内部使用的omi作为Web Components的开发框架，omi是个非常棒的现代框架，强力推荐！
+* 基于Web Components ，拥抱Web Components标准，内部使用的[omi](https://www.baidu.com)作为Web Components的开发框架，omi是个非常棒的现代框架，强力推荐！
 * 高性能的，使用WebGl进行渲染，同频弹幕数达到5000+，fps依旧坚挺
 * 添加曲线模式的弹幕发送
 * 内置特效指令（切勿在全屏模式下使用），当前有#护眼、#下雪等 - 未来将支持更多的特效指令
 
-Demo located at https://dwqdaiwenqi.github.io/danmaku-player/site/
+→ Demo located at https://dwqdaiwenqi.github.io/danmaku-player/site/
 
 ## 截图
 <img src="./preview1.jpg" style="margin:0 auto; width:699px;">
