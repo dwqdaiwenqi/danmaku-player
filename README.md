@@ -23,7 +23,7 @@ npm i danmaku-player
 * [https://unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.js](https://unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.js)
 
 ### HTML
-用法和<video/>标签差不多，直接写入到html中即可
+用法和`<video/>`标签差不多，直接写入到html中即可
 ```html
   <script src="//unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.min.js"></script>
   <danmaku-player id="player" 
