@@ -45,7 +45,7 @@ npm i danmaku-player
 ### React
 ```js
 import 'danmaku-player'
-
+//...
 render(){
     return(
       <section>
