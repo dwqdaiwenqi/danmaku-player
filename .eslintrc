@@ -13,6 +13,8 @@
 		"no-mixed-spaces-and-tabs": 0,
 		"no-floating-decimal": 0,
 		"space-before-blocks": 0,
+		"no-debugger": 0,
+		"no-undef":0,
 		"indent": ["off", "tab"]
 	},
 	"parser": "babel-eslint"
