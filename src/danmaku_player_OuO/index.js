@@ -102,7 +102,6 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       app.stage.addChild(this.user_fixed_runway)
       this.danmaku_offset = { x: 100 }
 
-
       this._setupVideo().then(res => {
         this.$video.addEventListener('loadeddata', () => {
 
@@ -192,7 +191,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
           appOuO.addChild(rect1)
           rect1.translation = [0, 0]
 
-          rect1.readPixels(data=>{
+          rect1.readPixels(data => {
             // window.pixels = data
             this.pixels = data
           })
