@@ -90,6 +90,8 @@ render(){
 下载个ffmpeg软件，然后执行命令 ``,就生成想要的缩略图了
 
 
+待完成...
+
 comming soon ......
 
 ## License
