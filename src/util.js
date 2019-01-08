@@ -47,17 +47,15 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
   var setValue = (fac, record = true) => {
     if (record) recordValue = fac
     if (vertical) {
-
       that.$slider.style.bottom = fac * 100 + '%'
-      that.$tooltipCon.textContent =   Math.round( min + fac * (max - min) )
+      that.$tooltipCon.textContent = Math.round(min + fac * (max - min))
       that.$bar.style.height = fac * 100 + '%'
-
     } else {
       // that.$slider.style.left = fac * 100 + '%'
       // that.$tooltipCon.textContent =   Math.round( min + fac * (max - min) )
       // that.$bar.style.width = fac * 100 + '%'
       that.$slider.style.left = fac * 100 + '%'
-      that.$tooltipCon.textContent =   (min + fac * (max - min)).toFixed(1) 
+      that.$tooltipCon.textContent = (min + fac * (max - min)).toFixed(1)
       that.$bar.style.width = fac * 100 + '%'
     }
 
@@ -73,9 +71,8 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
 
   var recordValue
   var init = () => {
-
     that.$el.classList.add('el-slider')
-    if(vertical) {
+    if (vertical) {
       that.$el.classList.add('is-vertical')
       that.$el.style.width = '100%'
     }
@@ -83,7 +80,7 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
     that.$holder.insertAdjacentElement('beforeend', that.$el)
 
     render()
-    
+
     var $runway = that.$runway = that.$el.querySelector('.el-slider__runway')
     var $slider = that.$slider = that.$el.querySelector('.el-slider__button-wrapper')
     var $tooltipCon = that.$tooltipCon = that.$el.querySelector('.el-tooltip__popper span')
@@ -96,17 +93,15 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
     var min_ = 0
     var max_ = max
 
-    if(that.min < 0) {
+    if (that.min < 0) {
       max_ += that.min * -1
       that.defaultValue += that.min * -1
-    }else {
-
+    } else {
       max_ += that.min
       that.defaultValue -= that.min
     }
-    
 
-    var fac = that.defaultValue / ( max_ - min_)
+    var fac = that.defaultValue / (max_ - min_)
 
     setValue(fac)
     // vetical slider@bottom bar@height
@@ -123,35 +118,30 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
       var pageX = e.pageX
       var pageY = e.pageY
 
-      if($slider.mousdown) {
-        let { 
+      if ($slider.mousdown) {
+        let {
           left, right, width, x,
           top, bottom, height, y
         } = $runway.getBoundingClientRect()
 
         let fac
-        
-        if(pageX < left) pageX = left
-        if(pageX > right) pageX = right
 
-        if(pageY < top) pageY = top
-        if(pageY > bottom) pageY = bottom
+        if (pageX < left) pageX = left
+        if (pageX > right) pageX = right
 
-        
-        if(vertical) {
+        if (pageY < top) pageY = top
+        if (pageY > bottom) pageY = bottom
+
+        if (vertical) {
           fac = 1 - (pageY - y) / height
         } else {
           fac = (pageX - x) / width
         }
 
-        
         setValue(fac)
-        
-       
       }
     })
-
-  } 
+  }
   var that = {
     onChange (fn) {
       this.handle_change = fn
@@ -162,17 +152,17 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
     setValue,
     offValue,
     onValue,
-    $holder : typeof $holder === 'string' ? document.querySelector($holder): $holder,
+    $holder: typeof $holder === 'string' ? document.querySelector($holder) : $holder,
     $el: document.createElement('div')
   }
   init()
   return that
 }
 
-export function mmss(second) {
-  var m = (second / 60 % 60)|0
-  var s =(second % 60)|0
-  if(m<10) m = '0'+m
-  if(s<10) s = '0'+s
-  return [m,s]
+export function mmss (second) {
+  var m = (second / 60 % 60) | 0
+  var s = (second % 60) | 0
+  if (m < 10) m = '0' + m
+  if (s < 10) s = '0' + s
+  return [m, s]
 }

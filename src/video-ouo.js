@@ -17,7 +17,7 @@ export default define('video-ouo', class extends WeElement {
         {
           this.data.poster &&
           <div className="poster_wrap">
-            <div className="poster_wrap_content" style={{backgroundImage:`url(${this.data.poster})`}}></div>
+            <div className="poster_wrap_content" style={{backgroundImage: `url(${this.data.poster})`}}></div>
           </div>
         }
 
@@ -43,8 +43,8 @@ export default define('video-ouo', class extends WeElement {
     this.danmakuPlayerOuO = DanmakuPlayerOuO(this.props.src, {
       $container: this.$video_wrap,
       danmakuapi,
-      // renderType: 'dom'
-      renderType: 'webgl'
+      renderType: 'dom'
+      // renderType: 'webgl'
     })
 
     this.danmakuPlayerOuO.onFetchCompleted(() => {
@@ -62,7 +62,7 @@ export default define('video-ouo', class extends WeElement {
       onProgress(this.danmakuPlayerOuO.$video)
     })
 
-    this.danmakuPlayerOuO.$video.addEventListener('canplay', () => {  
+    this.danmakuPlayerOuO.$video.addEventListener('canplay', () => {
       this.data.loading = false
     })
     this.danmakuPlayerOuO.$video.addEventListener('waiting', () => {
@@ -70,7 +70,7 @@ export default define('video-ouo', class extends WeElement {
       this.data.loading = true
     })
 
-    this.danmakuPlayerOuO.$video.addEventListener('play',()=>{
+    this.danmakuPlayerOuO.$video.addEventListener('play', () => {
       this.data.poster = null
     })
     this.danmakuPlayerOuO.onEffectCommand((opt) => {

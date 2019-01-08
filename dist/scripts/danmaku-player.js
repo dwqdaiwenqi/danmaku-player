@@ -47271,7 +47271,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           return;
         }
 
-        //debugger
+        // debugger
         onplayChange();
         _this.data.showUi = true;
         clearTimeout(_this.itvMove);
@@ -47284,13 +47284,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
     }, _this.handleMouseMove = function (e) {
       _this.data.showUi = true;
       clearTimeout(_this.itvMove);
-      //console.log('move')
+      // console.log('move')
 
       var $target = e.target;
 
 
       if ($target.classList.contains('ui') || $target.classList.contains('control_side')) {
-        //console.log('contaains ui')
+        // console.log('contaains ui')
         _this.itvMove = setTimeout(function () {
           _this.data.showUi = false;
         }, 1233);
@@ -47353,7 +47353,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var text = _this.$control_bottom_comment_input.value.trim();
       if (!text.length) return;
-      //debugger
+      // debugger
       window.localStorage['danmaku-player-OuO__last-input'] = text;
       // {mode:'linear', fill:0xff00ff, fontSize: 23, alpha: 1 }
       // console.log(this.data.danmakuAlpha, this.data.danmakuColor, this.data.danmakuFontSize, this.data.danmakuMode)
@@ -47373,17 +47373,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.data.repeat = !_this.data.repeat;
       onrepeatChange(_this.data.repeat);
     }, _this.handleFullScreen2 = function () {
-
       if (_this.data.fullScreen) {
         _this.exitFullscreen();
       } else {
         _this.requestFullScreen();
       }
     }, _this.handlePlay = function (e) {
-
       // var { onplayChange } = this.props
       // onplayChange()
-
 
       var onplayChange = _this.props.onplayChange;
 
@@ -47409,7 +47406,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       _this.data.offDanmaku = !_this.data.offDanmaku;
       onSwitchDanamku(_this.data.offDanmaku);
     }, _this.handleIptFocus = function () {
-      //console.log('focus!')
+      // console.log('focus!')
       _this.iptFocus = true;
     }, _this.handleIptBlur = function () {
       // console.log('blur!')
@@ -48018,8 +48015,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
           _this4.slideDotDrag = true;
           // onChangeCurrent(fac)
-          //console.log(fac)
-          //this.currentPercent = 1
+          // console.log(fac)
+          // this.currentPercent = 1
           _this4.data.sliderDotProgress = fac;
         }
       });
@@ -48027,11 +48024,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
   }, {
     key: 'install',
     value: function install() {
-      this.itv4;
-      this.itv5;
+      this.itv4 = null;
+      this.itv5 = null;
 
       // console.log(this.props)
-
 
       this.data = {
         fullScreen: false,
@@ -48111,7 +48107,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
         _this5.data.danmakuAlpha = v;
       });
       (0, _util.Slider)(this.$setting_fontsize, [0, 100, 50]).onChange(function (v) {
-
         v = 12 + v / 100 * (40 - 12);
         console.log(v);
         _this5.data.danmakuFontSize = v;
@@ -48119,7 +48114,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       this.dragProgressDot();
       window.addEventListener('keydown', function (e) {
-
         if (e.keyCode === 13) {
           if (_this5.iptFocus) {
             _this5.handleComment();
@@ -48140,19 +48134,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
           _this5.clearItv();
 
           _this5.itv4 = setTimeout(function () {
-
             _this5.handleFullScreen && _this5.handleFullScreen();
           }, 123);
 
           _this5.data.fullScreen = true;
         } else {
-
           _this5.clearItv();
           _this5.itv5 = setTimeout(function () {
             if (_this5.handleExitFullScreen) {
               _this5.handleExitFullScreen();
             } else {
-              //this.normalScreen = true
+              // this.normalScreen = true
               _this5.props.onrequestNormalScreen();
             }
           }, 123);
@@ -48258,7 +48250,6 @@ var SplitText = function (_PIXI$Container) {
 
     _this.pivot.x = _this.width * .5;
     _this.pivot.y = _this.height * .5;
-
     return _this;
   }
 
@@ -48282,7 +48273,6 @@ var Danmaku = exports.Danmaku = function (_PIXI$Container2) {
     _this2.opt = opt;
     _this2.final_po = { x: 0, y: 0 };
     _this2.is_moving = false;
-    _this2.tw_final;
     return _this2;
   }
 
@@ -48340,7 +48330,6 @@ var CurveDanmaku = exports.CurveDanmaku = function (_Danmaku) {
         var x = _ref4.x,
             t = _ref4.t;
 
-
         _this4.x = x;
         _this4.y = by;
 
@@ -48389,10 +48378,9 @@ var LinearDanmaku = exports.LinearDanmaku = function (_Danmaku2) {
     _this5.pivot.y = _this5.height * .5;
 
     if (_this5.opt.wireframe) {
-
       // console.log(this.opt)
       var rectangle = new PIXI.Graphics();
-      //rectangle.lineStyle(1, parseInt('#3d8483', 16), 1)
+      // rectangle.lineStyle(1, parseInt('#3d8483', 16), 1)
       rectangle.lineStyle(1, 0xffffff, 1);
       rectangle.drawRect(0, 0, _this5.width, _this5.height);
       rectangle.endFill();
@@ -48420,9 +48408,9 @@ var LinearDanmaku = exports.LinearDanmaku = function (_Danmaku2) {
             t = _ref6.t;
 
         _this6.x = x;
-        //console.log('danmaku-move-x-y:', this.x,this.y,this.visible,this.message)
+        // console.log('danmaku-move-x-y:', this.x,this.y,this.visible,this.message)
       }).start();
-      ///////////////////
+      /// ////////////////
     }
   }, {
     key: 'update',
@@ -48461,7 +48449,6 @@ var FixedDanmaku = exports.FixedDanmaku = function (_Danmaku3) {
     _this7.pivot.x = _this7.width * .5;
     _this7.pivot.y = _this7.height * .5;
     if (_this7.opt.wireframe) {
-
       // console.log(this.opt)
       var rectangle = new PIXI.Graphics();
       rectangle.lineStyle(1, 0xffffff, 1);
@@ -48781,7 +48768,6 @@ var Rectangle = function Rectangle(_ref, _ref2) {
       gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 
       if (this.handel_pixel && this.canReadPixels) {
-
         var pixels = new Uint8Array(this.widthInClip * this.heightInClip * 4);
         gl.readPixels(this.translation[0], this.translation[1], this.widthInClip, this.heightInClip, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
         this.handel_pixel(pixels);
@@ -48791,11 +48777,11 @@ var Rectangle = function Rectangle(_ref, _ref2) {
     get widthInClip() {
       return width * this.scale[0];
 
-      //return this.gl.drawingBufferWidth
+      // return this.gl.drawingBufferWidth
     },
     get heightInClip() {
       return height * this.scale[0];
-      //return this.gl.drawingBufferHeight
+      // return this.gl.drawingBufferHeight
     },
     readPixels: function readPixels(fn) {
       this.handel_pixel = fn;
@@ -48955,7 +48941,6 @@ function DanmakuPlayer($video) {
 
       this._setupVideo().then(function (res) {
         _this.$video.addEventListener('loadeddata', function () {
-
           var rect1 = _glOuo2.default.Rectangle([appOuO.canvas.width, appOuO.canvas.height], [_this.$gl_video], {
             vs: '\n              attribute vec2 a_position;\n              uniform vec2 u_resolution;\n              uniform vec2 u_translation;\n              uniform vec2 u_scale;\n              attribute vec2 a_texCoord;\n              varying vec2 v_texCoord;\n    \n              void main(){\n                \n                vec2 position = a_position * u_scale + u_translation;\n                vec2 zeroToTwo = (position / u_resolution)*2.;\n                vec2 clipSpace = zeroToTwo-1.;\n    \n                v_texCoord = a_texCoord;\n    \n                gl_Position = vec4(clipSpace*vec2(1,-1),0,1);\n              }\n            ',
             fs: '\n              precision mediump float;\n    \n              varying vec2 v_texCoord;\n              uniform sampler2D u_texture;\n              uniform vec2 textureSize;\n    \n              \n              vec4 toGray(vec4 co){\n                float gray =( co.x+co.y+co.z)/3.;\n                return vec4(vec3(gray),1.);\n              }\n    \n              void main() {\n    \n                float xDerivative_kernel[9];                \n                xDerivative_kernel[0] = -1.; xDerivative_kernel[1] = -2.; xDerivative_kernel[2] = -1.;\n                xDerivative_kernel[3] = 0.; xDerivative_kernel[4] = 0.; xDerivative_kernel[5] = 0.;\n                xDerivative_kernel[6] = 1.; xDerivative_kernel[7] = 2.; xDerivative_kernel[8] = 1.;\n        \n                float yDerivative_kernel[9];                \n                yDerivative_kernel[0] = -1.; yDerivative_kernel[1] = 0.; yDerivative_kernel[2] = 1.;\n                yDerivative_kernel[3] = -2.; yDerivative_kernel[4] = 0.; yDerivative_kernel[5] = 2.;\n                yDerivative_kernel[6] = -1.; yDerivative_kernel[7] = 0.; yDerivative_kernel[8] = 1.;\n      \n      \n                vec2 v_texCoord = v_texCoord.xy;\n      \n                vec2 onePixel = vec2(1) / textureSize;\n      \n                vec4 sumx = \n                  // \n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1, -1)) )* xDerivative_kernel[0] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0, -1)) )* xDerivative_kernel[1] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1, -1)) )* xDerivative_kernel[2] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  0)) )* xDerivative_kernel[3] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  0)) )* xDerivative_kernel[4] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  0)) )* xDerivative_kernel[5] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  1)) )* xDerivative_kernel[6]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  1)) )* xDerivative_kernel[7]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  1)) )* xDerivative_kernel[8] ;\n      \n                vec4 sumy = \n                  // \n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1, -1)) )* yDerivative_kernel[0] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0, -1)) )* yDerivative_kernel[1] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1, -1)) )* yDerivative_kernel[2] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  0)) )* yDerivative_kernel[3] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  0)) )* yDerivative_kernel[4] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  0)) )* yDerivative_kernel[5] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  1)) )* yDerivative_kernel[6]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  1)) )* yDerivative_kernel[7]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  1)) )* yDerivative_kernel[8] ;\n    \n                gl_FragColor = vec4(sqrt(sumx*sumx+sumy*sumy).xyz  , 1.0);\n    \n              }\n            ',
@@ -48964,18 +48949,32 @@ function DanmakuPlayer($video) {
             }
 
           });
+          // appOuO.addChild(rect1)
+          // rect1.translation = [0, 0]
+
+          // rect1.readPixels(data => {
+          //   this.pixels = data
+          // })
+          // rect1.visible = false
+          // this.rect1 = rect1
+
+          // var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
+          // appOuO.addChild(rect2)
+          // rect2.translation = [0, 0]
+
+          // this.rect2 = rect2
+
           appOuO.addChild(rect1);
           rect1.translation = [0, 0];
 
           rect1.readPixels(function (data) {
-            // window.pixels = data
             _this.pixels = data;
           });
-          rect1.visible = false;
+          rect1.visible = true;
           _this.rect1 = rect1;
 
           var rect2 = _glOuo2.default.Rectangle([rect1.width, rect1.height], [_this.$gl_video], {});
-          appOuO.addChild(rect2);
+          // appOuO.addChild(rect2)
           rect2.translation = [0, 0];
 
           _this.rect2 = rect2;
@@ -48985,11 +48984,8 @@ function DanmakuPlayer($video) {
 
           _this._update();
         });
-
         {
-
           document.addEventListener(_utils.shimVisibilityChange, function () {
-
             if (!_this.enableVisibility) return;
 
             if (document[_utils.shimHidden]) {
@@ -49007,11 +49003,10 @@ function DanmakuPlayer($video) {
           _this.handleFetchCompleted && _this.handleFetchCompleted();
           _this._timeupdate(res);
         }).catch(function (e) {
-          alert('弹幕资源发生错误');
+          window.alert('弹幕资源发生错误');
           _this.handleFetchCompleted && _this.handleFetchCompleted();
         });
       });
-
       return this;
     },
     hideDanmaku: function hideDanmaku() {
@@ -49024,20 +49019,20 @@ function DanmakuPlayer($video) {
       // this.app.view.style.visibility =  'visible'
       this.app.stage.visible = true;
     },
+
     get renderType() {
       return this.opt.renderType;
     },
     set renderType(v) {
       var _this2 = this;
 
-      this.opt.renderType = v;['volume', 'currentTime', 'loop', 'playbackRate'].forEach(function (attr) {
+      this.opt.renderType = v;['volume', 'currentTime', 'loop', 'playbackRate', 'autoplay'].forEach(function (attr) {
         _this2.$dom_video[attr] = _this2.$gl_video[attr] = _this2.$video[attr];
       });
 
       this.$wrap_ouo.style.display = v === 'webgl' ? 'block' : 'none';
       this.$wrap_dom.style.display = v === 'webgl' ? 'none' : 'block';
       this.$video = v === 'webgl' ? this.$gl_video : this.$dom_video;
-
       this.$video.play();
     },
     _setupVideo: function _setupVideo() {
@@ -49071,42 +49066,37 @@ function DanmakuPlayer($video) {
       var _this4 = this;
 
       return new Promise(function (resolve, reject) {
-
         var api = _this4.opt.danmakuapi;
 
         if (!api) {
           return resolve({});
         }
-        var xhr = new XMLHttpRequest();
+        var xhr = new window.XMLHttpRequest();
         xhr.onload = function () {
           var danmakuList = {};
           try {
             danmakuList = JSON.parse(xhr.responseText);
           } catch (e) {
             console.log(e);
-            return reject();
+            return reject(new Error());
           }
 
           resolve(danmakuList);
         };
 
         xhr.onerror = function () {
-          reject();
+          reject(new Error());
         };
         xhr.open('GET', api);
         xhr.send(null);
       });
     },
     _chooseFixedRunway: function _chooseFixedRunway() {
-      //现判断有无空通道
-      //如果没有空通道，随机选择通道放置
-      //有空通道，上至下选择空通道
       var runway;
       var i = 0;
 
-      // 所有通道已填满
       if (this.fixed_group.children.every(function (runway) {
-        return runway.danmakus.length != 0;
+        return runway.danmakus.length !== 0;
       })) {
         runway = this.fixed_group.children[Math.random() * this.fixed_group.children.length | 0];
       } else {
@@ -49126,13 +49116,11 @@ function DanmakuPlayer($video) {
     _update: function _update() {
       var _this5 = this;
 
-      var generateSnow = function generateSnow() {
-
+      var generateSnowflake = function generateSnowflake() {
         ;[].concat(_toConsumableArray(Array(5 + Math.random() * 5 | 0))).forEach(function () {
           // let snow = new Snow(Math.random()*2)
-          var snow = new _snowflake2.default(.2 + Math.random() * 2, 0xffffff);
+          var snow = new _snowflake2.default(.2 + Math.random() * 2, 0xff00ff);
           _this5.snow_container.addChild(snow);
-
           snow.x = _this5.app.screen.width * Math.random();
           snow.y = -snow.r - Math.random() * 20;
           // snow.y = 10
@@ -49141,15 +49129,13 @@ function DanmakuPlayer($video) {
 
           snow.onRemove(function () {
             snow.parent.removeChild(snow);
-            //snows = snows.filter(other_snow=>snow!=other_snow)
+            // snows = snows.filter(other_snow=>snow!=other_snow)
           });
         });
       };
-
       var RenderAction = {
         dom: function dom(that) {},
         webgl: function webgl(that) {
-
           that.appOuO.update();
         }
       };
@@ -49160,14 +49146,13 @@ function DanmakuPlayer($video) {
         RenderAction[_this5.opt.renderType](_this5);
 
         _this5.runway_group.children.forEach(function (runway) {
-
           // console.log(runway.danmakus.length);
           runway.danmakus.forEach(function (danmaku) {
             if (!danmaku.is_moving) return;
 
             // console.log(danmaku.x)
             if (danmaku.x + danmaku.width * .5 < _this5.contain.x - 10) {
-              //console.count('destory-danmaku')
+              // console.count('destory-danmaku')
 
               runway.w_of_sum -= danmaku.width;
               danmaku.parent.removeChild(danmaku);
@@ -49185,26 +49170,24 @@ function DanmakuPlayer($video) {
 
         if (!_this5.snowEffect) return;
 
-        //////  / ///
+        /// ///  / ///
         if (!_this5.snow_st) _this5.snow_st = Date.now();
 
         if (Date.now() - _this5.snow_st > 200) {
           _this5.snow_st = Date.now();
-          generateSnow();
+          generateSnowflake();
         }
 
-        //console.log(this.app.screen.width)
-
+        // console.log(this.app.screen.width)
 
         _this5.snow_container.children.forEach(function (snow) {
-
           snow.animate = true;
 
           var x = snow.x | 0;
-          //var y = e.pageY-rect.top
+          // var y = e.pageY-rect.top
 
           var y = _this5.app.screen.height - snow.y | 0;
-          //var y = rect1.height-(e.pageY-rect.top)
+          // var y = rect1.height-(e.pageY-rect.top)
 
           var idx = (y * _this5.app.screen.width + x) * 4 | 0;
 
@@ -49213,12 +49196,12 @@ function DanmakuPlayer($video) {
               g = _ref2[1],
               b = _ref2[2];
 
-          //document.body.style.background = `rgba(${r},${g},${b},255)`
+          // document.body.style.background = `rgba(${r},${g},${b},255)`
 
           var brightness = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255;
           // console.log(brightness);
-          //是边缘 但是 这个边缘点没有被对象占领
-          if (snow.animate && brightness < .2) {
+          // 是边缘 但是 这个边缘点没有被对象占领
+          if (snow.animate && brightness < .43) {
             snow.animate = false;
 
             snow.will_remove = true;
@@ -49255,17 +49238,15 @@ function DanmakuPlayer($video) {
 
       this.contain = {
         x: this.app.screen.width * 0
+      };
 
-        ///
-
-      };this.$video.addEventListener('timeupdate', function () {
-        console.log('renderType:', _this6.$video.getAttribute('renderType'), 'currentTime:', _this6.$video.currentTime);
+      this.$video.addEventListener('timeupdate', function () {
+        // console.log('renderType:', this.$video.getAttribute('renderType'), 'currentTime:',this.$video.currentTime)
         // console.log('renderTYpe:', this.$video.getAttribute('renderType'))
         if (_this6.$video.paused) return;
 
         var _ref3 = [Math.round(_this6.$video.currentTime), Math.round(_this6.$video.duration)],
-            currentTime = _ref3[0],
-            duration = _ref3[1];
+            currentTime = _ref3[0];
 
 
         if (currentTime === currentTime_) return;
@@ -49277,24 +49258,21 @@ function DanmakuPlayer($video) {
 
         danmakus = [];
         runway_i = 0;
-        //fixedRunwayIdx = 0
+        // fixedRunwayIdx = 0
         danmaku_list[currentTime].data.forEach(function (o) {
-
           _this6.which_runway = _this6.runway_group.children[runway_i];
 
           {
-
             if (_this6.which_runway.w_of_sum > _this6.app.screen.width * .7) {
-              //if(this.which_runway.w_of_sum > this.app.screen.width*.2){
+              // if(this.which_runway.w_of_sum > this.app.screen.width*.2){
               runway_i = ++runway_i % _this6.runway_group.children.length;
             }
           }
-          //console.log(this.runway_group.children.length)
+          // console.log(this.runway_group.children.length)
 
           var danmaku = _this6._danmakuFactory(o.text, _extends({}, o));
 
           if (danmaku instanceof _danmakus.FixedDanmaku) {
-
             _this6.whichFixedRunway = _this6._chooseFixedRunway();
 
             _this6.whichFixedRunway.addChild(danmaku);
@@ -49304,22 +49282,20 @@ function DanmakuPlayer($video) {
 
             danmaku.delayRemove();
           } else {
-
             _this6.which_runway.w_of_sum += danmaku.width;
 
             _this6.which_runway.addChild(danmaku);
             danmaku.__idx__ = _this6.which_runway.danmakus.length - 1;
             danmakus.push(danmaku);
           }
-          /////////
+          /// //////
 
-          /////////
+          /// //////
         });
 
         // 每帧的弹幕设置起至和结束位置并线性移动
-        // 
+        //
         danmakus.forEach(function (danmaku) {
-
           _this6._giveDanmakuStartPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus);
           _this6._giveDanmakuEndPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus);
           danmaku.y = _this6.which_runway.default_height * .5;
@@ -49353,30 +49329,27 @@ function DanmakuPlayer($video) {
 
       var num = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 9;
 
-
       // debugger
       num *= 1;
 
-      // scroll 
+      // scroll
       (_runway_group = this.runway_group).removeChild.apply(_runway_group, _toConsumableArray(this.runway_group.children));
 
       var num_of_runway = num;
       var w_of_runway = this.app.screen.width;
       var h_of_runway = this.app.screen.height / num_of_runway;[].concat(_toConsumableArray(Array(num_of_runway))).forEach(function (v, i) {
-
-        //if(i!=5) return
+        // if(i!=5) return
         var runway = new _runway2.default(w_of_runway, h_of_runway, 0xff00ff, true);
         _this7.runway_group.addChild(runway);
         runway.x = 0;
         runway.y = i / num_of_runway * _this7.app.screen.height;
       });
 
-      // fixed 
+      // fixed
       (_fixed_group = this.fixed_group).removeChild.apply(_fixed_group, _toConsumableArray(this.fixed_group.children));
       num_of_runway = num;
       w_of_runway = this.app.screen.width;
       h_of_runway = this.app.screen.height / num_of_runway;[].concat(_toConsumableArray(Array(num_of_runway))).forEach(function (v, i) {
-
         var runway = new _runway2.default(w_of_runway, h_of_runway);
         _this7.fixed_group.addChild(runway);
         runway.x = 0;
@@ -49389,13 +49362,12 @@ function DanmakuPlayer($video) {
           if (danmaku === danmakus[j]) return j;
         }
       }();
-      //console.log(i);
+      // console.log(i);
 
       if (i === 0) {
         danmaku.x = this.app.screen.width * 1 + danmaku.width * .5;
       } else {
-
-        //前面的对象完全在屏幕内
+        // 前面的对象完全在屏幕内
         try {
           var in_view = danmakus[i - 1].bounding.right < this.app.screen.width;
 
@@ -49409,13 +49381,12 @@ function DanmakuPlayer($video) {
           // danmakus,danmaku
           // debugger
           // (23) Array, 83
-          //console.log('err',danmakus,i);
+          // console.log('err',danmakus,i);
           console.log(e);
         }
       }
     },
     _giveDanmakuEndPo: function _giveDanmakuEndPo(danmaku, i, danmakus, runway_i) {
-
       i = function () {
         for (var j = 0, _len = danmakus.length; j < _len; j++) {
           if (danmaku === danmakus[j]) return j;
@@ -49430,11 +49401,10 @@ function DanmakuPlayer($video) {
       }
       danmaku.final_po.x -= danmaku.width * .5;
 
-      //console.log(danmaku.final_po.x);
+      // console.log(danmaku.final_po.x);
     },
     _danmakuFactory: function _danmakuFactory(text, opt) {
-
-      //debugger
+      // debugger
       if (!DANMAKU_TYPES.some(function (v) {
         return v = opt.mode;
       })) return console.warn('not defined this mode..');
@@ -49455,7 +49425,7 @@ function DanmakuPlayer($video) {
       var effects = ['#下雪'];
 
       if (!effects.some(function (v) {
-        return v == s;
+        return v === s;
       })) {
         return void 1;
       }
@@ -49483,7 +49453,6 @@ function DanmakuPlayer($video) {
 
       var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (_ref4 = {}, mode = _ref4.mode, fill = _ref4.fill, fontSize = _ref4.fontSize, alpha = _ref4.alpha, _ref4);
 
-
       // command
       var effect = void 0;
       if (effect = this._effectAction(text)) {
@@ -49503,7 +49472,6 @@ function DanmakuPlayer($video) {
       var runway;
 
       if (danmaku instanceof _danmakus.FixedDanmaku) {
-
         // debugger
         runway = this.user_fixed_runway;
         runway.addChild(danmaku);
@@ -49542,7 +49510,7 @@ function DanmakuPlayer($video) {
 
       this.danmakuDuration = DUR_FAC * this.app.screen.width;
 
-      //console.log('danmakuduration',this.danmakuDuration)
+      // console.log('danmakuduration',this.danmakuDuration)
     },
     normal: function normal() {
       // debugger
@@ -49553,19 +49521,17 @@ function DanmakuPlayer($video) {
 
       this.danmakuDuration = DUR_FAC * V_DEFAULT_W;
 
-      //console.log('danmakuduration',this.danmakuDuration)
+      // console.log('danmakuduration',this.danmakuDuration)
     },
     adjustWidth: function adjustWidth() {
-
       // console.log(this.opt.$container.offsetWidth)
-
 
       var scale = this.opt.$container.offsetWidth / V_DEFAULT_W;
 
       if (scale * V_DEFAULT_H > this.opt.$container.offsetHeight) {
         scale = this.opt.$container.offsetHeight / V_DEFAULT_H;
       }
-      //this.app.stage.scale.x = this.app.stage.scale.y = scale
+      // this.app.stage.scale.x = this.app.stage.scale.y = scale
       this.app.renderer.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H);
 
       this.appOuO.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H);
@@ -49640,15 +49606,14 @@ var Runway = function (_PIXI$Container) {
     _this.hold_danmakus = [];
 
     _this.w_of_sum = 0;
-
     return _this;
   }
 
   _createClass(Runway, [{
     key: 'danmakus',
     get: function get() {
-      //debugger
-      //console.log(this.children);
+      // debugger
+      // console.log(this.children);
 
       return this.children.filter(function (o) {
         return o instanceof _danmakus.Danmaku;
@@ -49718,7 +49683,6 @@ var Snow = function (_PIXI$Container) {
     _this.addChild(circle);
 
     _this.circle = circle;
-
     return _this;
   }
 
@@ -50017,7 +49981,6 @@ var danmakuCustomEvents = ['senddanmaku'];
     }, _this.handleProgress = function ($video) {
       _this.control_wrap.updateBuffProgress($video);
     }, _this.handleChangeCurrent = function (percent) {
-
       _this.video_ouo.setCurrentTime(percent);
 
       _this.handleTimeUpdate(_this.video_ouo.danmakuPlayerOuO.$video);
@@ -50359,7 +50322,6 @@ function Slider($holder, _ref) {
 
     if (record) recordValue = fac;
     if (vertical) {
-
       that.$slider.style.bottom = fac * 100 + '%';
       that.$tooltipCon.textContent = Math.round(min + fac * (max - min));
       that.$bar.style.height = fac * 100 + '%';
@@ -50384,7 +50346,6 @@ function Slider($holder, _ref) {
 
   var recordValue;
   var init = function init() {
-
     that.$el.classList.add('el-slider');
     if (vertical) {
       that.$el.classList.add('is-vertical');
@@ -50411,7 +50372,6 @@ function Slider($holder, _ref) {
       max_ += that.min * -1;
       that.defaultValue += that.min * -1;
     } else {
-
       max_ += that.min;
       that.defaultValue -= that.min;
     }
@@ -50597,8 +50557,8 @@ exports.default = (0, _omi.define)('video-ouo', (_temp = _class = function (_WeE
       this.danmakuPlayerOuO = (0, _danmaku_player_OuO2.default)(this.props.src, {
         $container: this.$video_wrap,
         danmakuapi: danmakuapi,
-        // renderType: 'dom'
-        renderType: 'webgl'
+        renderType: 'dom'
+        // renderType: 'webgl'
       });
 
       this.danmakuPlayerOuO.onFetchCompleted(function () {

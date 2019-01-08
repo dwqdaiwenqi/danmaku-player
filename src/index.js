@@ -88,7 +88,6 @@ define('danmaku-player-xxx', class extends WeElement {
     this.control_wrap.updateBuffProgress($video)
   }
   handleChangeCurrent = (percent) => {
-    
     this.video_ouo.setCurrentTime(percent)
 
     this.handleTimeUpdate(this.video_ouo.danmakuPlayerOuO.$video)

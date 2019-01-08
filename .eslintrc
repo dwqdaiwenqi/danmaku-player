@@ -12,6 +12,7 @@
 		"no-return-assign": 0,
 		"no-mixed-spaces-and-tabs": 0,
 		"no-floating-decimal": 0,
+		"space-before-blocks": 0,
 		"indent": ["off", "tab"]
 	},
 	"parser": "babel-eslint"

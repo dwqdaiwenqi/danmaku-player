@@ -108,7 +108,7 @@ define('control-wrap', class extends WeElement {
                               : <div onClick={this.handleVolumn} class="iconfont_volumn_on control_volumn_off">
                                 <div class="svgicon">
                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><path d="M15 11a3.998 3.998 0 0 0-2-3.465v2.636l1.865 1.865A4.02 4.02 0 0 0 15 11z"></path><path d="M13.583 5.583A5.998 5.998 0 0 1 17 11a6 6 0 0 1-.585 2.587l1.477 1.477a8.001 8.001 0 0 0-3.446-11.286 1 1 0 0 0-.863 1.805zM18.778 18.778l-2.121-2.121-1.414-1.414-1.415-1.415L13 13l-2-2-3.889-3.889-3.889-3.889a.999.999 0 1 0-1.414 1.414L5.172 8H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1l4.188 3.35a.5.5 0 0 0 .812-.39v-3.131l2.587 2.587-.01.005a1 1 0 0 0 .86 1.806c.215-.102.424-.214.627-.333l2.3 2.3a1.001 1.001 0 0 0 1.414-1.416zM11 5.04a.5.5 0 0 0-.813-.39L8.682 5.854 11 8.172V5.04z"></path></svg>
-                                </div>           
+                                </div>
                               </div>
                             }
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><path d="M10.188 4.65L6 8H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1l4.188 3.35a.5.5 0 0 0 .812-.39V5.04a.498.498 0 0 0-.812-.39zM14.446 3.778a1 1 0 0 0-.862 1.804 6.002 6.002 0 0 1-.007 10.838 1 1 0 0 0 .86 1.806A8.001 8.001 0 0 0 19 11a8.001 8.001 0 0 0-4.554-7.222z"></path><path d="M15 11a3.998 3.998 0 0 0-2-3.465v6.93A3.998 3.998 0 0 0 15 11z"></path></svg>
@@ -158,7 +158,7 @@ define('control-wrap', class extends WeElement {
                               !this.data.fullScreen
                               ? <div class="">
                                 <div class="svgicon">
-                                  <svg viewBox="0 0 22 22"><path d="M9 3H4a1 1 0 0 0-1 1v5a1 1 0 0 0 2 0V5h4a1 1 0 0 0 0-2zM18 12a1 1 0 0 0-1 1v4h-4a1 1 0 0 0 0 2h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1z"></path></svg>               
+                                  <svg viewBox="0 0 22 22"><path d="M9 3H4a1 1 0 0 0-1 1v5a1 1 0 0 0 2 0V5h4a1 1 0 0 0 0-2zM18 12a1 1 0 0 0-1 1v4h-4a1 1 0 0 0 0 2h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1z"></path></svg>
                                 </div>
                               </div>
                               : <div class="">
@@ -201,12 +201,12 @@ define('control-wrap', class extends WeElement {
                               <div style="width:70%;float:right;" ref={el => this.$path_container = el} onClick={this.handlePickMode}>
                                 <div class="setting_path_linear setting_path setting_path--picked" data-path="linear">
                                 </div>
-                                <div class="setting_path_sin setting_path" data-path="curve">                        
+                                <div class="setting_path_sin setting_path" data-path="curve">
                                 </div>
                                 <div class="setting_path_fix setting_path" data-path="fixed">
                                 </div>
                               </div>
-                            </div>                    
+                            </div>
                             <div ref={el => this.$setting_alpah = el} class="setting_alpah comment_setting_item">
                               <span>透明</span>
                             </div>
@@ -225,7 +225,7 @@ define('control-wrap', class extends WeElement {
                         </div>
                       </div>
                     </div>
-                  </div>     
+                  </div>
                   <div class="control_side">
                     <div class="control_btn control_comment" onClick={this.handleCommentSwitch}>
                       <div class="iconfont_comment">
@@ -239,7 +239,7 @@ define('control-wrap', class extends WeElement {
                       <div class="control_btn control_screenshot">
                         <div class="iconfont_screenshot">
                           <div class="svgicon">
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M16 23c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6-2.691 6-6 6zM16 13c-2.206 0-4 1.794-4 4s1.794 4 4 4c2.206 0 4-1.794 4-4s-1.794-4-4-4zM27 28h-22c-1.654 0-3-1.346-3-3v-16c0-1.654 1.346-3 3-3h3c0.552 0 1 0.448 1 1s-0.448 1-1 1h-3c-0.551 0-1 0.449-1 1v16c0 0.552 0.449 1 1 1h22c0.552 0 1-0.448 1-1v-16c0-0.551-0.448-1-1-1h-11c-0.552 0-1-0.448-1-1s0.448-1 1-1h11c1.654 0 3 1.346 3 3v16c0 1.654-1.346 3-3 3zM24 10.5c0 0.828 0.672 1.5 1.5 1.5s1.5-0.672 1.5-1.5c0-0.828-0.672-1.5-1.5-1.5s-1.5 0.672-1.5 1.5zM15 4c0 0.552-0.448 1-1 1h-4c-0.552 0-1-0.448-1-1v0c0-0.552 0.448-1 1-1h4c0.552 0 1 0.448 1 1v0z"></path></svg>              
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 32 32"><path d="M16 23c-3.309 0-6-2.691-6-6s2.691-6 6-6 6 2.691 6 6-2.691 6-6 6zM16 13c-2.206 0-4 1.794-4 4s1.794 4 4 4c2.206 0 4-1.794 4-4s-1.794-4-4-4zM27 28h-22c-1.654 0-3-1.346-3-3v-16c0-1.654 1.346-3 3-3h3c0.552 0 1 0.448 1 1s-0.448 1-1 1h-3c-0.551 0-1 0.449-1 1v16c0 0.552 0.449 1 1 1h22c0.552 0 1-0.448 1-1v-16c0-0.551-0.448-1-1-1h-11c-0.552 0-1-0.448-1-1s0.448-1 1-1h11c1.654 0 3 1.346 3 3v16c0 1.654-1.346 3-3 3zM24 10.5c0 0.828 0.672 1.5 1.5 1.5s1.5-0.672 1.5-1.5c0-0.828-0.672-1.5-1.5-1.5s-1.5 0.672-1.5 1.5zM15 4c0 0.552-0.448 1-1 1h-4c-0.552 0-1-0.448-1-1v0c0-0.552 0.448-1 1-1h4c0.552 0 1 0.448 1 1v0z"></path></svg>
                           </div>
                         </div>
                       </div>
@@ -252,31 +252,28 @@ define('control-wrap', class extends WeElement {
 
         </section>
       </div>
-      
-      
+
     )
   }
 
-
-  updateBuffProgress($video) {
+  updateBuffProgress ($video) {
     // console.log($video,'buff')
-   
-    if(!$video.buffered.length) return
+
+    if (!$video.buffered.length) return
 
     var bufferedEnd = $video.buffered.end($video.buffered.length - 1)
-    var duration =  $video.duration
-    
+    var duration = $video.duration
+
     if (duration > 0) {
       // console.log(bufferedEnd / duration)
       this.data.buffPercent = bufferedEnd / duration
     }
   }
-  updateCurrentProgress($video) {
-     
+  updateCurrentProgress ($video) {
     var [ mm, ss ] = mmss($video.currentTime | 0)
     this.data.currentTime = { mm, ss }
 
-    if(!this.slideDotDrag){
+    if (!this.slideDotDrag){
       this.data.currentPercent = $video.currentTime / $video.duration
       this.data.sliderDotProgress = this.data.currentPercent
     }
@@ -309,40 +306,36 @@ define('control-wrap', class extends WeElement {
 
     var cl = $target.classList
 
-    if(cl.contains('ui') || cl.contains('control_side') || cl.contains('control_wrap')) {
-      if(this.data.showCommentControl){
+    if (cl.contains('ui') || cl.contains('control_side') || cl.contains('control_wrap')) {
+      if (this.data.showCommentControl){
         // debugger
         this.handleCommentSwitch()
-        
+
         // console.log('showCommentControl...')
-  
+
         return
       }
 
-      //debugger
+      // debugger
       onplayChange()
       this.data.showUi = true
       clearTimeout(this.itvMove)
       this.itvMove = setTimeout(() => {
         this.data.showUi = false
       }, 1233)
-
-
-
     }
-    
-    
+
     // debugger
   }
   handleMouseMove = (e) => {
     this.data.showUi = true
     clearTimeout(this.itvMove)
-    //console.log('move')
-    
+    // console.log('move')
+
     var { target: $target } = e
 
-    if($target.classList.contains('ui') || $target.classList.contains('control_side')) {
-      //console.log('contaains ui')
+    if ($target.classList.contains('ui') || $target.classList.contains('control_side')) {
+      // console.log('contaains ui')
       this.itvMove = setTimeout(() => {
         this.data.showUi = false
       }, 1233)
@@ -404,8 +397,8 @@ define('control-wrap', class extends WeElement {
   handleComment = () => {
     var { onComment } = this.props
     var text = this.$control_bottom_comment_input.value.trim()
-    if(!text.length) return
-    //debugger
+    if (!text.length) return
+    // debugger
     window.localStorage['danmaku-player-OuO__last-input'] = text
     // {mode:'linear', fill:0xff00ff, fontSize: 23, alpha: 1 }
     // console.log(this.data.danmakuAlpha, this.data.danmakuColor, this.data.danmakuFontSize, this.data.danmakuMode)
@@ -414,13 +407,12 @@ define('control-wrap', class extends WeElement {
   }
   handleVolumn = () => {
     this.data.offVolumn = !this.data.offVolumn
-    
-    if(this.data.offVolumn) {
+
+    if (this.data.offVolumn) {
       this.$sliderVolumn.offValue()
     } else {
       this.$sliderVolumn.onValue()
     }
-    
   }
   handleRepeat = () => {
     var { onrepeatChange } = this.props
@@ -428,39 +420,35 @@ define('control-wrap', class extends WeElement {
     onrepeatChange(this.data.repeat)
   }
   handleFullScreen2 = () => {
-  
-    if(this.data.fullScreen){
+    if (this.data.fullScreen){
       this.exitFullscreen()
     } else {
       this.requestFullScreen()
     }
   }
   handlePlay = (e) => {
-
     // var { onplayChange } = this.props
     // onplayChange()
 
-    
     var { onplayChange } = this.props
     onplayChange()
   }
 
-  clearItv() {
+  clearItv () {
     clearTimeout(this.itv4)
     clearTimeout(this.itv5)
   }
-  clearHandle() {
+  clearHandle () {
     this.handleFullScreen = null
     this.handleExitFullScreen = null
   }
-  onRequestFullScreen(fn) {
+  onRequestFullScreen (fn) {
     this.handleFullScreen = fn
   }
-  onExitFullScreen(fn) {
+  onExitFullScreen (fn) {
     this.handleExitFullScreen = fn
   }
   requestFullScreen = () => {
-
     var { $playerRoot, onrequestFullScreen } = this.props
     $playerRoot.requestFullscreen()
     this.onRequestFullScreen(() => {
@@ -468,10 +456,8 @@ define('control-wrap', class extends WeElement {
       // debugger
       onrequestFullScreen()
     })
-    
-    
   }
-  exitFullscreen() {
+  exitFullscreen () {
     var { onrequestNormalScreen } = this.props
     document.exitFullscreen()
     this.onExitFullScreen(() => {
@@ -482,7 +468,7 @@ define('control-wrap', class extends WeElement {
   handleCommentSwitch = () => {
     this.data.showCommentControl = !this.data.showCommentControl
 
-    this.data.showSettingPannel = 
+    this.data.showSettingPannel =
     this.data.showSettingDanmakuPannel = false
   }
   handleDanmakuSwitch = () => {
@@ -490,71 +476,64 @@ define('control-wrap', class extends WeElement {
     this.data.offDanmaku = !this.data.offDanmaku
     onSwitchDanamku(this.data.offDanmaku)
   }
-  receiveProps(parentProps, b ,c){
-    
-    
+  receiveProps (parentProps, b, c){
+
     // this.data.play = parentProps.play
     // debugger
     // console.log('receiveProps',parentProps.play, b.play)
   }
-  dragProgressDot() {
-
+  dragProgressDot () {
     var { onChangeCurrent } = this.props
     var $el = this.$control_bottom_t_progress_slider_dot
-    
+
     var fac = 0
     $el.addEventListener('mousedown', e => {
       $el.mousdown = true
-
     })
 
     window.addEventListener('mouseup', e => {
-      if(!$el.mousdown) return
+      if (!$el.mousdown) return
       this.slideDotDrag = false
       // console.log('mouseup!!!!',fac)
       $el.mousdown = false
       onChangeCurrent(fac)
-
     })
     window.addEventListener('mousemove', e => {
       var pageX = e.pageX
       var pageY = e.pageY
 
-      if($el.mousdown) {
-        let { 
+      if ($el.mousdown) {
+        let {
           left, right, width, x,
           top, bottom, height, y
         } = this.$control_bottom_t_progress_slider.getBoundingClientRect()
 
-        
-        if(pageX < left) pageX = left
-        if(pageX > right) pageX = right
+        if (pageX < left) pageX = left
+        if (pageX > right) pageX = right
 
-     
         fac = (pageX - x) / width
 
         this.slideDotDrag = true
         // onChangeCurrent(fac)
-        //console.log(fac)
-        //this.currentPercent = 1
+        // console.log(fac)
+        // this.currentPercent = 1
         this.data.sliderDotProgress = fac
       }
     })
   }
   handleIptFocus = () => {
-    //console.log('focus!')
+    // console.log('focus!')
     this.iptFocus = true
   }
   handleIptBlur = () => {
    // console.log('blur!')
     this.iptFocus = false
   }
-  install() {
-    this.itv4
-    this.itv5
+  install () {
+    this.itv4 = null
+    this.itv5 = null
 
    // console.log(this.props)
-
 
     this.data = {
       fullScreen: false,
@@ -589,15 +568,13 @@ define('control-wrap', class extends WeElement {
     }
   }
 
-  installed() {
-
+  installed () {
     var { onspeedChange, onbrightnessChange, onscaleChange, onvolumnChange } = this.props
     var ls = window.localStorage
-    Slider(this.$control_setting_pannel_speed, [0, 100, 25]).onChange(v => { 
+    Slider(this.$control_setting_pannel_speed, [0, 100, 25]).onChange(v => {
       v = .1 + v / 100 * 3.9
       // console.log(v)
       onspeedChange(v)
-      
     })
 		Slider(this.$control_setting_pannel_brightness, [0, 100, 50]).onChange(v => {
       v = .1 + v / 100 * 1.9
@@ -621,72 +598,56 @@ define('control-wrap', class extends WeElement {
 
     this.$sliderVolumn = $sliderVolumn
 
-    
     Slider(this.$setting_alpah, [0, 100, 100]).onChange(v => {
       // console.log(v)
       v = v / 100 * 1
       console.log(v)
       this.data.danmakuAlpha = v
-      
     })
     Slider(this.$setting_fontsize, [0, 100, 50]).onChange(v => {
-
-      v = 12 + v / 100 * (40 - 12 )
+      v = 12 + v / 100 * (40 - 12)
       console.log(v)
       this.data.danmakuFontSize = v
-      
     })
 
     this.dragProgressDot()
     window.addEventListener('keydown', e => {
-
-      if(e.keyCode === 13) {
-        if(this.iptFocus) {
+      if (e.keyCode === 13) {
+        if (this.iptFocus) {
           this.handleComment()
-        
         }
-        
       }
-      if(e.keyCode === 38){
-        if(this.iptFocus) {
+      if (e.keyCode === 38){
+        if (this.iptFocus) {
           let lastIptTex
-          if(lastIptTex = ls['danmaku-player-OuO__last-input']){
+          if (lastIptTex = ls['danmaku-player-OuO__last-input']){
             this.$control_bottom_comment_input.value = lastIptTex
           }
-          
         }
       }
-
-
     })
-    window.addEventListener('fullscreenchange', e => {  
+    window.addEventListener('fullscreenchange', e => {
       // 需要全屏
-      if(!this.data.fullScreen){
+      if (!this.data.fullScreen){
         this.clearItv()
-        
-        this.itv4 = setTimeout( ()=> {
-          
+
+        this.itv4 = setTimeout(() => {
           this.handleFullScreen && this.handleFullScreen()
         }, 123)
 
         this.data.fullScreen = true
-      
-        
       } else {
-        
         this.clearItv()
-        this.itv5 = setTimeout( ()=> {
-          if(this.handleExitFullScreen){
+        this.itv5 = setTimeout(() => {
+          if (this.handleExitFullScreen){
             this.handleExitFullScreen()
           } else {
-            //this.normalScreen = true
+            // this.normalScreen = true
             this.props.onrequestNormalScreen()
           }
-
         }, 123)
 
         this.data.fullScreen = false
-
       }
     })
   }

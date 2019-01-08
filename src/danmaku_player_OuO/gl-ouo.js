@@ -10,7 +10,7 @@
     console.log(gl.getShaderInfoLog(shader))
     gl.deleteShader(shader)
   }
-  
+
   var createProgram = (gl, vertexShader, fragmentShader) => {
     var program = gl.createProgram()
     gl.attachShader(program, vertexShader)
@@ -29,7 +29,7 @@
     canvas.width = width
     canvas.height = height
     canvas.setAttribute('gl-ouo', '')
-  
+
     var vertexShader = createShader(gl, gl.VERTEX_SHADER, `
       attribute vec2 a_position;
       
@@ -75,7 +75,7 @@
       }
     `)
     var program = createProgram(gl, vertexShader, fragmentShader)
-  
+
     var App = {
       children: [],
       canvas,
@@ -84,7 +84,7 @@
       program1: program,
       addTicker (fuc, name) {
         var Renderer = { animate: true, name: '' }
-  
+
         var els = [
           Object.assign(Object.create(Renderer), { fuc, name })
         ]
@@ -105,29 +105,28 @@
           els.push(o)
           return o
         }
-  
+
         return els[0]
       },
-      resize(w, h) {
+      resize (w, h) {
         this.$el.width = w
         this.$el.height = h
       },
-      update() {
+      update () {
         gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight)
-  
+
         gl.enable(gl.BLEND)
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
-  
+
         gl.clear(gl.COLOR_BUFFER_BIT)
-  
+
         this.children.forEach((obj) => {
-          if(obj.visible === true) {
+          if (obj.visible === true) {
             obj.update()
           }
-          
         })
       },
-      addChild(...objs) {
+      addChild (...objs) {
         objs.forEach(obj => {
           obj.gl = this.gl
           obj.program = this.program1
@@ -138,27 +137,27 @@
     }
     return App
   }
-  
+
   var Rectangle = ([width, height], [texture_, color = [1, 1, 1, 1]], { vs, fs, uniforms = {} } = {}) => {
     var Rectangle = {
       init () {
         var gl = this.gl
-  
+
         if (vs && fs) {
           let program = createProgram(gl,
             createShader(gl, gl.VERTEX_SHADER, vs),
             createShader(gl, gl.FRAGMENT_SHADER, fs)
           )
           this.program = program
-  
+
           Object.keys(uniforms).forEach((k) => {
             // console.log(uniforms[v]);
-  
+
             this.uniforms[k] = uniforms[k]
             this[k + '_location'] = gl.getUniformLocation(this.program, k)
           })
         }
-  
+
         this.position_location = gl.getAttribLocation(this.program, 'a_position')
         this.texCoord_location = gl.getAttribLocation(this.program, 'a_texCoord')
         this.resoluton_location = gl.getUniformLocation(this.program, 'u_resolution')
@@ -167,16 +166,16 @@
         this.texture_location = gl.getUniformLocation(this.program, 'u_texture')
         this.color_location = gl.getUniformLocation(this.program, 'u_color')
         this.alpha_location = gl.getUniformLocation(this.program, 'u_alpha')
-  
+
         this.position_buffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, this.position_buffer)
         // Put geometry data into buffer
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, width, 0, width, height, 0, height]), gl.STATIC_DRAW)
-  
+
         this.tex_buffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, this.tex_buffer)
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]), gl.STATIC_DRAW)
-  
+
         this.texture = gl.createTexture()
         gl.bindTexture(gl.TEXTURE_2D, this.texture)
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.texture_)
@@ -190,7 +189,7 @@
         // a_texCoord
         // u_color
         // u_texture
-  
+
         return this
       },
       gl: null,
@@ -229,14 +228,14 @@
       },
       update () {
         var gl = this.gl
-  
+
         gl.useProgram(this.program)
         // Turn on the attribute
         gl.enableVertexAttribArray(this.position_location)
-  
+
         // Bind the position buffer.
         gl.bindBuffer(gl.ARRAY_BUFFER, this.position_buffer)
-  
+
         // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
         var size = 2 // 2 components per iteration
         var type = gl.FLOAT // the data is 32bit floats
@@ -245,20 +244,20 @@
         var offset = 0 // start at the beginning of the buffer
         gl.vertexAttribPointer(
           this.position_location, size, type, normalize, stride, offset)
-  
+
         // set the resolution
         gl.uniform2f(this.resoluton_location, gl.canvas.width, gl.canvas.height)
-  
+
         // set the color
         gl.uniform4fv(this.color_location, this.color)
         // Set the translation.
         gl.uniform2fv(this.translation_location, this.translation)
-  
+
         gl.uniform2fv(this.scale_location, this.scale)
-  
+
         gl.uniform1f(this.alpha_location, this.alpha)
         // debugger
-  
+
         {
           gl.enableVertexAttribArray(this.texCoord_location)
           gl.bindBuffer(gl.ARRAY_BUFFER, this.tex_buffer)
@@ -266,10 +265,10 @@
         }
         {
           gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, this.texture_)
-  
+
           // Tell WebGL we want to affect texture unit 0
           gl.activeTexture(gl.TEXTURE0)
-  
+
           gl.uniform1i(this.texture_location, 0)
         }
         {
@@ -283,11 +282,10 @@
             }
           })
         }
-  
+
         gl.drawArrays(gl.TRIANGLE_FAN, 0, 4)
-  
+
         if (this.handel_pixel && this.canReadPixels) {
-          
           let pixels = new Uint8Array(this.widthInClip * this.heightInClip * 4)
           gl.readPixels(this.translation[0], this.translation[1], this.widthInClip, this.heightInClip, gl.RGBA, gl.UNSIGNED_BYTE, pixels)
           this.handel_pixel(pixels)
@@ -298,11 +296,11 @@
       get widthInClip () {
         return width * this.scale[0]
 
-        //return this.gl.drawingBufferWidth
+        // return this.gl.drawingBufferWidth
       },
       get heightInClip () {
         return height * this.scale[0]
-        //return this.gl.drawingBufferHeight
+        // return this.gl.drawingBufferHeight
       },
       readPixels (fn) {
         this.handel_pixel = fn
@@ -310,6 +308,5 @@
     }
     return Rectangle
   }
-  
+
   export default { App, Rectangle }
-  

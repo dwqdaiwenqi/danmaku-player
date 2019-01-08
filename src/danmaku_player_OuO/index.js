@@ -104,9 +104,8 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
 
       this._setupVideo().then(res => {
         this.$video.addEventListener('loadeddata', () => {
-
-          var rect1 = OuO.Rectangle([appOuO.canvas.width,appOuO.canvas.height],[this.$gl_video],{
-            vs:`
+          var rect1 = OuO.Rectangle([appOuO.canvas.width, appOuO.canvas.height], [this.$gl_video], {
+            vs: `
               attribute vec2 a_position;
               uniform vec2 u_resolution;
               uniform vec2 u_translation;
@@ -124,8 +123,8 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
     
                 gl_Position = vec4(clipSpace*vec2(1,-1),0,1);
               }
-            `
-            ,fs:`
+            `,
+             fs: `
               precision mediump float;
     
               varying vec2 v_texCoord;
@@ -182,412 +181,357 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
                 gl_FragColor = vec4(sqrt(sumx*sumx+sumy*sumy).xyz  , 1.0);
     
               }
-            `
-            ,uniforms:{
-              textureSize:[appOuO.canvas.width, appOuO.canvas.height]
+            `,
+             uniforms: {
+              textureSize: [appOuO.canvas.width, appOuO.canvas.height]
             }
-              
+
           })
+          // appOuO.addChild(rect1)
+          // rect1.translation = [0, 0]
+
+          // rect1.readPixels(data => {
+          //   this.pixels = data
+          // })
+          // rect1.visible = false
+          // this.rect1 = rect1
+
+          // var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
+          // appOuO.addChild(rect2)
+          // rect2.translation = [0, 0]
+
+          // this.rect2 = rect2
+
           appOuO.addChild(rect1)
           rect1.translation = [0, 0]
 
           rect1.readPixels(data => {
-            // window.pixels = data
             this.pixels = data
           })
-          rect1.visible = false
+          rect1.visible = true
           this.rect1 = rect1
 
-          
-          var rect2 = OuO.Rectangle( [rect1.width,rect1.height],[this.$gl_video],{  })
-          appOuO.addChild(rect2)
+          var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
+         // appOuO.addChild(rect2)
           rect2.translation = [0, 0]
 
           this.rect2 = rect2
-         
 
           this._createRunway(9)
           this._createUserRunway()
 
           this._update()
         })
-
-
-
         {
-          
-          document.addEventListener(shimVisibilityChange, ()=>{
+          document.addEventListener(shimVisibilityChange, () => {
+            if (!this.enableVisibility) return
 
-            if(!this.enableVisibility ) return
-
-            if(document[shimHidden]) {
+            if (document[shimHidden]) {
               this.$video.pause()
 
-              console.log('%c visibility hidden','color:aqua;')
+              console.log('%c visibility hidden', 'color:aqua;')
             } else {
               this.$video.play()
-              console.log('%c visibility visible','color:teal;')
+              console.log('%c visibility visible', 'color:teal;')
             }
-
           })
-   
         }
 
-        this._fetchDanmakuList().then(res=>{
+        this._fetchDanmakuList().then(res => {
           this.handleFetchCompleted && this.handleFetchCompleted()
           this._timeupdate(res)
         }).catch(e => {
-          alert('弹幕资源发生错误')
+          window.alert('弹幕资源发生错误')
           this.handleFetchCompleted && this.handleFetchCompleted()
         })
       })
-
-
-     
       return this
-    }
-    
-    ,hideDanmaku() {
+    },
+    hideDanmaku () {
       // this.appOuO.canvas.style.visibility =
       // this.app.view.style.visibility =  'hidden'
       this.app.stage.visible = false
-    }
-    ,showDanmaku() {
+    },
+    showDanmaku () {
       // this.appOuO.canvas.style.visibility =
       // this.app.view.style.visibility =  'visible'
       this.app.stage.visible = true
-    }
-    ,get renderType(){
+    },
+    get renderType (){
       return this.opt.renderType
-    }
-    ,set renderType(v){
+    },
+    set renderType (v) {
       this.opt.renderType = v
 
-      ;['volume','currentTime','loop','playbackRate'].forEach(attr => {
-        this.$dom_video[attr] = this.$gl_video[attr] = 
-        this.$video[attr]
+      ;['volume', 'currentTime', 'loop', 'playbackRate', 'autoplay'].forEach(attr => {
+        this.$dom_video[attr] = this.$gl_video[attr] = this.$video[attr]
       })
- 
-      this.$wrap_ouo.style.display = v === 'webgl'?'block' : 'none'
-      this.$wrap_dom.style.display = v === 'webgl'?'none' : 'block'
-      this.$video = v === 'webgl'? this.$gl_video : this.$dom_video
-      
+
+      this.$wrap_ouo.style.display = v === 'webgl' ? 'block' : 'none'
+      this.$wrap_dom.style.display = v === 'webgl' ? 'none' : 'block'
+      this.$video = v === 'webgl' ? this.$gl_video : this.$dom_video
       this.$video.play()
-      
-    }
-    ,_setupVideo(){
-      return new Promise(resolve=>{
+    },
+    _setupVideo () {
+      return new Promise(resolve => {
         this.$gl_video = document.createElement('video')
         this.$gl_video.src = this.$video
         this.$gl_video.crossOrigin = '*'
         this.$gl_video.preload = 'auto'
-        this.$gl_video.setAttribute('renderType','webgl')
-        
+        this.$gl_video.setAttribute('renderType', 'webgl')
+
         this.$dom_video.src = this.$video
         this.$dom_video.crossOrigin = '*'
         this.$dom_video.preload = 'auto'
-        this.$dom_video.setAttribute('renderType','dom')
+        this.$dom_video.setAttribute('renderType', 'dom')
 
-        if(this.opt.renderType === 'webgl') {
+        if (this.opt.renderType === 'webgl') {
           this.$wrap_ouo.style.display = 'block'
           this.$video = this.$gl_video
           resolve(this.$gl_video)
-
         } else {
         // debugger
           this.$wrap_dom.style.display = 'block'
           this.$video = this.$dom_video
           resolve(this.$dom_video)
-
         }
-        
-        
-       
       })
-    }
-    ,_fetchDanmakuList(){
-      return new Promise((resolve, reject)=>{
-
+    },
+    _fetchDanmakuList () {
+      return new Promise((resolve, reject) => {
         var api = this.opt.danmakuapi
-        
-        if(!api) {
+
+        if (!api) {
           return resolve({})
         }
-        var xhr = new XMLHttpRequest()
+        var xhr = new window.XMLHttpRequest()
         xhr.onload = () => {
           var danmakuList = {}
-          try{ 
+          try {
             danmakuList = JSON.parse(xhr.responseText)
-          } catch(e) { 
+          } catch (e) {
             console.log(e)
-            return reject()
+            return reject(new Error())
          }
 
           resolve(danmakuList)
         }
 
         xhr.onerror = () => {
-          reject()
+          reject(new Error())
         }
         xhr.open('GET', api)
         xhr.send(null)
       })
-    }
-    ,_chooseFixedRunway(){
-      //现判断有无空通道
-      //如果没有空通道，随机选择通道放置
-      //有空通道，上至下选择空通道
+    },
+    _chooseFixedRunway () {
       var runway
       var i = 0
-      
-      // 所有通道已填满
-      if(this.fixed_group.children.every(runway=>runway.danmakus.length!=0)){
-        runway = this.fixed_group.children[Math.random()*this.fixed_group.children.length|0]
-      }else{
+
+      if (this.fixed_group.children.every(runway => runway.danmakus.length !== 0)){
+        runway = this.fixed_group.children[Math.random() * this.fixed_group.children.length | 0]
+      } else {
         runway = this.fixed_group.children[i]
-        while(runway.danmakus.length) runway = this.fixed_group.children[i++]  
+        while (runway.danmakus.length) runway = this.fixed_group.children[i++]
       }
       return runway
-
-    }
-
-    ,onFetchCompleted(fn) {
+    },
+    onFetchCompleted (fn) {
       this.handleFetchCompleted = fn
-    }
-    ,onEffectCommand(fn){
+    },
+    onEffectCommand (fn) {
       this.handleEffectCommand = fn
-    }
-    ,_update(){
-
-      var generateSnow = ()=>{
-        
-        ;[...Array(5+Math.random()*5|0)].forEach(()=>{
+    },
+    _update () {
+      var generateSnowflake = () => {
+        ;[...Array(5 + Math.random() * 5 | 0)].forEach(() => {
           // let snow = new Snow(Math.random()*2)
-          let snow = new Snow(.2+Math.random()*2,0xffffff)
+          let snow = new Snow(.2 + Math.random() * 2, 0xff00ff)
           this.snow_container.addChild(snow)
-          
-          snow.x = this.app.screen.width*Math.random()
-          snow.y = -snow.r-Math.random()*20
+          snow.x = this.app.screen.width * Math.random()
+          snow.y = -snow.r - Math.random() * 20
           // snow.y = 10
-          snow.vx = .5-Math.random() * 1
-          snow.vy = 1+3*Math.random()
+          snow.vx = .5 - Math.random() * 1
+          snow.vy = 1 + 3 * Math.random()
 
-          snow.onRemove(()=>{
+          snow.onRemove(() => {
             snow.parent.removeChild(snow)
-            //snows = snows.filter(other_snow=>snow!=other_snow)
+            // snows = snows.filter(other_snow=>snow!=other_snow)
           })
-          
         })
       }
-
       var RenderAction = {
-        dom(that) {
+        dom (that) {
 
         },
-        webgl(that) {
-
+        webgl (that) {
           that.appOuO.update()
         }
       }
 
-      this.app.ticker.add(()=>{
+      this.app.ticker.add(() => {
         TWEEN.update()
 
-
         RenderAction[this.opt.renderType](this)
-      
 
-        this.runway_group.children.forEach(runway=>{
-
+        this.runway_group.children.forEach(runway => {
           // console.log(runway.danmakus.length);
-          runway.danmakus.forEach(danmaku=>{
-            if(!danmaku.is_moving) return
+          runway.danmakus.forEach(danmaku => {
+            if (!danmaku.is_moving) return
 
             // console.log(danmaku.x)
-            if(danmaku.x+danmaku.width*.5 < this.contain.x-10){
-              //console.count('destory-danmaku')
+            if (danmaku.x + danmaku.width * .5 < this.contain.x - 10){
+              // console.count('destory-danmaku')
 
               runway.w_of_sum -= danmaku.width
               danmaku.parent.removeChild(danmaku)
             }
           })
-
         })
 
-        this.user_runway.danmakus.forEach(danmaku=>{
-          if(!danmaku.is_moving) return
-          if(danmaku.x+danmaku.width*.5 < this.contain.x-10){
+        this.user_runway.danmakus.forEach(danmaku => {
+          if (!danmaku.is_moving) return
+          if (danmaku.x + danmaku.width * .5 < this.contain.x - 10){
             this.user_runway.w_of_sum -= danmaku.width
             this.user_runway.removeChild(danmaku)
           }
         })
 
+        if (!this.snowEffect) return
 
-        if(!this.snowEffect) return
-        
-        //////  / ///
-        if(!this.snow_st) this.snow_st = Date.now()
-      
-        if(Date.now()-this.snow_st > 200){
+        /// ///  / ///
+        if (!this.snow_st) this.snow_st = Date.now()
+
+        if (Date.now() - this.snow_st > 200){
           this.snow_st = Date.now()
-          generateSnow()
-         
+          generateSnowflake()
         }
-        
-        //console.log(this.app.screen.width)
 
-      
-        this.snow_container.children.forEach(snow=>{
-                 
+        // console.log(this.app.screen.width)
+
+        this.snow_container.children.forEach(snow => {
           snow.animate = true
-  
-          var x = snow.x|0
-          //var y = e.pageY-rect.top
-  
-          var y = (this.app.screen.height-snow.y)|0
-          //var y = rect1.height-(e.pageY-rect.top)
-          
-          var idx= (y*this.app.screen.width+x)*4|0
 
-          
-          var [r,g,b] = [this.pixels[idx], this.pixels[idx+1], this.pixels[idx+2]]
+          var x = snow.x | 0
+          // var y = e.pageY-rect.top
 
-          //document.body.style.background = `rgba(${r},${g},${b},255)`
-  
-          let brightness = 1-(0.299 * r + 0.587 * g + 0.114 * b) / 255
+          var y = (this.app.screen.height - snow.y) | 0
+          // var y = rect1.height-(e.pageY-rect.top)
+
+          var idx = (y * this.app.screen.width + x) * 4 | 0
+
+          var [r, g, b] = [this.pixels[idx], this.pixels[idx + 1], this.pixels[idx + 2]]
+
+          // document.body.style.background = `rgba(${r},${g},${b},255)`
+
+          let brightness = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255
           // console.log(brightness);
-          //是边缘 但是 这个边缘点没有被对象占领
-          if(snow.animate && brightness<.2){      
+          // 是边缘 但是 这个边缘点没有被对象占领
+          if (snow.animate && brightness < .43){
             snow.animate = false
-            
+
             snow.will_remove = true
           }
-  
-  
-          if(snow.animate){
+
+          if (snow.animate){
             snow.will_remove = false
             snow.will_remove_t = 0
             snow.update()
           }
-  
-          if(snow.will_remove){
-            if(!snow.will_remove_t) snow.will_remove_t = Date.now()
-  
-            if(Date.now()-snow.will_remove_t>15000){
+
+          if (snow.will_remove){
+            if (!snow.will_remove_t) snow.will_remove_t = Date.now()
+
+            if (Date.now() - snow.will_remove_t > 15000){
               snow.will_remove_t = Date.now()
-    
+
               snow.parent.removeChild(snow)
-              
             }
           }
-  
-  
-          if(snow.y>this.app.screen.height+snow.r ||
-            snow.x<snow.r||
-            snow.x>this.app.screen.width+snow.r
+
+          if (snow.y > this.app.screen.height + snow.r ||
+            snow.x < snow.r ||
+            snow.x > this.app.screen.width + snow.r
           ){
             snow.parent.removeChild(snow)
           }
-  
         })
-
       })
-
-
-
-     
-
-    }
-    ,_timeupdate(danmaku_list){
-      
+    },
+     _timeupdate (danmaku_list){
       var currentTime_
       var danmakus = []
       var runway_i = 0
 
       this.contain = {
-        x:this.app.screen.width*0
+        x: this.app.screen.width * 0
       }
 
-      ///
-
-      this.$video.addEventListener('timeupdate',()=>{
-        console.log('renderType:', this.$video.getAttribute('renderType'), 'currentTime:',this.$video.currentTime)
+      this.$video.addEventListener('timeupdate', () => {
+        // console.log('renderType:', this.$video.getAttribute('renderType'), 'currentTime:',this.$video.currentTime)
         // console.log('renderTYpe:', this.$video.getAttribute('renderType'))
-        if(this.$video.paused) return
+        if (this.$video.paused) return
 
-        var [currentTime,duration] = [
+        var [currentTime] = [
           Math.round(this.$video.currentTime), Math.round(this.$video.duration)
         ]
-      
-        if(currentTime === currentTime_) return
+
+        if (currentTime === currentTime_) return
 
         currentTime_ = currentTime
-        
-        if(!danmaku_list) return
-        if(!danmaku_list[currentTime_]) return
 
-        
+        if (!danmaku_list) return
+        if (!danmaku_list[currentTime_]) return
+
         danmakus = []
         runway_i = 0
-        //fixedRunwayIdx = 0
-        danmaku_list[currentTime].data.forEach(o=>{
-
+        // fixedRunwayIdx = 0
+        danmaku_list[currentTime].data.forEach(o => {
           this.which_runway = this.runway_group.children[runway_i]
 
           {
-            
-            if(this.which_runway.w_of_sum > this.app.screen.width*.7){
-            //if(this.which_runway.w_of_sum > this.app.screen.width*.2){
-              runway_i = ++runway_i%this.runway_group.children.length
+            if (this.which_runway.w_of_sum > this.app.screen.width * .7){
+            // if(this.which_runway.w_of_sum > this.app.screen.width*.2){
+              runway_i = ++runway_i % this.runway_group.children.length
             }
           }
-          //console.log(this.runway_group.children.length)
+          // console.log(this.runway_group.children.length)
 
           let danmaku = this._danmakuFactory(o.text, {...o})
 
-          if(danmaku instanceof FixedDanmaku){
-
+          if (danmaku instanceof FixedDanmaku){
             this.whichFixedRunway = this._chooseFixedRunway()
 
             this.whichFixedRunway.addChild(danmaku)
 
-           
             danmaku.x = this.app.screen.width * .5
-            danmaku.y = this.whichFixedRunway.height*.5
+            danmaku.y = this.whichFixedRunway.height * .5
 
             danmaku.delayRemove()
-            
-            
-          }else{
-
+          } else {
             this.which_runway.w_of_sum += danmaku.width
 
             this.which_runway.addChild(danmaku)
-            danmaku.__idx__ = this.which_runway.danmakus.length-1
+            danmaku.__idx__ = this.which_runway.danmakus.length - 1
             danmakus.push(danmaku)
           }
-          /////////
+          /// //////
 
-          /////////
-
+          /// //////
         })
 
         // 每帧的弹幕设置起至和结束位置并线性移动
-        // 
-        danmakus.forEach((danmaku)=>{
-
-          this._giveDanmakuStartPo(danmaku,  danmaku.__idx__, danmaku.parent.danmakus)
-          this._giveDanmakuEndPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus) 
-          danmaku.y = this.which_runway.default_height*.5
+        //
+        danmakus.forEach((danmaku) => {
+          this._giveDanmakuStartPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus)
+          this._giveDanmakuEndPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus)
+          danmaku.y = this.which_runway.default_height * .5
           // danmaku.move()
           danmaku.move({ duration: this.danmakuDuration })
         })
-
-      }) 
-
-
-    }
-    ,_createUserRunway(){
+      })
+    },
+     _createUserRunway (){
       let gapY = this.app.screen.height * .1
       this.app.stage.removeChild(this.user_runway)
       let w_of_runway = this.app.screen.width
@@ -597,139 +541,125 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       this.user_runway.x = 0
       this.user_runway.y = gapY
 
-
       this.app.stage.removeChild(this.user_fixed_runway)
       w_of_runway = this.app.screen.width
-      h_of_runway =  this.app.screen.height / this.runway_group.children.length
-      this.user_fixed_runway = new Runway(w_of_runway, h_of_runway,0x0000ff,true)
+      h_of_runway = this.app.screen.height / this.runway_group.children.length
+      this.user_fixed_runway = new Runway(w_of_runway, h_of_runway, 0x0000ff, true)
       this.app.stage.addChild(this.user_fixed_runway)
       this.user_fixed_runway.x = 0
       this.user_fixed_runway.y = gapY
-    }
-    ,_createRunway(num=9){
-
+    },
+     _createRunway (num = 9){
       // debugger
-      num*=1
+      num *= 1
 
-      // scroll 
+      // scroll
       this.runway_group.removeChild(...this.runway_group.children)
 
       let num_of_runway = num
       let w_of_runway = this.app.screen.width
       let h_of_runway = this.app.screen.height / num_of_runway
-      
-      ;[...Array(num_of_runway)].forEach((v,i)=>{
 
-        //if(i!=5) return
-        let runway = new Runway(w_of_runway, h_of_runway,0xff00ff,true)
+      ;[...Array(num_of_runway)].forEach((v, i) => {
+        // if(i!=5) return
+        let runway = new Runway(w_of_runway, h_of_runway, 0xff00ff, true)
         this.runway_group.addChild(runway)
         runway.x = 0
-        runway.y = i/num_of_runway*this.app.screen.height
+        runway.y = i / num_of_runway * this.app.screen.height
       })
-      
 
-      // fixed 
+      // fixed
       this.fixed_group.removeChild(...this.fixed_group.children)
       num_of_runway = num
       w_of_runway = this.app.screen.width
       h_of_runway = this.app.screen.height / num_of_runway
-      
-      ;[...Array(num_of_runway)].forEach((v,i)=>{
 
+      ;[...Array(num_of_runway)].forEach((v, i) => {
         let runway = new Runway(w_of_runway, h_of_runway)
         this.fixed_group.addChild(runway)
         runway.x = 0
-        runway.y = i/num_of_runway*this.app.screen.height
+        runway.y = i / num_of_runway * this.app.screen.height
       })
-
-    }
-    ,_giveDanmakuStartPo(danmaku,i,danmakus,s){
-      i = (function(){
-        for(let j = 0,len=danmakus.length;j<len;j++){
-          if(danmaku===danmakus[j]) return j
+    },
+     _giveDanmakuStartPo (danmaku, i, danmakus, s){
+      i = (function (){
+        for (let j = 0, len = danmakus.length; j < len; j++){
+          if (danmaku === danmakus[j]) return j
         }
-      })();
-      //console.log(i);
-      
-      if(i===0){ 
-        danmaku.x = this.app.screen.width*1 + danmaku.width*.5 
-      }else{
-      
-        //前面的对象完全在屏幕内
-        try{
-          let in_view = danmakus[i-1].bounding.right<this.app.screen.width
-          
-          if(in_view){
-            danmaku.x = this.app.screen.width*1 + danmaku.width*.5 
+      })()
+      // console.log(i);
 
-          }else{
+      if (i === 0){
+        danmaku.x = this.app.screen.width * 1 + danmaku.width * .5
+      } else {
+        // 前面的对象完全在屏幕内
+        try {
+          let in_view = danmakus[i - 1].bounding.right < this.app.screen.width
+
+          if (in_view){
+            danmaku.x = this.app.screen.width * 1 + danmaku.width * .5
+          } else {
             //
-            danmaku.x = danmakus[i-1].bounding.right + danmaku.width*.5 
-            + Math.random()*this.danmaku_offset.x
+            danmaku.x = danmakus[i - 1].bounding.right + danmaku.width * .5 +
+            Math.random() * this.danmaku_offset.x
           }
-        }catch(e){
+        } catch (e){
           // danmakus,danmaku
           // debugger
           // (23) Array, 83
-          //console.log('err',danmakus,i);
-          console.log(e);
+          // console.log('err',danmakus,i);
+          console.log(e)
         }
-
       }
-
-      
-    }
-    ,_giveDanmakuEndPo(danmaku,i,danmakus, runway_i){
-      
-      i = (function(){
-        for(let j = 0,len=danmakus.length;j<len;j++){
-          if(danmaku===danmakus[j]) return j
+    },
+     _giveDanmakuEndPo (danmaku, i, danmakus, runway_i){
+      i = (function (){
+        for (let j = 0, len = danmakus.length; j < len; j++){
+          if (danmaku === danmakus[j]) return j
         }
-      })();
+      })()
 
       danmaku.final_po.x = this.contain.x
 
       var len = danmakus.length
-      for(let j = i+1;j < len; j++){
-        danmaku.final_po.x -= danmakus[j].width    
+      for (let j = i + 1; j < len; j++){
+        danmaku.final_po.x -= danmakus[j].width
       }
-      danmaku.final_po.x -= danmaku.width*.5
+      danmaku.final_po.x -= danmaku.width * .5
 
-      //console.log(danmaku.final_po.x);
-    }
-    ,_danmakuFactory(text, opt){
+      // console.log(danmaku.final_po.x);
+    },
+     _danmakuFactory (text, opt){
+      // debugger
+      if (!DANMAKU_TYPES.some(v => v = opt.mode)) return console.warn('not defined this mode..')
 
-      //debugger
-      if(!DANMAKU_TYPES.some(v=>v=opt.mode)) return console.warn('not defined this mode..')
-  
       return {
-        curve(){
+        curve (){
           return new CurveDanmaku(text, opt)
-        }
-        ,linear(){
+        },
+         linear (){
           return new LinearDanmaku(text, opt)
-        }
-        ,fixed(){
+        },
+         fixed (){
           return new FixedDanmaku(text, opt)
         }
       }[opt.mode]()
-     
-    }
-    ,_effectAction(s){
+    },
+     _effectAction (s){
       var effects = ['#下雪']
-      
-      if(!effects.some(v=>v==s)){
+
+      if (!effects.some(v => v === s)){
         return void 1
       }
 
       return {
-        ex(that) {
+        ex (that) {
           // debugger
-          that.snowEffect =  !that.snowEffect
-          if(!that.snowEffect){
+          that.snowEffect = !that.snowEffect
+          if (!that.snowEffect){
             that.renderType = 'dom'
             that.snow_container.removeChildren()
-            
+
             that.snow_st = 0
 
             that.rect1.visible = that.rect1.canReadPixels = false
@@ -737,24 +667,22 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
             that.renderType = 'webgl'
             that.rect1.visible = that.rect1.canReadPixels = true
           }
-
         }
       }
-    }
-    
-    ,sendDanmaku(text, opt = {mode,fill,fontSize, alpha}={}){
+    },
 
+     sendDanmaku (text, opt = {mode, fill, fontSize, alpha} = {}){
       // command
       let effect
-      if(effect = this._effectAction(text)) {
-        if(this.appOuO.canvas.width > EFFECT_COMMAND_RENDERING_MAX_WIDTH) {
+      if (effect = this._effectAction(text)) {
+        if (this.appOuO.canvas.width > EFFECT_COMMAND_RENDERING_MAX_WIDTH) {
           console.warn('***渲染面积过大，可能存在卡顿***')
         }
-        
-        this.handleEffectCommand && this.handleEffectCommand(text) 
+
+        this.handleEffectCommand && this.handleEffectCommand(text)
         return effect.ex(this)
       }
-      
+
       // this.$video
       opt.wireframe = true
       var danmaku = this._danmakuFactory(text, opt)
@@ -762,42 +690,38 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       // console.log(danmaku)
       var runway
 
-      if(danmaku instanceof FixedDanmaku){
-
+      if (danmaku instanceof FixedDanmaku){
         // debugger
         runway = this.user_fixed_runway
         runway.addChild(danmaku)
-        
+
         // danmaku.x = this.user_fixed_runway.width*.5
-        danmaku.x = this.app.screen.width*.5
+        danmaku.x = this.app.screen.width * .5
 
         // debugger
-        danmaku.y = this.user_fixed_runway.height*.5
+        danmaku.y = this.user_fixed_runway.height * .5
 
         danmaku.delayRemove()
-
-      }else{
+      } else {
         runway = this.user_runway
         runway.w_of_sum += danmaku.width
         runway.addChild(danmaku)
         danmaku.__idx__ = runway.danmakus.length - 1
-  
-        this._giveDanmakuStartPo(danmaku,  danmaku.__idx__, danmaku.parent.danmakus)
-        this._giveDanmakuEndPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus) 
-        danmaku.y = runway.default_height*.5
+
+        this._giveDanmakuStartPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus)
+        this._giveDanmakuEndPo(danmaku, danmaku.__idx__, danmaku.parent.danmakus)
+        danmaku.y = runway.default_height * .5
         danmaku.move()
       }
-
-
-    }
-    ,wideScreen(){
+    },
+     wideScreen (){
       console.log('wide')
       this.adjustWidth()
 
       this._createRunway(12)
       this._createUserRunway()
-    }
-    ,fullScreen(){
+    },
+     fullScreen (){
       console.log('full')
       this.adjustWidth()
       this._createRunway(20)
@@ -805,50 +729,40 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
 
       this.danmakuDuration = DUR_FAC * this.app.screen.width
 
-      //console.log('danmakuduration',this.danmakuDuration)
-    }
-    ,normal(){
+      // console.log('danmakuduration',this.danmakuDuration)
+    },
+     normal (){
       // debugger
       console.log('normal')
       this.adjustWidth()
       this._createRunway(9)
       this._createUserRunway()
 
-
       this.danmakuDuration = DUR_FAC * V_DEFAULT_W
 
-      //console.log('danmakuduration',this.danmakuDuration)
-    }
-    ,adjustWidth(){
-
+      // console.log('danmakuduration',this.danmakuDuration)
+    },
+     adjustWidth (){
       // console.log(this.opt.$container.offsetWidth)
 
+      var scale = this.opt.$container.offsetWidth / V_DEFAULT_W
 
-      var scale = this.opt.$container.offsetWidth/V_DEFAULT_W
-
-      if(scale*V_DEFAULT_H>this.opt.$container.offsetHeight){
-        scale = this.opt.$container.offsetHeight/V_DEFAULT_H
+      if (scale * V_DEFAULT_H > this.opt.$container.offsetHeight){
+        scale = this.opt.$container.offsetHeight / V_DEFAULT_H
       }
-     //this.app.stage.scale.x = this.app.stage.scale.y = scale
-      this.app.renderer.resize(scale*V_DEFAULT_W, scale*V_DEFAULT_H)
+     // this.app.stage.scale.x = this.app.stage.scale.y = scale
+      this.app.renderer.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H)
 
+      this.appOuO.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H)
+      this.appOuO.children.forEach(o => o.scale = [scale, scale])
 
-
-      this.appOuO.resize(scale*V_DEFAULT_W, scale*V_DEFAULT_H)
-      this.appOuO.children.forEach(o=>o.scale=[scale,scale])
-
-      this.$dom_video.style.width = scale*V_DEFAULT_W + 'px'
-      this.$dom_video.style.height = scale*V_DEFAULT_H + 'px'
-
-    }
-    ,saveScreenshots(){
+      this.$dom_video.style.width = scale * V_DEFAULT_W + 'px'
+      this.$dom_video.style.height = scale * V_DEFAULT_H + 'px'
+    },
+     saveScreenshots (){
 
     }
   }
 
   return DanmakuPlayer.init()
 }
-
-
-
-
