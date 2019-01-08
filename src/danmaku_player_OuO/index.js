@@ -25,23 +25,22 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
   var opt = arguments[1]
 
   const DanmakuPlayer = {
-    $video
-    ,which_runway: null
-    ,enableVisibility: false
-    ,snowEffect: false
-    ,snow_st: 0
-    ,pixels: []
-    ,rect1: null
-    ,rect2: null
-    ,danmakuDuration: DUR_FAC * V_DEFAULT_W
-    ,init(){
-
+    $video,
+    which_runway: null,
+    enableVisibility: false,
+    snowEffect: false,
+    snow_st: 0,
+    pixels: [],
+    rect1: null,
+    rect2: null,
+    danmakuDuration: DUR_FAC * V_DEFAULT_W,
+    init () {
       opt = Object.assign({}, {
         constrain: {
-          left: 0
-          ,right: V_DEFAULT_W
-          ,top: 0
-          ,bottom: V_DEFAULT_W / VIDEO_RATIO - BOT_GAP
+          left: 0,
+          right: V_DEFAULT_W,
+          top: 0,
+          bottom: V_DEFAULT_W / VIDEO_RATIO - BOT_GAP
         }
       }, opt)
 
@@ -77,19 +76,18 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       // console.log(this.$wrap_ouo,this.$wrap_dom)
 
       // document.body.appendChild(app.view)
-      var appOuO = OuO.App( V_DEFAULT_W, V_DEFAULT_H, {})
+      var appOuO = OuO.App(V_DEFAULT_W, V_DEFAULT_H, {})
       $wrap_ouo.children[0].appendChild(appOuO.$el)
       this.appOuO = appOuO
 
       var app = new PIXI.Application({
-        width: appOuO.canvas.width
-        ,height: appOuO.canvas.height
-        ,transparent: true
+        width: appOuO.canvas.width,
+        height: appOuO.canvas.height,
+        transparent: true
       })
 
       $wrap_pixi.children[0].appendChild(app.view)
       this.app = app
-
 
       this.runway_group = new PIXI.Container()
       this.snow_container = new PIXI.Container()
@@ -102,16 +100,13 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       app.stage.addChild(this.fixed_group)
       app.stage.addChild(this.user_runway)
       app.stage.addChild(this.user_fixed_runway)
-      
-      // debugger
-      this.danmaku_offset = {x: 100}
+      this.danmaku_offset = { x: 100 }
 
 
-      this._setupVideo().then(res=>{
-
+      this._setupVideo().then(res => {
         this.$video.addEventListener('loadeddata', () => {
 
-          var rect1 = OuO.Rectangle( [appOuO.canvas.width,appOuO.canvas.height],[this.$video],{
+          var rect1 = OuO.Rectangle([appOuO.canvas.width,appOuO.canvas.height],[this.$gl_video],{
             vs:`
               attribute vec2 a_position;
               uniform vec2 u_resolution;
@@ -195,7 +190,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
               
           })
           appOuO.addChild(rect1)
-          rect1.translation = [0,0]
+          rect1.translation = [0, 0]
 
           rect1.readPixels(data=>{
             // window.pixels = data
@@ -205,7 +200,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
           this.rect1 = rect1
 
           
-          var rect2 = OuO.Rectangle( [rect1.width,rect1.height],[this.$video],{  })
+          var rect2 = OuO.Rectangle( [rect1.width,rect1.height],[this.$gl_video],{  })
           appOuO.addChild(rect2)
           rect2.translation = [0, 0]
 
@@ -288,7 +283,6 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
         this.$gl_video.crossOrigin = '*'
         this.$gl_video.preload = 'auto'
         this.$gl_video.setAttribute('renderType','webgl')
-
         
         this.$dom_video.src = this.$video
         this.$dom_video.crossOrigin = '*'
@@ -518,7 +512,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       ///
 
       this.$video.addEventListener('timeupdate',()=>{
-
+        console.log('renderType:', this.$video.getAttribute('renderType'), 'currentTime:',this.$video.currentTime)
         // console.log('renderTYpe:', this.$video.getAttribute('renderType'))
         if(this.$video.paused) return
 

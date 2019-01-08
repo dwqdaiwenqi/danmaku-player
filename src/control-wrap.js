@@ -289,26 +289,21 @@ define('control-wrap', class extends WeElement {
     var { left, width } = this.$control_bottom_t_progress_slider.getBoundingClientRect()
 
     let x = e.pageX - left
-    let percent = x/width
+    let percent = x / width
+    // debugger
 
     onChangeCurrent(percent)
 
-    if(!this.props.play){
+    if (!this.props.play) {
       onplayStart()
     }
-    // console.log(this.props.play)
-    //onplayStart
   }
-  css() {
+  css () {
     return require('./_control-wrap.less')
   }
-  
   handleClick = (e) => {
     var { target: $target } = e
-
-    
-
-    if(this.slideDotDrag) return
+    if (this.slideDotDrag) return
 
     var { onplayChange } = this.props
 
@@ -596,17 +591,17 @@ define('control-wrap', class extends WeElement {
 
   installed() {
 
-    var { onspeedChange, onbrightnessChange, onscaleChange ,onvolumnChange } = this.props
+    var { onspeedChange, onbrightnessChange, onscaleChange, onvolumnChange } = this.props
     var ls = window.localStorage
     Slider(this.$control_setting_pannel_speed, [0, 100, 25]).onChange(v => { 
       v = .1 + v / 100 * 3.9
-      console.log(v)
+      // console.log(v)
       onspeedChange(v)
       
     })
 		Slider(this.$control_setting_pannel_brightness, [0, 100, 50]).onChange(v => {
       v = .1 + v / 100 * 1.9
-      console.log(v)
+      // console.log(v)
       onbrightnessChange(v)
     })
     // Slider(this.$control_setting_pannel_scale, [0, 100, 100]).onChange(v => {
@@ -614,11 +609,10 @@ define('control-wrap', class extends WeElement {
     //   console.log(v)
     //   onscaleChange(v)
     // })
-    var $sliderVolumn = Slider(this.$control_volumn_wrp, [0, 100, 50], true)
+    var $sliderVolumn = Slider(this.$control_volumn_wrp, [0, 100, 100], true)
     $sliderVolumn.onChange(v => {
-     
-      v = v / 100 * 2
-      console.log(v)
+      v = v / 100 * 1
+      // console.log(v)
       onvolumnChange(v)
     })
     Object.assign($sliderVolumn.$el.style, {

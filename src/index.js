@@ -56,7 +56,7 @@ define('danmaku-player-xxx', class extends WeElement {
               this.data.brightness = val
             }}
             onvolumnChange={val => {
-              this.video_ouo.setVolumn(val)
+              this.video_ouo.setVolume(val)
             }}
             onComment={(text, param) => {
               this.video_ouo.sendDanmaku(text, param)
@@ -88,6 +88,7 @@ define('danmaku-player-xxx', class extends WeElement {
     this.control_wrap.updateBuffProgress($video)
   }
   handleChangeCurrent = (percent) => {
+    
     this.video_ouo.setCurrentTime(percent)
 
     this.handleTimeUpdate(this.video_ouo.danmakuPlayerOuO.$video)

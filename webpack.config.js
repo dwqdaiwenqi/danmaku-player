@@ -72,8 +72,8 @@ module.exports = {
       ,__VERSION__: JSON.stringify(require('./package.json').version)
     })
     ,new HtmlWebpackPlugin({
-      template: './src/site/index.html',
-      filename: '../site/index.html',
+      template: './src/example/index.html',
+      filename: '../example/index.html',
       inject: 'head',
       __DEV__: JSON.stringify(process.env.npm_lifecycle_event)
     })

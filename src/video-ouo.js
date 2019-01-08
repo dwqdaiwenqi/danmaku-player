@@ -1,15 +1,14 @@
-import { define, render, WeElement, getHost  } from 'omi'
+import {define, WeElement} from 'omi'
 import DanmakuPlayerOuO from './danmaku_player_OuO/'
 import cs from 'classnames'
 
 export default define('video-ouo', class extends WeElement {
   static observe = true
-  render() {
-
-    return(
+  render () {
+    return (
       <section>
 
-        <div className="video_wrap" ref={el=> this.$video_wrap = el}>
+        <div className="video_wrap" ref={el => this.$video_wrap = el}>
 
         </div>
         <div className="snow_mask_wrap">
@@ -26,33 +25,32 @@ export default define('video-ouo', class extends WeElement {
           <div><img src={require('./assets/loading.gif')} alt=""/></div>
         </div>
       </section>
-      
     )
   }
-  css() {
+  css () {
     return require('./_video-ouo.less')
   }
-  install() {
+  install () {
     this.data.snowEffect = false
     this.data.loading = false
 
     // debugger
     this.data.poster = this.props.poster
   }
-  installed() {
+  installed () {
     var { danmakuapi, onTimeUpdate, onProgress, onLoadeddata, onFetchCompleted } = this.props
-    //console.log()
+    // console.log()
     this.danmakuPlayerOuO = DanmakuPlayerOuO(this.props.src, {
       $container: this.$video_wrap,
       danmakuapi,
-      renderType: 'dom'
+      // renderType: 'dom'
+      renderType: 'webgl'
     })
 
     this.danmakuPlayerOuO.onFetchCompleted(() => {
       onFetchCompleted()
     })
     // console.log(    )
-    
     this.danmakuPlayerOuO.$video.addEventListener('loadeddata', e => {
       onLoadeddata(this.danmakuPlayerOuO.$video)
     })
@@ -61,90 +59,82 @@ export default define('video-ouo', class extends WeElement {
     })
 
     this.danmakuPlayerOuO.$video.addEventListener('progress', e => {
-      
       onProgress(this.danmakuPlayerOuO.$video)
     })
 
-    this.danmakuPlayerOuO.$video.addEventListener('canplay', () => {
-      
+    this.danmakuPlayerOuO.$video.addEventListener('canplay', () => {  
       this.data.loading = false
-      
     })
     this.danmakuPlayerOuO.$video.addEventListener('waiting', () => {
-      //console.log('canplay..........')
+      // console.log('canplay..........')
       this.data.loading = true
     })
 
     this.danmakuPlayerOuO.$video.addEventListener('play',()=>{
       this.data.poster = null
     })
-    
-
     this.danmakuPlayerOuO.onEffectCommand((opt) => {
       this.data.snowEffect = !this.data.snowEffect
     })
-
-
     // console.log('video-ouo installed!!!')
   }
-  updated() {
-    
+  updated () {
+
   }
-  sendDanmaku(text, param) {
-    //console.log(param)
-    //debugger
+  sendDanmaku (text, param) {
+    // console.log(param)
+    // debugger
     this.danmakuPlayerOuO.sendDanmaku(text, param)
   }
-  setRepeat(loop) {
+  setRepeat (loop) {
     this.danmakuPlayerOuO.$video.loop = !loop
   }
-  setPlaybackrate(playbackrate) {
+  setPlaybackrate (playbackrate) {
     this.danmakuPlayerOuO.$video.playbackRate = playbackrate * 1
   }
-  setCurrentTime(percent) {
+  setCurrentTime (percent) {
+    // console.log('renderTYpe:', this.danmakuPlayerOuO.$video.getAttribute('renderType'))
     this.danmakuPlayerOuO.$video.currentTime = this.danmakuPlayerOuO.$video.duration * percent
   }
-  setVolumn(v){
-    this.danmakuPlayerOuO.$video.volumn = v * 1
+  setVolume (v) {
+    this.danmakuPlayerOuO.$video.volume = v * 1
+    // console.log(v, this.danmakuPlayerOuO.$video.volume)
   }
-  setPoster(v) {
+  setPoster (v) {
     this.data.poster = v
-    
   }
-  pause() {
+  pause () {
     this.danmakuPlayerOuO.$video.pause()
   }
-  play() {
+  play () {
     this.danmakuPlayerOuO.enableVisibility = true
     this.danmakuPlayerOuO.$video.play()
   }
-  showDanmaku() {
+  showDanmaku () {
     this.danmakuPlayerOuO.showDanmaku()
   }
-  hideDanmaku() {
+  hideDanmaku () {
     this.danmakuPlayerOuO.hideDanmaku()
   }
-  playbackrate(val) {
+  playbackrate (val) {
     // playbackrate --- playbackRate
     this.danmakuPlayerOuO.$video.playbackRate = val
   }
-  autoplay(val) {
+  autoplay (val) {
     try {
       val = JSON.parse(val)
     } catch (error) {
-      alert(error)
+      // alert(error)
     }
-    
- 
-    if(val === true) this.danmakuPlayerOuO.played = true
+
+    if (val === true) this.danmakuPlayerOuO.played = true
 
     this.danmakuPlayerOuO.$video.autoplay = val
   }
-  requestFullScreen() {
+  requestFullScreen () {
     this.danmakuPlayerOuO.fullScreen()
   }
-  requestNormalScreen() {
+  requestNormalScreen () {
     this.danmakuPlayerOuO.normal()
   }
-  
 })

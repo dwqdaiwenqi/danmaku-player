@@ -47244,17 +47244,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
       var x = e.pageX - left;
       var percent = x / width;
+      // debugger
 
       onChangeCurrent(percent);
 
       if (!_this.props.play) {
         onplayStart();
       }
-      // console.log(this.props.play)
-      //onplayStart
     }, _this.handleClick = function (e) {
       var $target = e.target;
-
 
       if (_this.slideDotDrag) return;
 
@@ -48081,12 +48079,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       var ls = window.localStorage;
       (0, _util.Slider)(this.$control_setting_pannel_speed, [0, 100, 25]).onChange(function (v) {
         v = .1 + v / 100 * 3.9;
-        console.log(v);
+        // console.log(v)
         onspeedChange(v);
       });
       (0, _util.Slider)(this.$control_setting_pannel_brightness, [0, 100, 50]).onChange(function (v) {
         v = .1 + v / 100 * 1.9;
-        console.log(v);
+        // console.log(v)
         onbrightnessChange(v);
       });
       // Slider(this.$control_setting_pannel_scale, [0, 100, 100]).onChange(v => {
@@ -48094,11 +48092,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
       //   console.log(v)
       //   onscaleChange(v)
       // })
-      var $sliderVolumn = (0, _util.Slider)(this.$control_volumn_wrp, [0, 100, 50], true);
+      var $sliderVolumn = (0, _util.Slider)(this.$control_volumn_wrp, [0, 100, 100], true);
       $sliderVolumn.onChange(function (v) {
-
-        v = v / 100 * 2;
-        console.log(v);
+        v = v / 100 * 1;
+        // console.log(v)
         onvolumnChange(v);
       });
       Object.assign($sliderVolumn.$el.style, {
@@ -48954,15 +48951,12 @@ function DanmakuPlayer($video) {
       app.stage.addChild(this.fixed_group);
       app.stage.addChild(this.user_runway);
       app.stage.addChild(this.user_fixed_runway);
-
-      // debugger
       this.danmaku_offset = { x: 100 };
 
       this._setupVideo().then(function (res) {
-
         _this.$video.addEventListener('loadeddata', function () {
 
-          var rect1 = _glOuo2.default.Rectangle([appOuO.canvas.width, appOuO.canvas.height], [_this.$video], {
+          var rect1 = _glOuo2.default.Rectangle([appOuO.canvas.width, appOuO.canvas.height], [_this.$gl_video], {
             vs: '\n              attribute vec2 a_position;\n              uniform vec2 u_resolution;\n              uniform vec2 u_translation;\n              uniform vec2 u_scale;\n              attribute vec2 a_texCoord;\n              varying vec2 v_texCoord;\n    \n              void main(){\n                \n                vec2 position = a_position * u_scale + u_translation;\n                vec2 zeroToTwo = (position / u_resolution)*2.;\n                vec2 clipSpace = zeroToTwo-1.;\n    \n                v_texCoord = a_texCoord;\n    \n                gl_Position = vec4(clipSpace*vec2(1,-1),0,1);\n              }\n            ',
             fs: '\n              precision mediump float;\n    \n              varying vec2 v_texCoord;\n              uniform sampler2D u_texture;\n              uniform vec2 textureSize;\n    \n              \n              vec4 toGray(vec4 co){\n                float gray =( co.x+co.y+co.z)/3.;\n                return vec4(vec3(gray),1.);\n              }\n    \n              void main() {\n    \n                float xDerivative_kernel[9];                \n                xDerivative_kernel[0] = -1.; xDerivative_kernel[1] = -2.; xDerivative_kernel[2] = -1.;\n                xDerivative_kernel[3] = 0.; xDerivative_kernel[4] = 0.; xDerivative_kernel[5] = 0.;\n                xDerivative_kernel[6] = 1.; xDerivative_kernel[7] = 2.; xDerivative_kernel[8] = 1.;\n        \n                float yDerivative_kernel[9];                \n                yDerivative_kernel[0] = -1.; yDerivative_kernel[1] = 0.; yDerivative_kernel[2] = 1.;\n                yDerivative_kernel[3] = -2.; yDerivative_kernel[4] = 0.; yDerivative_kernel[5] = 2.;\n                yDerivative_kernel[6] = -1.; yDerivative_kernel[7] = 0.; yDerivative_kernel[8] = 1.;\n      \n      \n                vec2 v_texCoord = v_texCoord.xy;\n      \n                vec2 onePixel = vec2(1) / textureSize;\n      \n                vec4 sumx = \n                  // \n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1, -1)) )* xDerivative_kernel[0] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0, -1)) )* xDerivative_kernel[1] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1, -1)) )* xDerivative_kernel[2] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  0)) )* xDerivative_kernel[3] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  0)) )* xDerivative_kernel[4] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  0)) )* xDerivative_kernel[5] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  1)) )* xDerivative_kernel[6]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  1)) )* xDerivative_kernel[7]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  1)) )* xDerivative_kernel[8] ;\n      \n                vec4 sumy = \n                  // \n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1, -1)) )* yDerivative_kernel[0] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0, -1)) )* yDerivative_kernel[1] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1, -1)) )* yDerivative_kernel[2] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  0)) )* yDerivative_kernel[3] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  0)) )* yDerivative_kernel[4] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  0)) )* yDerivative_kernel[5] +\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2(-1,  1)) )* yDerivative_kernel[6]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 0,  1)) )* yDerivative_kernel[7]+\n                  toGray(texture2D(u_texture, v_texCoord + onePixel * vec2( 1,  1)) )* yDerivative_kernel[8] ;\n    \n                gl_FragColor = vec4(sqrt(sumx*sumx+sumy*sumy).xyz  , 1.0);\n    \n              }\n            ',
             uniforms: {
@@ -48980,7 +48974,7 @@ function DanmakuPlayer($video) {
           rect1.visible = false;
           _this.rect1 = rect1;
 
-          var rect2 = _glOuo2.default.Rectangle([rect1.width, rect1.height], [_this.$video], {});
+          var rect2 = _glOuo2.default.Rectangle([rect1.width, rect1.height], [_this.$gl_video], {});
           appOuO.addChild(rect2);
           rect2.translation = [0, 0];
 
@@ -49265,7 +49259,7 @@ function DanmakuPlayer($video) {
         ///
 
       };this.$video.addEventListener('timeupdate', function () {
-
+        console.log('renderType:', _this6.$video.getAttribute('renderType'), 'currentTime:', _this6.$video.currentTime);
         // console.log('renderTYpe:', this.$video.getAttribute('renderType'))
         if (_this6.$video.paused) return;
 
@@ -49775,11 +49769,12 @@ function html(htmls) {
 
 var _getPrefix = function getPrefix() {
   var prefix = null;
-  if (document.hidden !== undefined) prefix = '';else {
+  if (document.hidden !== undefined) {
+    prefix = '';
+  } else {
     var browserPrefixes = ['webkit', 'moz', 'ms', 'o'];
-    // Test all vendor prefixes
     for (var i = 0; i < browserPrefixes.length; i++) {
-      if (document[browserPrefixes[i] + 'Hidden'] != undefined) {
+      if (document[browserPrefixes[i] + 'Hidden'] !== undefined) {
         prefix = browserPrefixes[i];
         break;
       }
@@ -50022,6 +50017,7 @@ var danmakuCustomEvents = ['senddanmaku'];
     }, _this.handleProgress = function ($video) {
       _this.control_wrap.updateBuffProgress($video);
     }, _this.handleChangeCurrent = function (percent) {
+
       _this.video_ouo.setCurrentTime(percent);
 
       _this.handleTimeUpdate(_this.video_ouo.danmakuPlayerOuO.$video);
@@ -50082,7 +50078,7 @@ var danmakuCustomEvents = ['senddanmaku'];
               _this2.data.brightness = val;
             },
             onvolumnChange: function onvolumnChange(val) {
-              _this2.video_ouo.setVolumn(val);
+              _this2.video_ouo.setVolume(val);
             },
             onComment: function onComment(text, param) {
               _this2.video_ouo.sendDanmaku(text, param);
@@ -50298,8 +50294,6 @@ window.customElements.define('danmaku-player', function (_window$HTMLElement) {
       if (observedAttributes.some(function (v) {
         return v === name;
       })) {
-        // console.log(name, newValue)
-        // 初次的属性变化需要记录，可能omi中有些方法是异步的，emit不到
         if (!this.completeConnectedCallback) {
           this.firstChangeOfAttr[name] = newValue;
         } else {
@@ -50598,19 +50592,19 @@ exports.default = (0, _omi.define)('video-ouo', (_temp = _class = function (_WeE
           onProgress = _props.onProgress,
           onLoadeddata = _props.onLoadeddata,
           onFetchCompleted = _props.onFetchCompleted;
-      //console.log()
+      // console.log()
 
       this.danmakuPlayerOuO = (0, _danmaku_player_OuO2.default)(this.props.src, {
         $container: this.$video_wrap,
         danmakuapi: danmakuapi,
-        renderType: 'dom'
+        // renderType: 'dom'
+        renderType: 'webgl'
       });
 
       this.danmakuPlayerOuO.onFetchCompleted(function () {
         onFetchCompleted();
       });
       // console.log(    )
-
       this.danmakuPlayerOuO.$video.addEventListener('loadeddata', function (e) {
         onLoadeddata(_this3.danmakuPlayerOuO.$video);
       });
@@ -50619,27 +50613,23 @@ exports.default = (0, _omi.define)('video-ouo', (_temp = _class = function (_WeE
       });
 
       this.danmakuPlayerOuO.$video.addEventListener('progress', function (e) {
-
         onProgress(_this3.danmakuPlayerOuO.$video);
       });
 
       this.danmakuPlayerOuO.$video.addEventListener('canplay', function () {
-
         _this3.data.loading = false;
       });
       this.danmakuPlayerOuO.$video.addEventListener('waiting', function () {
-        //console.log('canplay..........')
+        // console.log('canplay..........')
         _this3.data.loading = true;
       });
 
       this.danmakuPlayerOuO.$video.addEventListener('play', function () {
         _this3.data.poster = null;
       });
-
       this.danmakuPlayerOuO.onEffectCommand(function (opt) {
         _this3.data.snowEffect = !_this3.data.snowEffect;
       });
-
       // console.log('video-ouo installed!!!')
     }
   }, {
@@ -50648,8 +50638,8 @@ exports.default = (0, _omi.define)('video-ouo', (_temp = _class = function (_WeE
   }, {
     key: 'sendDanmaku',
     value: function sendDanmaku(text, param) {
-      //console.log(param)
-      //debugger
+      // console.log(param)
+      // debugger
       this.danmakuPlayerOuO.sendDanmaku(text, param);
     }
   }, {
@@ -50665,12 +50655,14 @@ exports.default = (0, _omi.define)('video-ouo', (_temp = _class = function (_WeE
   }, {
     key: 'setCurrentTime',
     value: function setCurrentTime(percent) {
+      // console.log('renderTYpe:', this.danmakuPlayerOuO.$video.getAttribute('renderType'))
       this.danmakuPlayerOuO.$video.currentTime = this.danmakuPlayerOuO.$video.duration * percent;
     }
   }, {
-    key: 'setVolumn',
-    value: function setVolumn(v) {
-      this.danmakuPlayerOuO.$video.volumn = v * 1;
+    key: 'setVolume',
+    value: function setVolume(v) {
+      this.danmakuPlayerOuO.$video.volume = v * 1;
+      // console.log(v, this.danmakuPlayerOuO.$video.volume)
     }
   }, {
     key: 'setPoster',
@@ -50710,7 +50702,7 @@ exports.default = (0, _omi.define)('video-ouo', (_temp = _class = function (_WeE
       try {
         val = JSON.parse(val);
       } catch (error) {
-        alert(error);
+        // alert(error)
       }
 
       if (val === true) this.danmakuPlayerOuO.played = true;
