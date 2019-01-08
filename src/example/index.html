@@ -8,28 +8,33 @@
 </head>
 <body>
   <style>
+    *{margin:0;padding:0;}
     html,body{
       width:100%;
       height:100%;
     }
-    #holder{
+    #player{
       position: relative;
-      /* left:50%;
-      top:50%;
-      transform: translate3d(-50%,-50%,0); */
-      
+      left:50%;
+      transform: translate3d(-50%,0,0);
+      margin-top:200px;
+    }
+    p{
+      text-align: center;
+      margin:10px 0;
     }
   </style>
 
-  <section id="holder">
+  
     <danmaku-player id="player" 
       thumbnail="//static.xyimg.net/cn/static/fed/common/img/thumbnail-tile-90X1-scale-160X90.png" 
       thumbnailtile="90"
       danmakuapi="//static.xyimg.net/cn/static/fed/common/danmaku-list.json"
       poster="//static.xyimg.net/cn/static/fed/common/img/poster.jpg" 
       src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
-  </section>
-  
+  <div>
+    <p>尝试输入特效指令，如：#下雪..</p>
+  </div>
   <script>
     var $player = document.querySelector('#player')
     $player.addEventListener('ended', () => {

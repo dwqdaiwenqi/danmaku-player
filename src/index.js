@@ -28,7 +28,7 @@ define('danmaku-player-xxx', class extends WeElement {
           <video-ouo danmakuapi={props.danmakuapi} onLoadeddata={this.handleLoadeddata} onFetchCompleted={this.handleFetchCompleted} onTimeUpdate={this.handleTimeUpdate} poster={this.props.poster} onProgress={this.handleProgress} src={props.src} ref={o => this.video_ouo = o }></video-ouo>
 
           {
-            <control-wrap play={this.data.play} showWrap={this.data.showWrap} screenshot={props.screenshot} thumbnailtile={props.thumbnailtile} thumbnail={props.thumbnail} thumbnailTime={this.data.thumbnailTime} playbackrate={this.data.playbackrate} onSliderMouseMove={this.handleSliderMouseMove} fullScreen={this.data.fullScreen} onChangeCurrent={this.handleChangeCurrent} $playerRoot={this} ref={o => this.control_wrap = o}
+            <control-wrap play={this.data.play} showWrap={this.data.showWrap} showComment={this.data.showComment} screenshot={props.screenshot} thumbnailtile={props.thumbnailtile} thumbnail={props.thumbnail} thumbnailTime={this.data.thumbnailTime} playbackrate={this.data.playbackrate} onSliderMouseMove={this.handleSliderMouseMove} fullScreen={this.data.fullScreen} onChangeCurrent={this.handleChangeCurrent} $playerRoot={this} ref={o => this.control_wrap = o}
             onrequestFullScreen={() => {
               this.data.screenMode = 'full_screen'
               this.video_ouo.requestFullScreen()
@@ -39,11 +39,16 @@ define('danmaku-player-xxx', class extends WeElement {
             onplayStart={v => {
               this.data.play = true
               this.video_ouo.play()
+
+              this.data.showComment = true
+              // debugger
             }}
             onplayChange={(v) => {
               this.data.play = !this.data.play
+              // debugger
               if (this.data.play) {
                 this.video_ouo.play()
+                this.data.showComment = true
               } else {
                 this.video_ouo.pause()
               }
@@ -111,6 +116,7 @@ define('danmaku-player-xxx', class extends WeElement {
       brightness: 1,
       showSettingPannel: false,
       showWrap: false,
+      showComment: false,
       thumbnailTime: {
         mm: 'mm',
         ss: 'ss'

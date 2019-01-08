@@ -345,7 +345,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
     _update () {
       var generateSnowflake = () => {
         ;[...Array(5 + Math.random() * 5 | 0)].forEach(() => {
-          let snow = new Snow(.2 + Math.random() * 2, 0xffffff)
+          let snow = new Snow(.5 + Math.random() * 1.5, 0xffffff)
           this.snow_container.addChild(snow)
           snow.x = this.app.screen.width * Math.random()
           snow.y = -snow.r - Math.random() * 20
@@ -426,7 +426,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
           let brightness = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255
           // console.log(brightness);
           // 是边缘 但是 这个边缘点没有被对象占领
-          if (snow.animate && brightness < .43){
+          if (snow.animate && brightness < .5){
             snow.animate = false
 
             snow.will_remove = true
@@ -676,6 +676,13 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       if (effect = this._effectAction(text)) {
         if (this.appOuO.canvas.width > EFFECT_COMMAND_RENDERING_MAX_WIDTH) {
           console.warn('***渲染面积过大，可能存在卡顿***')
+
+          // console.log(window.prompt('渲染面积过大，可能存在卡顿! 确定开启吗?'))
+          // if (!window.prompt('渲染面积过大，可能存在卡顿! 确定开启吗?')){
+          //   return
+          // }
+
+          return
         }
 
         this.handleEffectCommand && this.handleEffectCommand(text)
@@ -749,14 +756,16 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       if (scale * V_DEFAULT_H > this.opt.$container.offsetHeight){
         scale = this.opt.$container.offsetHeight / V_DEFAULT_H
       }
-     // this.app.stage.scale.x = this.app.stage.scale.y = scale
-      this.app.renderer.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H)
 
-      this.appOuO.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H)
+      var [w, h] = [Math.round(scale * V_DEFAULT_W), Math.round(scale * V_DEFAULT_H)]
+
+      this.app.renderer.resize(w, h)
+
+      this.appOuO.resize(w, h)
       this.appOuO.children.forEach(o => o.scale = [scale, scale])
 
-      this.$dom_video.style.width = scale * V_DEFAULT_W + 'px'
-      this.$dom_video.style.height = scale * V_DEFAULT_H + 'px'
+      this.$dom_video.style.width = w + 'px'
+      this.$dom_video.style.height = h + 'px'
     },
      saveScreenshots (){
 

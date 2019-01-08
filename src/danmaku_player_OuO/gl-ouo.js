@@ -294,12 +294,12 @@
         }
       },
       get widthInClip () {
-        return width * this.scale[0]
+        return Math.round(width * this.scale[0])
 
         // return this.gl.drawingBufferWidth
       },
       get heightInClip () {
-        return height * this.scale[0]
+        return Math.round(height * this.scale[0])
         // return this.gl.drawingBufferHeight
       },
       readPixels (fn) {

@@ -47425,6 +47425,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
       var cls = (0, _classnames2.default)('control_wrap', props.showWrap && 'control_wrap--visible', !props.showWrap && 'control_wrap--hidden');
+
       return Omi.h(
         'div',
         null,
@@ -47844,7 +47845,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
               Omi.h(
                 'div',
                 { 'class': 'control_side' },
-                Omi.h(
+                this.props.showComment && Omi.h(
                   'div',
                   { 'class': 'control_btn control_comment', onClick: this.handleCommentSwitch },
                   Omi.h(
@@ -48775,12 +48776,12 @@ var Rectangle = function Rectangle(_ref, _ref2) {
     },
 
     get widthInClip() {
-      return width * this.scale[0];
+      return Math.round(width * this.scale[0]);
 
       // return this.gl.drawingBufferWidth
     },
     get heightInClip() {
-      return height * this.scale[0];
+      return Math.round(height * this.scale[0]);
       // return this.gl.drawingBufferHeight
     },
     readPixels: function readPixels(fn) {
@@ -49118,7 +49119,7 @@ function DanmakuPlayer($video) {
 
       var generateSnowflake = function generateSnowflake() {
         ;[].concat(_toConsumableArray(Array(5 + Math.random() * 5 | 0))).forEach(function () {
-          var snow = new _snowflake2.default(.2 + Math.random() * 2, 0xffffff);
+          var snow = new _snowflake2.default(.5 + Math.random() * 1.5, 0xffffff);
           _this5.snow_container.addChild(snow);
           snow.x = _this5.app.screen.width * Math.random();
           snow.y = -snow.r - Math.random() * 20;
@@ -49200,7 +49201,7 @@ function DanmakuPlayer($video) {
           var brightness = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255;
           // console.log(brightness);
           // 是边缘 但是 这个边缘点没有被对象占领
-          if (snow.animate && brightness < .43) {
+          if (snow.animate && brightness < .5) {
             snow.animate = false;
 
             snow.will_remove = true;
@@ -49457,6 +49458,13 @@ function DanmakuPlayer($video) {
       if (effect = this._effectAction(text)) {
         if (this.appOuO.canvas.width > EFFECT_COMMAND_RENDERING_MAX_WIDTH) {
           console.warn('***渲染面积过大，可能存在卡顿***');
+
+          // console.log(window.prompt('渲染面积过大，可能存在卡顿! 确定开启吗?'))
+          // if (!window.prompt('渲染面积过大，可能存在卡顿! 确定开启吗?')){
+          //   return
+          // }
+
+          return;
         }
 
         this.handleEffectCommand && this.handleEffectCommand(text);
@@ -49530,16 +49538,21 @@ function DanmakuPlayer($video) {
       if (scale * V_DEFAULT_H > this.opt.$container.offsetHeight) {
         scale = this.opt.$container.offsetHeight / V_DEFAULT_H;
       }
-      // this.app.stage.scale.x = this.app.stage.scale.y = scale
-      this.app.renderer.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H);
 
-      this.appOuO.resize(scale * V_DEFAULT_W, scale * V_DEFAULT_H);
+      var _ref5 = [Math.round(scale * V_DEFAULT_W), Math.round(scale * V_DEFAULT_H)],
+          w = _ref5[0],
+          h = _ref5[1];
+
+
+      this.app.renderer.resize(w, h);
+
+      this.appOuO.resize(w, h);
       this.appOuO.children.forEach(function (o) {
         return o.scale = [scale, scale];
       });
 
-      this.$dom_video.style.width = scale * V_DEFAULT_W + 'px';
-      this.$dom_video.style.height = scale * V_DEFAULT_H + 'px';
+      this.$dom_video.style.width = w + 'px';
+      this.$dom_video.style.height = h + 'px';
     },
     saveScreenshots: function saveScreenshots() {}
   };
@@ -50010,7 +50023,7 @@ var danmakuCustomEvents = ['senddanmaku'];
           Omi.h('video-ouo', { danmakuapi: props.danmakuapi, onLoadeddata: this.handleLoadeddata, onFetchCompleted: this.handleFetchCompleted, onTimeUpdate: this.handleTimeUpdate, poster: this.props.poster, onProgress: this.handleProgress, src: props.src, ref: function ref(o) {
               return _this2.video_ouo = o;
             } }),
-          Omi.h('control-wrap', { play: this.data.play, showWrap: this.data.showWrap, screenshot: props.screenshot, thumbnailtile: props.thumbnailtile, thumbnail: props.thumbnail, thumbnailTime: this.data.thumbnailTime, playbackrate: this.data.playbackrate, onSliderMouseMove: this.handleSliderMouseMove, fullScreen: this.data.fullScreen, onChangeCurrent: this.handleChangeCurrent, $playerRoot: this, ref: function ref(o) {
+          Omi.h('control-wrap', { play: this.data.play, showWrap: this.data.showWrap, showComment: this.data.showComment, screenshot: props.screenshot, thumbnailtile: props.thumbnailtile, thumbnail: props.thumbnail, thumbnailTime: this.data.thumbnailTime, playbackrate: this.data.playbackrate, onSliderMouseMove: this.handleSliderMouseMove, fullScreen: this.data.fullScreen, onChangeCurrent: this.handleChangeCurrent, $playerRoot: this, ref: function ref(o) {
               return _this2.control_wrap = o;
             },
             onrequestFullScreen: function onrequestFullScreen() {
@@ -50023,11 +50036,16 @@ var danmakuCustomEvents = ['senddanmaku'];
             onplayStart: function onplayStart(v) {
               _this2.data.play = true;
               _this2.video_ouo.play();
+
+              _this2.data.showComment = true;
+              // debugger
             },
             onplayChange: function onplayChange(v) {
               _this2.data.play = !_this2.data.play;
+              // debugger
               if (_this2.data.play) {
                 _this2.video_ouo.play();
+                _this2.data.showComment = true;
               } else {
                 _this2.video_ouo.pause();
               }
@@ -50071,6 +50089,7 @@ var danmakuCustomEvents = ['senddanmaku'];
         brightness: 1,
         showSettingPannel: false,
         showWrap: false,
+        showComment: false,
         thumbnailTime: {
           mm: 'mm',
           ss: 'ss'
