@@ -7,7 +7,7 @@
 * 想比传统的弹幕显示运动方式，添加了曲线模式的弹幕发送
 * 内置实时图像处理的特效指令（切勿在全屏模式下使用），当前有#护眼、#下雪等 - 未来将支持更多的特效指令
 
-→ Demo located at https://dwqdaiwenqi.github.io/danmaku-player/site/
+→ Demo located at https://dwqdaiwenqi.github.io/danmaku-player/example/
 
 ## 截图
 <img src="./preview1.jpg" style="margin:0 auto; width:699px;">
