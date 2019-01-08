@@ -15,7 +15,7 @@ switch(ENV){
     break;
   case 'pro':
     filename = 'scripts/danmaku-player.min.js'
-    publicPath = '../dist/'
+    publicPath = '//unpkg.com/danmaku-player@latest/dist/'
     break;
   case 'site':
     filename = 'scripts/danmaku-player.min.js'
