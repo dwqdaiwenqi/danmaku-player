@@ -1,5 +1,5 @@
 /*!
- *  danmaku-player v1.0.2
+ *  danmaku-player v1.0.3
  *  By https://github.com/dwqdaiwenqi 
  *  Github: https://github.com/dwqdaiwenqi/danmaku-player
  *  MIT Licensed.
@@ -48949,35 +48949,35 @@ function DanmakuPlayer($video) {
             }
 
           });
-          // appOuO.addChild(rect1)
-          // rect1.translation = [0, 0]
-
-          // rect1.readPixels(data => {
-          //   this.pixels = data
-          // })
-          // rect1.visible = false
-          // this.rect1 = rect1
-
-          // var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
-          // appOuO.addChild(rect2)
-          // rect2.translation = [0, 0]
-
-          // this.rect2 = rect2
-
           appOuO.addChild(rect1);
           rect1.translation = [0, 0];
 
           rect1.readPixels(function (data) {
             _this.pixels = data;
           });
-          rect1.visible = true;
+          rect1.visible = false;
           _this.rect1 = rect1;
 
           var rect2 = _glOuo2.default.Rectangle([rect1.width, rect1.height], [_this.$gl_video], {});
-          // appOuO.addChild(rect2)
+          appOuO.addChild(rect2);
           rect2.translation = [0, 0];
 
           _this.rect2 = rect2;
+
+          //   appOuO.addChild(rect1)
+          //   rect1.translation = [0, 0]
+
+          //   rect1.readPixels(data => {
+          //     this.pixels = data
+          //   })
+          //   rect1.visible = false
+          //   this.rect1 = rect1
+
+          //   var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
+          //  // appOuO.addChild(rect2)
+          //   rect2.translation = [0, 0]
+
+          //   this.rect2 = rect2
 
           _this._createRunway(9);
           _this._createUserRunway();
@@ -49118,8 +49118,7 @@ function DanmakuPlayer($video) {
 
       var generateSnowflake = function generateSnowflake() {
         ;[].concat(_toConsumableArray(Array(5 + Math.random() * 5 | 0))).forEach(function () {
-          // let snow = new Snow(Math.random()*2)
-          var snow = new _snowflake2.default(.2 + Math.random() * 2, 0xff00ff);
+          var snow = new _snowflake2.default(.2 + Math.random() * 2, 0xffffff);
           _this5.snow_container.addChild(snow);
           snow.x = _this5.app.screen.width * Math.random();
           snow.y = -snow.r - Math.random() * 20;

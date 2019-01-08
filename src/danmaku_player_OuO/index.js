@@ -187,35 +187,35 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
             }
 
           })
-          // appOuO.addChild(rect1)
-          // rect1.translation = [0, 0]
-
-          // rect1.readPixels(data => {
-          //   this.pixels = data
-          // })
-          // rect1.visible = false
-          // this.rect1 = rect1
-
-          // var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
-          // appOuO.addChild(rect2)
-          // rect2.translation = [0, 0]
-
-          // this.rect2 = rect2
-
           appOuO.addChild(rect1)
           rect1.translation = [0, 0]
 
           rect1.readPixels(data => {
             this.pixels = data
           })
-          rect1.visible = true
+          rect1.visible = false
           this.rect1 = rect1
 
           var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
-         // appOuO.addChild(rect2)
+          appOuO.addChild(rect2)
           rect2.translation = [0, 0]
 
           this.rect2 = rect2
+
+        //   appOuO.addChild(rect1)
+        //   rect1.translation = [0, 0]
+
+        //   rect1.readPixels(data => {
+        //     this.pixels = data
+        //   })
+        //   rect1.visible = false
+        //   this.rect1 = rect1
+
+        //   var rect2 = OuO.Rectangle([rect1.width, rect1.height], [this.$gl_video], { })
+        //  // appOuO.addChild(rect2)
+        //   rect2.translation = [0, 0]
+
+        //   this.rect2 = rect2
 
           this._createRunway(9)
           this._createUserRunway()
@@ -345,8 +345,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
     _update () {
       var generateSnowflake = () => {
         ;[...Array(5 + Math.random() * 5 | 0)].forEach(() => {
-          // let snow = new Snow(Math.random()*2)
-          let snow = new Snow(.2 + Math.random() * 2, 0xff00ff)
+          let snow = new Snow(.2 + Math.random() * 2, 0xffffff)
           this.snow_container.addChild(snow)
           snow.x = this.app.screen.width * Math.random()
           snow.y = -snow.r - Math.random() * 20
