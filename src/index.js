@@ -6,6 +6,7 @@ import './video-ouo'
 import './fullscreen-api-polyfill'
 import './control-wrap'
 import { version } from 'core-js'
+import {mmss} from './util'
 
 var mediaEvents = [
   'loadeddata', 'loadstart', 'canplay', 'timeupdate', 'play', 'playing',
@@ -24,6 +25,7 @@ define('danmaku-player-xxx', class extends WeElement{
     var data = this.data
 
     // console.log('enableSendDanmaku:%s,enableSwitchDanmaku:%s', this.data.enableSendDanmaku, this.data.enableSwitchDanmaku)
+    // console.log('thumbnail', props.thumbnail)
     return (
 
       <div className={cs(this.data.screenMode)} style={{filter: `brightness(${this.data.brightness})`}}>
@@ -37,7 +39,11 @@ define('danmaku-player-xxx', class extends WeElement{
             // poster={this.data.poster}
             onProgress={this.handleProgress} ref={o => this.video_ouo = o }></video-ouo>
            {
-            <control-wrap enableSwitchDanmaku={data.enableSwitchDanmaku} enableSendDanmaku={data.enableSendDanmaku} play={this.data.play} showWrap={this.data.showWrap} showComment={this.data.showComment} screenshot={props.screenshot} thumbnailtile={props.thumbnailtile} thumbnail={props.thumbnail} thumbnailTime={this.data.thumbnailTime} playbackrate={this.data.playbackrate}
+            <control-wrap enableSwitchDanmaku={data.enableSwitchDanmaku} enableSendDanmaku={data.enableSendDanmaku} play={this.data.play} showWrap={this.data.showWrap} showComment={this.data.showComment} screenshot={props.screenshot}
+            thumbnailtile={this.data.thumbnailtile}
+            thumbnail={this.data.thumbnail}
+            thumbnailTime={this.data.thumbnailTime}
+            playbackrate={this.data.playbackrate}
             onSliderMouseMove={this.handleSliderMouseMove} fullScreen={this.data.fullScreen}
             onChangeCurrent={this.handleChangeCurrent} $playerRoot={this} ref={o => this.control_wrap = o}
             onrequestFullScreen={() => {
@@ -99,21 +105,7 @@ define('danmaku-player-xxx', class extends WeElement{
   }
   constructor (){
     super()
-    // console.log('danmaku-player-xxx--constructor')
-     // console.log('danmaku-player-xxx--install')
-    //  'enableSwitchDanmaku',
-    //   'enableSendDanmaku',
-    //   'screenshot',
-    //   'theme',
 
-    //   'playbackrate',
-    //   'volume',
-    //   'paused',
-    //   'ended',
-    //   'currentTime',
-    //   'duration'
-
-    // 初次变化和外部属性变化的的监听
     tagAttrEmitter.on('enableSwitchDanmaku', (value, context) => {
       // console.log('enableSwitchDanmaku:', value)
       this.data.enableSwitchDanmaku = JSON.parse(value)
@@ -139,6 +131,14 @@ define('danmaku-player-xxx', class extends WeElement{
       // console.log('poster:', value)
       // this.data.poster = value
       this.video_ouo.setPoster(value)
+    })
+    tagAttrEmitter.on('thumbnail', (value, context) => {
+      // console.log('thubmnail', value)
+      this.data.thumbnail = value
+    })
+    tagAttrEmitter.on('thumbnailtile', (value, context) => {
+      // console.log('thumbnailtile', value)
+      this.data.thumbnailtile = value
     })
     tagAttrEmitter.on('loop', (value, context) => {
       // console.log('loop', value)
@@ -194,6 +194,8 @@ define('danmaku-player-xxx', class extends WeElement{
       showSettingPannel: false,
       showWrap: false,
       showComment: false,
+      thumbnail: '',
+      thumbnailtile: '',
       thumbnailTime: {
         mm: 'mm',
         ss: 'ss'
@@ -355,7 +357,6 @@ customElements.define('danmaku-player', class extends HTMLElement{
       }}/>,
       this.shadowRoot
     )
-    // console.log('danmaku-player-end')
 
     this.constructor.observedProps.forEach(v => {
       Object.defineProperty(this, v, {
@@ -365,17 +366,6 @@ customElements.define('danmaku-player', class extends HTMLElement{
         },
         set (val){
           this[`_${v}`] = val
-
-          // console.log(v)
-          // if (this.itsReady){
-          //   if (v === 'playbackrate'){
-          //     setTimeout(() => {
-          //       tagAttrEmitter.emit(v, val, this)
-          //     })
-          //   }
-          // }
-
-          // console.log(`this.itsReady:${this.itsReady}`)
 
             if (this.itsReady){
               tagAttrEmitter.emit(v, val, this)

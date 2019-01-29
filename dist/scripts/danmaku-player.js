@@ -60674,6 +60674,8 @@ __webpack_require__(/*! ./control-wrap */ "./src/control-wrap.js");
 
 var _coreJs = __webpack_require__(/*! core-js */ "./node_modules/.2.6.1@core-js/index.js");
 
+var _util = __webpack_require__(/*! ./util */ "./src/util.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -60699,6 +60701,7 @@ var tagAttrEmitter = new _events.EventEmitter();
       var data = this.data;
 
       // console.log('enableSendDanmaku:%s,enableSwitchDanmaku:%s', this.data.enableSendDanmaku, this.data.enableSwitchDanmaku)
+      // console.log('thumbnail', props.thumbnail)
       return Omi.h(
         'div',
         { className: (0, _classnames2.default)(this.data.screenMode), style: { filter: 'brightness(' + this.data.brightness + ')' } },
@@ -60715,7 +60718,11 @@ var tagAttrEmitter = new _events.EventEmitter();
             , onProgress: this.handleProgress, ref: function ref(o) {
               return _this2.video_ouo = o;
             } }),
-          Omi.h('control-wrap', { enableSwitchDanmaku: data.enableSwitchDanmaku, enableSendDanmaku: data.enableSendDanmaku, play: this.data.play, showWrap: this.data.showWrap, showComment: this.data.showComment, screenshot: props.screenshot, thumbnailtile: props.thumbnailtile, thumbnail: props.thumbnail, thumbnailTime: this.data.thumbnailTime, playbackrate: this.data.playbackrate,
+          Omi.h('control-wrap', { enableSwitchDanmaku: data.enableSwitchDanmaku, enableSendDanmaku: data.enableSendDanmaku, play: this.data.play, showWrap: this.data.showWrap, showComment: this.data.showComment, screenshot: props.screenshot,
+            thumbnailtile: this.data.thumbnailtile,
+            thumbnail: this.data.thumbnail,
+            thumbnailTime: this.data.thumbnailTime,
+            playbackrate: this.data.playbackrate,
             onSliderMouseMove: this.handleSliderMouseMove, fullScreen: this.data.fullScreen,
             onChangeCurrent: this.handleChangeCurrent, $playerRoot: this, ref: function ref(o) {
               return _this2.control_wrap = o;
@@ -60780,21 +60787,6 @@ var tagAttrEmitter = new _events.EventEmitter();
   function _class() {
     _classCallCheck(this, _class);
 
-    // console.log('danmaku-player-xxx--constructor')
-    // console.log('danmaku-player-xxx--install')
-    //  'enableSwitchDanmaku',
-    //   'enableSendDanmaku',
-    //   'screenshot',
-    //   'theme',
-
-    //   'playbackrate',
-    //   'volume',
-    //   'paused',
-    //   'ended',
-    //   'currentTime',
-    //   'duration'
-
-    // 初次变化和外部属性变化的的监听
     var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
     _this.handlecanplay = function () {
@@ -60806,7 +60798,7 @@ var tagAttrEmitter = new _events.EventEmitter();
     };
 
     _this.handleSliderMouseMove = function (progress) {
-      var _mmss = mmss(_this.video_ouo.danmakuPlayerOuO.$video.duration * progress | 0),
+      var _mmss = (0, _util.mmss)(_this.video_ouo.danmakuPlayerOuO.$video.duration * progress | 0),
           _mmss2 = _slicedToArray(_mmss, 2),
           mm = _mmss2[0],
           ss = _mmss2[1];
@@ -60871,6 +60863,14 @@ var tagAttrEmitter = new _events.EventEmitter();
       // this.data.poster = value
       _this.video_ouo.setPoster(value);
     });
+    tagAttrEmitter.on('thumbnail', function (value, context) {
+      // console.log('thubmnail', value)
+      _this.data.thumbnail = value;
+    });
+    tagAttrEmitter.on('thumbnailtile', function (value, context) {
+      // console.log('thumbnailtile', value)
+      _this.data.thumbnailtile = value;
+    });
     tagAttrEmitter.on('loop', function (value, context) {
       // console.log('loop', value)
       // this.video_ouo.danmakuPlayerOuO.$video.loop = JSON.parse(value)
@@ -60926,6 +60926,8 @@ var tagAttrEmitter = new _events.EventEmitter();
         showSettingPannel: false,
         showWrap: false,
         showComment: false,
+        thumbnail: '',
+        thumbnailtile: '',
         thumbnailTime: {
           mm: 'mm',
           ss: 'ss'
@@ -61053,7 +61055,6 @@ customElements.define('danmaku-player', function (_HTMLElement) {
         // console.log('installed')
         _this4.thePrepareIs('installed');
       } })), _this4.shadowRoot);
-    // console.log('danmaku-player-end')
 
     _this4.constructor.observedProps.forEach(function (v) {
       Object.defineProperty(_this4, v, {
@@ -61063,17 +61064,6 @@ customElements.define('danmaku-player', function (_HTMLElement) {
         },
         set: function set(val) {
           this['_' + v] = val;
-
-          // console.log(v)
-          // if (this.itsReady){
-          //   if (v === 'playbackrate'){
-          //     setTimeout(() => {
-          //       tagAttrEmitter.emit(v, val, this)
-          //     })
-          //   }
-          // }
-
-          // console.log(`this.itsReady:${this.itsReady}`)
 
           if (this.itsReady) {
             tagAttrEmitter.emit(v, val, this);
