@@ -229,10 +229,10 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
             if (document[shimHidden]) {
               this.$video.pause()
 
-              console.log('%c visibility hidden', 'color:aqua;')
+              // console.log('%c visibility hidden', 'color:aqua;')
             } else {
               this.$video.play()
-              console.log('%c visibility visible', 'color:teal;')
+              // console.log('%c visibility visible', 'color:teal;')
             }
           })
         }
@@ -250,12 +250,15 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
     hideDanmaku () {
       // this.appOuO.canvas.style.visibility =
       // this.app.view.style.visibility =  'hidden'
-      this.app.stage.visible = false
+      // this.app.stage.visible = false
+
+      this.runway_group.visible = false
     },
     showDanmaku () {
       // this.appOuO.canvas.style.visibility =
       // this.app.view.style.visibility =  'visible'
-      this.app.stage.visible = true
+      // this.app.stage.visible = true
+      this.runway_group.visible = true
     },
     get renderType (){
       return this.opt.renderType
@@ -266,6 +269,8 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       ;['volume', 'currentTime', 'loop', 'playbackRate', 'autoplay'].forEach(attr => {
         this.$dom_video[attr] = this.$gl_video[attr] = this.$video[attr]
       })
+      this.$gl_video.pause()
+      this.$dom_video.pause()
 
       this.$wrap_ouo.style.display = v === 'webgl' ? 'block' : 'none'
       this.$wrap_dom.style.display = v === 'webgl' ? 'none' : 'block'
@@ -426,7 +431,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
           let brightness = 1 - (0.299 * r + 0.587 * g + 0.114 * b) / 255
           // console.log(brightness);
           // 是边缘 但是 这个边缘点没有被对象占领
-          if (snow.animate && brightness < .5){
+          if (snow.animate && brightness < .47){
             snow.animate = false
 
             snow.will_remove = true

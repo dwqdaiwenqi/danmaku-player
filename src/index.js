@@ -1,14 +1,11 @@
+/// ///////////////////////////////////////////////////////
 import { define, render, WeElement } from 'omi'
 import cs from 'classnames'
-import './fullscreen-api-polyfill'
-
 import { EventEmitter } from 'events'
-
-import { mmss } from './util'
 import './video-ouo'
+import './fullscreen-api-polyfill'
 import './control-wrap'
-
-let tagAttrEmitter = new EventEmitter()
+import { version } from 'core-js'
 
 var mediaEvents = [
   'loadeddata', 'loadstart', 'canplay', 'timeupdate', 'play', 'playing',
@@ -19,16 +16,30 @@ var danmakuCustomEvents = [
   'senddanmaku'
 ]
 
-define('danmaku-player-xxx', class extends WeElement {
+let tagAttrEmitter = new EventEmitter()
+
+define('danmaku-player-xxx', class extends WeElement{
   static observe = true
-  render (props) {
+  render (props){
+    var data = this.data
+
+    // console.log('enableSendDanmaku:%s,enableSwitchDanmaku:%s', this.data.enableSendDanmaku, this.data.enableSwitchDanmaku)
     return (
+
       <div className={cs(this.data.screenMode)} style={{filter: `brightness(${this.data.brightness})`}}>
         <div className="danmaku_player_wrap">
-          <video-ouo danmakuapi={props.danmakuapi} onLoadeddata={this.handleLoadeddata} onFetchCompleted={this.handleFetchCompleted} onTimeUpdate={this.handleTimeUpdate} poster={this.props.poster} onProgress={this.handleProgress} src={props.src} ref={o => this.video_ouo = o }></video-ouo>
-
-          {
-            <control-wrap play={this.data.play} showWrap={this.data.showWrap} showComment={this.data.showComment} screenshot={props.screenshot} thumbnailtile={props.thumbnailtile} thumbnail={props.thumbnail} thumbnailTime={this.data.thumbnailTime} playbackrate={this.data.playbackrate} onSliderMouseMove={this.handleSliderMouseMove} fullScreen={this.data.fullScreen} onChangeCurrent={this.handleChangeCurrent} $playerRoot={this} ref={o => this.control_wrap = o}
+          <video-ouo connected={data.connected} danmakuapi={data.danmakuapi} src={data.src}
+            onLoadeddata={this.handleLoadeddata}
+            onFetchCompleted={this.handleFetchCompleted}
+            onTimeUpdate={this.handleTimeUpdate}
+            onended={this.handleended}
+            oncanplay={this.handlecanplay}
+            // poster={this.data.poster}
+            onProgress={this.handleProgress} ref={o => this.video_ouo = o }></video-ouo>
+           {
+            <control-wrap enableSwitchDanmaku={data.enableSwitchDanmaku} enableSendDanmaku={data.enableSendDanmaku} play={this.data.play} showWrap={this.data.showWrap} showComment={this.data.showComment} screenshot={props.screenshot} thumbnailtile={props.thumbnailtile} thumbnail={props.thumbnail} thumbnailTime={this.data.thumbnailTime} playbackrate={this.data.playbackrate}
+            onSliderMouseMove={this.handleSliderMouseMove} fullScreen={this.data.fullScreen}
+            onChangeCurrent={this.handleChangeCurrent} $playerRoot={this} ref={o => this.control_wrap = o}
             onrequestFullScreen={() => {
               this.data.screenMode = 'full_screen'
               this.video_ouo.requestFullScreen()
@@ -41,6 +52,8 @@ define('danmaku-player-xxx', class extends WeElement {
               this.video_ouo.play()
 
               this.data.showComment = true
+
+              this.props.onplay()
               // debugger
             }}
             onplayChange={(v) => {
@@ -49,6 +62,7 @@ define('danmaku-player-xxx', class extends WeElement {
               if (this.data.play) {
                 this.video_ouo.play()
                 this.data.showComment = true
+                this.props.onplay()
               } else {
                 this.video_ouo.pause()
               }
@@ -64,9 +78,8 @@ define('danmaku-player-xxx', class extends WeElement {
               this.video_ouo.setVolume(val)
             }}
             onComment={(text, param) => {
-              this.video_ouo.sendDanmaku(text, param)
-              let handle = this.props['onsenddanmaku']
-              handle(text, param)
+              // debugger
+              this.sendDanmaku(text, param)
             }}
             onSwitchDanamku={(val) => {
               if (!val) {
@@ -75,6 +88,8 @@ define('danmaku-player-xxx', class extends WeElement {
                 this.video_ouo.hideDanmaku()
               }
             }} onrepeatChange={(val) => {
+              val = !val
+              // console.log('setRepeat:%s', val)
                 this.video_ouo.setRepeat(val)
             }}></control-wrap>
           }
@@ -82,32 +97,94 @@ define('danmaku-player-xxx', class extends WeElement {
       </div>
     )
   }
-  handleFetchCompleted = () => {
-    this.data.showWrap = true
-  }
-  handleLoadeddata = ($video) => {
-    // debugger
-    this.control_wrap.updateCurrentProgress($video)
-  }
-  handleProgress = ($video) => {
-    this.control_wrap.updateBuffProgress($video)
-  }
-  handleChangeCurrent = (percent) => {
-    this.video_ouo.setCurrentTime(percent)
+  constructor (){
+    super()
+    // console.log('danmaku-player-xxx--constructor')
+     // console.log('danmaku-player-xxx--install')
+    //  'enableSwitchDanmaku',
+    //   'enableSendDanmaku',
+    //   'screenshot',
+    //   'theme',
 
-    this.handleTimeUpdate(this.video_ouo.danmakuPlayerOuO.$video)
-  }
-  handleTimeUpdate = ($video) => {
-    // var { onTimeUpdate } = this.props
-    this.control_wrap.updateCurrentProgress($video)
+    //   'playbackrate',
+    //   'volume',
+    //   'paused',
+    //   'ended',
+    //   'currentTime',
+    //   'duration'
+
+    // 初次变化和外部属性变化的的监听
+    tagAttrEmitter.on('enableSwitchDanmaku', (value, context) => {
+      // console.log('enableSwitchDanmaku:', value)
+      this.data.enableSwitchDanmaku = JSON.parse(value)
+    })
+    tagAttrEmitter.on('enableSendDanmaku', (value, context) => {
+      // console.log('enableSendDanmaku:', value)
+      this.data.enableSendDanmaku = JSON.parse(value)
+    })
+    tagAttrEmitter.on('connected', (o, context) => {
+      // console.log('connected', o)
+
+      this.data.danmakuapi = o.danmakuapi
+      this.data.src = o.src
+      this.data.connected = true
+    })
+    tagAttrEmitter.on('src', (value, context) => {
+      // console.log('src', value)
+      // if (!this.danmakuPlayerOuO){
+        // this.initialPlayer(value)
+      // }
+    })
+    tagAttrEmitter.on('poster', (value, context) => {
+      // console.log('poster:', value)
+      // this.data.poster = value
+      this.video_ouo.setPoster(value)
+    })
+    tagAttrEmitter.on('loop', (value, context) => {
+      // console.log('loop', value)
+      // this.video_ouo.danmakuPlayerOuO.$video.loop = JSON.parse(value)
+      // this.video_ouo.setRepeat(value)
+
+    })
+    tagAttrEmitter.on('autoplay', (value, context) => {
+      // console.log('autoplay', value)
+
+      this.video_ouo.autoplay(value)
+
+      if (value === 'true'){
+        this.data.showComment = true
+
+        this.data.play = JSON.parse(value)
+      }
+      //
+    })
+    tagAttrEmitter.on('playbackrate', (value, context) => {
+      // console.log('playbackrate', value)
+
+      this.video_ouo.playbackrate(value)
+    })
+    tagAttrEmitter.on('volume', (value, context) => {
+      // console.log(this.video_ouo.$video)
+      // this.video_ouo.danmakuPlayerOuO.$video.volume = value * 1
+      this.video_ouo.setVolume(value)
+    })
+    tagAttrEmitter.on('play', (value, context) => {
+      // console.log('play', value)
+      this.video_ouo.play()
+    })
+    tagAttrEmitter.on('pause', (value, context) => {
+      this.video_ouo.pause()
+    })
+    tagAttrEmitter.on('currentTime', (value, context) => {
+
+    })
   }
 
-  handleSliderMouseMove = (progress) => {
-    var [ mm, ss ] = mmss(this.video_ouo.danmakuPlayerOuO.$video.duration * progress | 0)
-    this.data.thumbnailTime = { mm, ss }
-  }
-  install () {
+  install (){
     this.data = {
+      connected: false,
+      src: '',
+      danmakuapi: '',
       screenMode: 'normal_screen',
       autoplay: false,
       play: false,
@@ -120,57 +197,32 @@ define('danmaku-player-xxx', class extends WeElement {
       thumbnailTime: {
         mm: 'mm',
         ss: 'ss'
-      }
+      },
+      enableSwitchDanmaku: true,
+      enableSendDanmaku: true
     }
   }
-  installed (p) {
-    // console.log('danmaku-player installed!!!')
-    var { props } = this
+  installed (){
+    var {oninstalled} = this.props
 
-    this.listenVideoEvent()
+    // this.listenVideoEvent()
+    // setTimeout(() => {
+      oninstalled()
+    // }, 3333)
 
-    var actions = {
-      autoplayChange (val) {
-        this.video_ouo.autoplay(val)
-      },
-      playbackrateChange (val) {
-        this.video_ouo.playbackrate(val)
-      },
-      posterChange (val) {
-        this.video_ouo.setPoster(val)
-      },
-      playChange (val) {
-        this.data.play = !this.data.play
-        if (this.data.play) {
-          this.video_ouo.play()
-        } else {
-          this.video_ouo.pause()
-        }
-      }
-    }
-    this.props.observedAttributes.forEach(attr => {
-      tagAttrEmitter.on(`${attr}Change`, (val, emitterOrigin) => {
-        let action
-        if (action = actions[`${attr}Change`]) {
-          action.call(this, val, emitterOrigin)
-        }
-      })
-    })
-    if (props.autoplay) {
-      try {
-        // console.log(props,props.autoplay)
-        this.data.play = JSON.parse(props.autoplay)
-      } catch (e) { console.log(e) }
-      tagAttrEmitter.emit('autoplayChange', props.autoplay)
-    }
-    if (props.playbackrate) {
-      tagAttrEmitter.emit('playbackrateChange', props.playbackrate)
-    }
-    if (props.poster) {
-      tagAttrEmitter.emit('posterChange', props.poster)
-    }
+    // console.log(this.$video_wrap)
+    // console.log('danmaku-player-xxx--installed')
+  }
+
+  sendDanmaku (text, param){
+    // debugger
+    this.video_ouo.sendDanmaku(text, param)
+    let handle = this.props['onsenddanmaku']
+    handle(text, param)
   }
   listenVideoEvent () {
+    // console.log(this.video_ouo.danmakuPlayerOuO)
+    // return
     var { $video } = this.video_ouo.danmakuPlayerOuO
     mediaEvents.forEach(name => {
       var handle = this.props[`on${name}`]
@@ -184,60 +236,186 @@ define('danmaku-player-xxx', class extends WeElement {
   css () {
     return require('./_danmaku-player.less')
   }
+  handlecanplay=() => {
+    this.props.oncanplay()
+  }
+  handleended=() => {
+    this.props.onended()
+  }
+  handleSliderMouseMove = (progress) => {
+    var [ mm, ss ] = mmss(this.video_ouo.danmakuPlayerOuO.$video.duration * progress | 0)
+    this.data.thumbnailTime = { mm, ss }
+  }
+  handleChangeCurrent = (percent) => {
+    this.video_ouo.setCurrentTime(percent)
+
+    this.handleTimeUpdate(this.video_ouo.danmakuPlayerOuO.$video)
+  }
+  handleFetchCompleted = () => {
+    // return console.log('handleFetchCompleted')
+    this.data.showWrap = true
+  }
+  handleLoadeddata = ($video) => {
+    // return console.log('handleLoadeddata')
+    this.control_wrap.updateCurrentProgress($video)
+    this.props.onloadeddata()
+  }
+  handleTimeUpdate = ($video) => {
+    // return console.log('handleTimeUpdate')
+    this.control_wrap.updateCurrentProgress($video)
+
+    // console.log('timeupdate:', this.props.ontimeupdate)
+    this.props.ontimeupdate()
+  }
+  handleProgress = ($video) => {
+    // return console.log('handleProgress')
+    this.control_wrap.updateBuffProgress($video)
+    this.props.onprogress()
+  }
 })
 
-window.customElements.define('danmaku-player', class extends window.HTMLElement {
+customElements.define('danmaku-player', class extends HTMLElement{
   static get observedAttributes () {
     return [
-      'volume', 'loop', 'poster', 'autoplay', 'src', 'playbackrate', 'play',
-      'thumbnail', 'thumbnailtile', 'screenshot', 'danmakuapi'
+      'thumbnail',
+      'thumbnailtile',
+      'danmakuapi',
+
+      'loop',
+      'autoplay',
+      'src',
+      'poster'
     ]
   }
-  constructor () {
+  static get observedProps (){
+    return [
+      'enableSwitchDanmaku',
+      'enableSendDanmaku',
+      'theme',
+
+      'playbackrate',
+      'volume',
+      'paused',
+      'ended',
+      'currentTime',
+      'duration'
+    ]
+  }
+  constructor (){
     super()
 
-    this.completeConnectedCallback = false
-    this.firstChangeOfAttr = Object.create(null)
+    this.saveAttrAtPrepareTime = Object.create(null)
+    this.completeConnected = false
+    this.prepareFuc = Object.create(null)
+
     this.mediaEventHandles = Object.create(null)
     this.danmakuCustomEventHandles = Object.create(null)
 
-    this.constructor.observedAttributes.forEach(k => {
-      let k_ = k
-      if (k === 'playbackrate') k_ = 'playbackRate'
+    this.thoseAreReady(() => {
+      // debugger
+      tagAttrEmitter.emit('connected', {
+        src: this.saveAttrAtPrepareTime.src,
+        danmakuapi: this.saveAttrAtPrepareTime.danmakuapi
+      }, this)
 
-      Object.defineProperty(this, k_, {
-        get () {
-          return this.getAttribute(k)
-        },
-        set (val) {
-          this.setAttribute(k, val)
-        }
+      Object.keys(this.saveAttrAtPrepareTime).forEach(name => {
+        this[name] = this.saveAttrAtPrepareTime[name]
+      })
+
+      // 非observedAttributes的属性 ，在x-tag插入dom后定义的。在connectedCallback中获取到它们得异步
+      // debugger
+
+      // console.log('---playbackrate', this.playbackrate, '---')
+      setTimeout(() => {
+        tagAttrEmitter.emit('playbackrate', this.playbackrate, this)
+        tagAttrEmitter.emit('volume', this.volume, this)
+        tagAttrEmitter.emit('currentTime', this.currentTime, this)
+        tagAttrEmitter.emit('enableSwitchDanmaku', this.enableSwitchDanmaku, this)
+        tagAttrEmitter.emit('enableSendDanmaku', this.enableSendDanmaku, this)
       })
     })
-  }
-
-  connectedCallback () {
     this.attachShadow({ mode: 'open' })
+    // $player.shadowRoot.children[0].shadowRoot
+    // $player.shadowRoot.children[0].shadowRoot.querySelector('section')
 
+    // console.log('danmaku-player-start')
     var $sty = document.createElement('style')
     this.shadowRoot.appendChild($sty)
     $sty.textContent = `:host{display:inline-block;} `
 
-    this.completeConnectedCallback = true
     this.makeEvents()
 
     render(
-      <danmaku-player-xxx
-        observedAttributes={this.constructor.observedAttributes}
-        {...this.firstChangeOfAttr}
+      <danmaku-player-xxx ref={o => { this.danmaku_player_xxx = o }}
         {...this.mediaEventHandles}
-
         {...this.danmakuCustomEventHandles}
-        ref={o => this.danmakuPlayer = o}
-      ></danmaku-player-xxx>,
+        oninstalled={() => {
+        // console.log('installed')
+        this.thePrepareIs('installed')
+      }}/>,
       this.shadowRoot
     )
+    // console.log('danmaku-player-end')
+
+    this.constructor.observedProps.forEach(v => {
+      Object.defineProperty(this, v, {
+        get (){
+          var val = this[`_${v}`]
+          return val
+        },
+        set (val){
+          this[`_${v}`] = val
+
+          // console.log(v)
+          // if (this.itsReady){
+          //   if (v === 'playbackrate'){
+          //     setTimeout(() => {
+          //       tagAttrEmitter.emit(v, val, this)
+          //     })
+          //   }
+          // }
+
+          // console.log(`this.itsReady:${this.itsReady}`)
+
+            if (this.itsReady){
+              tagAttrEmitter.emit(v, val, this)
+            }
+        }
+      })
+    })
+
+    this.constructor.observedAttributes.forEach(v => {
+      Object.defineProperty(this, v, {
+        get (){
+          return this.getAttribute(v)
+        },
+        set (val){
+          // console.log(v, val)
+          this.setAttribute(v, val)
+        }
+      })
+    })
+
+    {
+      // 初始非observedAttributes
+      ;[
+        ['enableSwitchDanmaku', true],
+        ['enableSendDanmaku', true],
+        ['screenshot', false],
+        ['theme', '#ff00ff'],
+
+        ['playbackrate', 1],
+        ['volume', 1],
+        ['paused', false],
+        ['ended', false],
+        ['currentTime', 0],
+        ['duration', 0]
+      ].forEach((item) => {
+        this[item[0]] = item[1]
+      })
+    }
   }
+
   makeEvents () {
     mediaEvents.forEach(name => {
       this[`${name}Event`] = new window.CustomEvent(name, {
@@ -266,17 +444,62 @@ window.customElements.define('danmaku-player', class extends window.HTMLElement 
       }
     })
   }
-  attributeChangedCallback (name, oldValue, newValue) {
-    var observedAttributes = this.constructor.observedAttributes
-    if (observedAttributes.some(v => v === name)) {
-      if (!this.completeConnectedCallback) {
-        this.firstChangeOfAttr[name] = newValue
+  play (){
+    // console.log('play--')
+    setTimeout(() => {
+      tagAttrEmitter.emit('play', 'OuO', this)
+    })
+  }
+  pause (){
+    setTimeout(() => {
+      tagAttrEmitter.emit('pause', 'QvQ', this)
+    })
+  }
+  sendDanmaku (text, param = {}){
+    setTimeout(() => {
+      param = Object.assign(
+        {mode: 'linear', fontSize: 18, fill: 'rgb(255,255,255)', alpha: 1},
+        param
+      )
+
+      this.danmaku_player_xxx.sendDanmaku(text, param)
+    })
+  }
+  thoseAreReady (fuc){
+    this.handle_thoseReay = fuc
+  }
+  get itsReady (){
+    return Object.keys(this.prepareFuc).length === 2
+  }
+  thePrepareIs (name){
+    this.prepareFuc[name] = {}
+    if (this.itsReady){
+      this.handle_thoseReay()
+    }
+  }
+  // constructor attributeChangedCallback connectedCallback attributeChangedCallback
+  connectedCallback (){
+    // console.log('connectedCallback---')
+    this.thePrepareIs('connectedCallback')
+  }
+  attributeChangedCallback (name, oldValue, newValue){
+    // console.log('attributeChangedCallback--', name, newValue)
+    var {observedAttributes} = this.constructor
+
+    if (observedAttributes.some(v => name === v)){
+      if (/autoplay|loop/.test(name) && !newValue){
+        newValue = true
+      }
+      if (!this.itsReady){
+        // 在没有准备完成期间，save存取属性的最后一次改变的值
+        this.saveAttrAtPrepareTime[name] = newValue
       } else {
-        // console.log('emit....',name)
-        tagAttrEmitter.emit(`${name}Change`, newValue, this)
+        // setTimeout(() => {
+        tagAttrEmitter.emit(`${name}`, newValue, this)
+       // })
       }
     } else {
-      console.log(`没有被ob的属性,`, name)
+      console.log(`没有obj这个attr:${name}`)
     }
   }
 })

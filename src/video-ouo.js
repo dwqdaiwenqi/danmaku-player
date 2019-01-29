@@ -5,6 +5,9 @@ import cs from 'classnames'
 export default define('video-ouo', class extends WeElement {
   static observe = true
   render () {
+    // console.log('connected:', this.props.connected)
+
+    // console.log('video-ouo:', this.data.poster)
     return (
       <section>
 
@@ -30,23 +33,40 @@ export default define('video-ouo', class extends WeElement {
   css () {
     return require('./_video-ouo.less')
   }
+  receiveProps (new_props, b, old_props){
+    // console.log(`old_connected:${old_props.connected},new_connected:${new_props.connected}`)
+    // console.log(`old_poster:${old_props.poster},new_poster:${new_props.poster}`)
+    // console.log(`new_poster:${new_props.poster}`)
+    var {connected, danmakuapi, src} = new_props
+
+    // this.data.poster = new_props.poster
+    // console.log(`connected:${connected}`)
+    if (connected === true && !this.danmakuPlayerOuO){
+      this.initialPlayer({danmakuapi, src})
+      // this.data.poster = new_props.poster
+    }
+    if (connected === true){
+
+    }
+  }
   install () {
     this.data.snowEffect = false
     this.data.loading = false
 
     // debugger
-    this.data.poster = this.props.poster
+    this.data.poster = ''
   }
   installed () {
-    var { danmakuapi, onTimeUpdate, onProgress, onLoadeddata, onFetchCompleted } = this.props
-    // console.log()
-    this.danmakuPlayerOuO = DanmakuPlayerOuO(this.props.src, {
+
+  }
+  initialPlayer (o){
+     var { onTimeUpdate, onProgress, onLoadeddata, onFetchCompleted, onended, oncanplay} = this.props
+    this.danmakuPlayerOuO = DanmakuPlayerOuO(o.src, {
       $container: this.$video_wrap,
-      danmakuapi,
+      danmakuapi: o.danmakuapi,
       renderType: 'dom'
       // renderType: 'webgl'
     })
-
     this.danmakuPlayerOuO.onFetchCompleted(() => {
       onFetchCompleted()
     })
@@ -57,6 +77,9 @@ export default define('video-ouo', class extends WeElement {
     this.danmakuPlayerOuO.$video.addEventListener('timeupdate', e => {
       onTimeUpdate(this.danmakuPlayerOuO.$video)
     })
+    this.danmakuPlayerOuO.$video.addEventListener('ended', e => {
+      onended(this.danmakuPlayerOuO.$video)
+    })
 
     this.danmakuPlayerOuO.$video.addEventListener('progress', e => {
       onProgress(this.danmakuPlayerOuO.$video)
@@ -64,6 +87,7 @@ export default define('video-ouo', class extends WeElement {
 
     this.danmakuPlayerOuO.$video.addEventListener('canplay', () => {
       this.data.loading = false
+      oncanplay(this.danmakuPlayerOuO.$video)
     })
     this.danmakuPlayerOuO.$video.addEventListener('waiting', () => {
       // console.log('canplay..........')
@@ -72,11 +96,12 @@ export default define('video-ouo', class extends WeElement {
 
     this.danmakuPlayerOuO.$video.addEventListener('play', () => {
       this.data.poster = null
+
+      // console.log('poster null!')
     })
     this.danmakuPlayerOuO.onEffectCommand((opt) => {
       this.data.snowEffect = !this.data.snowEffect
     })
-    // console.log('video-ouo installed!!!')
   }
   updated () {
 
@@ -87,7 +112,7 @@ export default define('video-ouo', class extends WeElement {
     this.danmakuPlayerOuO.sendDanmaku(text, param)
   }
   setRepeat (loop) {
-    this.danmakuPlayerOuO.$video.loop = !loop
+    this.danmakuPlayerOuO.$video.loop = !!loop
   }
   setPlaybackrate (playbackrate) {
     this.danmakuPlayerOuO.$video.playbackRate = playbackrate * 1

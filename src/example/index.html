@@ -15,35 +15,86 @@
     }
     #player{
       position: relative;
-      left:50%;
-      transform: translate3d(-50%,0,0);
+      /* left:50%;
+      transform: translate3d(-50%,0,0); */
       margin-top:200px;
     }
     p{
       text-align: center;
       margin:10px 0;
     }
-  </style>
 
-  
-    <danmaku-player id="player" 
-      thumbnail="//static.xyimg.net/cn/static/fed/common/img/thumbnail-tile-90X1-scale-160X90.png" 
-      thumbnailtile="90"
-      danmakuapi="//static.xyimg.net/cn/static/fed/common/danmaku-list.json"
-      poster="//static.xyimg.net/cn/static/fed/common/img/poster.jpg" 
-      src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
+    danmaku-player{
+      --co:fuchsia;
+    }
+  </style>
+    <danmaku-player id="player" autoplay="false"
+    danmakuapi="//static.xyimg.net/cn/static/fed/common/danmaku-list.json"
+    poster="//static.xyimg.net/cn/static/fed/common/img/poster.jpg"
+    src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
   <div>
-    <p>尝试输入特效指令，如：#下雪..</p>
+    <!-- <p>尝试输入特效指令，如：#下雪..</p> -->
   </div>
   <script>
     var $player = document.querySelector('#player')
-    $player.addEventListener('ended', () => {
-      //...
-    })
-    $player.addEventListener('play', () => {
-      //...
-    })
+    // $player.enableSwitchDanmaku = false
+    // $player.enableSendDanmaku = false
+    // $player.theme = '#ff00ff'
+    //$player.playbackrate = 3.0
+    // $player.volume = 1.0
+    // $player.src = "//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"
     
+
+    // $player.loop = false
+    $player.autoplay =false
+    $player.playbackrate=1
+    $player.enableSendDanmaku=true
+    $player.enableSwitchDanmaku=true
+    
+
+    
+    setTimeout(()=>{
+      // $player.sendDanmaku('text7777',{})
+    },3333)
+    
+
+    // $player.play()
+    
+    $player.addEventListener('senddanmaku',(e)=>{
+      //debugger
+      console.log('senddanmaku',e.detail)
+    })
+    $player.addEventListener('progress',e=>{
+      console.log('progress',e.detail)
+    })
+    $player.addEventListener('loadeddata',e=>{
+      console.log('loadeddata',e.detail)
+    })
+
+    $player.addEventListener('canplay',e=>{
+      console.log('canplay',e.detail)
+    })
+    $player.addEventListener('play',(e)=>{
+      console.log('play',e.detail)
+    })
+    $player.addEventListener('timeupdate',(e)=>{
+      console.log('timeupdate',e.detail)
+    })
+    $player.addEventListener('ended',e=>{
+      console.log('ended.')
+    })
+    // console.log($player)
+    // debugger
+    // $player.addEventListener('ended', () => {
+    //   //...
+    // })
+    // $player.addEventListener('play', () => {
+    //   //...
+    // })
+    
+    //console.log($player.danmakuPlayer)
+
+
 
   </script>
 </body>

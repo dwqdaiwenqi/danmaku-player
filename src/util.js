@@ -159,6 +159,13 @@ export function Slider ($holder, [min, max, defaultValue], vertical = false) {
   return that
 }
 
+export function html (htmls, ...args) {
+  return htmls.reduce((param, a) => {
+    param.htmls += htmls[param.idx] + (args[param.idx++] || '')
+    return param
+  }, {htmls: '', idx: 0}).htmls
+}
+
 export function mmss (second) {
   var m = (second / 60 % 60) | 0
   var s = (second % 60) | 0
