@@ -1,5 +1,5 @@
 /*!
- *  danmaku-player v1.0.6
+ *  danmaku-player v1.0.7
  *  By https://github.com/dwqdaiwenqi 
  *  Github: https://github.com/dwqdaiwenqi/danmaku-player
  *  MIT Licensed.
