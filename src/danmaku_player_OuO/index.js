@@ -6,6 +6,7 @@ import Snow from './snowflake'
 import TWEEN from '@tweenjs/tween.js'
 import { html, shimVisibilityChange, shimHidden } from './utils'
 // console.log(PIXI.utils.rgb2hex([1.0, 0, 0]))
+// debugger
 
 export default function DanmakuPlayer ($video, {$container, constrain, danmakuapi, renderType = 'dom'} = {}) {
   const BOT_GAP = 0
@@ -149,7 +150,6 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
                 yDerivative_kernel[3] = -2.; yDerivative_kernel[4] = 0.; yDerivative_kernel[5] = 2.;
                 yDerivative_kernel[6] = -1.; yDerivative_kernel[7] = 0.; yDerivative_kernel[8] = 1.;
       
-      
                 vec2 v_texCoord = v_texCoord.xy;
       
                 vec2 onePixel = vec2(1) / textureSize;
@@ -275,6 +275,8 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       this.$wrap_ouo.style.display = v === 'webgl' ? 'block' : 'none'
       this.$wrap_dom.style.display = v === 'webgl' ? 'none' : 'block'
       this.$video = v === 'webgl' ? this.$gl_video : this.$dom_video
+
+      console.log('set renderType:', v)
       this.$video.play()
     },
     _setupVideo () {
@@ -471,7 +473,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
         x: this.app.screen.width * 0
       }
 
-      this.$video.addEventListener('timeupdate', () => {
+      var handle_timeupdate = () => {
         // console.log('renderType:', this.$video.getAttribute('renderType'), 'currentTime:',this.$video.currentTime)
         // console.log('renderTYpe:', this.$video.getAttribute('renderType'))
         if (this.$video.paused) return
@@ -533,7 +535,10 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
           // danmaku.move()
           danmaku.move({ duration: this.danmakuDuration })
         })
-      })
+      }
+
+      this.$gl_video.addEventListener('timeupdate', handle_timeupdate)
+      this.$dom_video.addEventListener('timeupdate', handle_timeupdate)
     },
      _createUserRunway (){
       let gapY = this.app.screen.height * .1
