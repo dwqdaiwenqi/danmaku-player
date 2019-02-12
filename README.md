@@ -34,7 +34,7 @@ npm i danmaku-player
     danmakuapi="//static.xyimg.net/cn/static/fed/common/danmaku-list.json"
     thumbnail="//static.xyimg.net/cn/static/fed/common/img/thumbnail-tile-90X1-scale-160X90.png"
     thumbnailtile="90"
-    poster="//static.xyimg.net/cn/static/fed/common/img/poster.jpg"
+    poster="//static.xyimg.net/cn/static/fed/common/img/posterx.jpg"
     src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
   <script>
     var $player = document.querySelector('#player')
