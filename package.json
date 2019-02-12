@@ -1,6 +1,6 @@
 {
   "name": "danmaku-player",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "email": "dwqdaiwenqi@gmail.com ",
   "description": "danmaku-player",
   "main": "dist/scripts/danmaku-player.js",
