@@ -14,6 +14,10 @@
 
 <img src="./preview2.jpg" style="margin:0 auto; width:699px;">
 
+<img src="./preview3.jpg" style="margin:0 auto; width:699px;">
+
+<img src="./preview4.jpg" style="margin:0 auto; width:699px;">
+
 
 ## Usage
 通过npm或者cdn获取
