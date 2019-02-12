@@ -30,20 +30,48 @@ npm i danmaku-player
 用法和`<video/>`标签差不多，直接写入到html中即可
 ```html
   <script src="//unpkg.com/danmaku-player@latest/dist/scripts/danmaku-player.min.js"></script>
-  <danmaku-player id="player" 
-    thumbnail="//static.xyimg.net/cn/static/fed/common/img/thumbnail-tile-90X1-scale-160X90.png" 
-    thumbnailtile="90"
+  <danmaku-player id="player" autoplay="false"
     danmakuapi="//static.xyimg.net/cn/static/fed/common/danmaku-list.json"
-    poster="//static.xyimg.net/cn/static/fed/common/img/poster.jpg" 
+    thumbnail="//static.xyimg.net/cn/static/fed/common/img/thumbnail-tile-90X1-scale-160X90.png"
+    thumbnailtile="90"
+    poster="//static.xyimg.net/cn/static/fed/common/img/poster.jpg"
     src="//static.xyimg.net/cn/static/fed/common/media/Galileo180.mp4"></danmaku-player>
   <script>
     var $player = document.querySelector('#player')
-    $player.addEventListener('ended', () => {
-      //...
+
+    // $player.loop = false
+    $player.autoplay =false
+    $player.playbackrate=1
+    $player.enableSendDanmaku=true
+    $player.enableSwitchDanmaku=true
+    
+
+    // $player.play()
+    
+    $player.addEventListener('senddanmaku',(e)=>{
+      //debugger
+      console.log('senddanmaku')
     })
-    $player.addEventListener('play', () => {
-      //...
+    $player.addEventListener('progress',e=>{
+      console.log('progress')
     })
+    $player.addEventListener('loadeddata',e=>{
+      console.log('loadeddata')
+    })
+
+    $player.addEventListener('canplay',e=>{
+      console.log('canplay')
+    })
+    $player.addEventListener('play',(e)=>{
+      console.log('play')
+    })
+    $player.addEventListener('timeupdate',(e)=>{
+     console.log('timeupdate')
+    })
+    $player.addEventListener('ended',e=>{
+      console.log('ended.')
+    })
+
  
   </script>
 ```
