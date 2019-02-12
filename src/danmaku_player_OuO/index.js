@@ -252,13 +252,20 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       // this.app.view.style.visibility =  'hidden'
       // this.app.stage.visible = false
 
-      this.runway_group.visible = false
+      this.runway_group.visible =
+      this.fixed_group.visible =
+      this.user_runway.visible =
+      this.user_fixed_runway.visible = false
     },
     showDanmaku () {
       // this.appOuO.canvas.style.visibility =
       // this.app.view.style.visibility =  'visible'
       // this.app.stage.visible = true
-      this.runway_group.visible = true
+
+      this.runway_group.visible =
+      this.fixed_group.visible =
+      this.user_runway.visible =
+      this.user_fixed_runway.visible = true
     },
     get renderType (){
       return this.opt.renderType
@@ -276,7 +283,7 @@ export default function DanmakuPlayer ($video, {$container, constrain, danmakuap
       this.$wrap_dom.style.display = v === 'webgl' ? 'none' : 'block'
       this.$video = v === 'webgl' ? this.$gl_video : this.$dom_video
 
-      console.log('set renderType:', v)
+      // console.log('set renderType:', v)
       this.$video.play()
     },
     _setupVideo () {
