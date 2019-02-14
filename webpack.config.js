@@ -4,7 +4,7 @@ var path = require('path')
 const ENV = process.env.npm_lifecycle_event
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const pkg = require('./package.json')
-
+   
 var filename
 var publicPath
 
