@@ -66,7 +66,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.BannerPlugin(" "+require('./package.json').name+" v"+require('./package.json').version+"\r\n By https://github.com/dwqdaiwenqi \r\n Github: https://github.com/dwqdaiwenqi/danmaku-player\r\n MIT Licensed.")
+    new webpack.BannerPlugin("  "+require('./package.json').name+" v"+require('./package.json').version+"\r\n By https://github.com/dwqdaiwenqi \r\n Github: https://github.com/dwqdaiwenqi/danmaku-player\r\n MIT Licensed.")
     ,new webpack.DefinePlugin({
       __DEV__: JSON.stringify(process.env.npm_lifecycle_event)
       ,__VERSION__: JSON.stringify(require('./package.json').version)
