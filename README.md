@@ -132,6 +132,26 @@ render(){
 | ended | 播放结束时触发
 | senddanmaku | 用户发送了一条弹幕
 
+### danmakuapi
+```js
+//弹幕资源的格式是个json
+{
+  //视频的第0秒
+  0:{
+    data:[
+      ｛text:'弹幕文字',fill:'弹幕颜色',mode:'运动模式'，fontSize:'弹幕字体大小',alpha:'弹幕透明度'}
+    ]
+  },
+  //视频的第一秒
+  1:{
+    data:[
+      ｛text:'弹幕文字',fill:'弹幕颜色',mode:'运动模式'，fontSize:'弹幕字体大小',alpha:'弹幕透明度'},
+      ｛text:'弹幕文字',fill:'弹幕颜色',mode:'运动模式'，fontSize:'弹幕字体大小',alpha:'弹幕透明度'}
+    ]
+  }
+  //...
+}
+```
 
 ### 你想问
 #### 为什么不要在全屏模式下使用#xxx特效指令
@@ -148,6 +168,7 @@ render(){
 ffmpeg -i Galileo.mp4 -frames 1 -vf "select=not(mod(n\,48)),scale=160:90,tile=90*1" assets/thumbnail-tile-90X1-scale-160X90.png
 ```
 
+## 欢迎I
 ## 待完成...
 
 ## comming soon ......
