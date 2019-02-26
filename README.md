@@ -145,7 +145,7 @@ $player.sendDanmaku('弹幕文字。。。',{
 
 #### danmakuapi
 ```js
-//danmakuapi返回的格式如下
+//danmakuapi应当返回如下格式
 {
   //视频的第0秒
   0:{
