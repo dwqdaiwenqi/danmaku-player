@@ -132,7 +132,7 @@ render(){
 | ended | 播放结束时触发
 | senddanmaku | 用户发送了一条弹幕
 
-### danmakuapi
+### danmakuapi格式
 ```js
 //弹幕资源的格式是个json
 {
