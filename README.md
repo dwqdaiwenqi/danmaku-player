@@ -97,19 +97,35 @@ render(){
 ### 特效指令
 特效指令#xxx，第一次输入#xxx开启了特效，再次输入#xxx关闭特效。目前有#下雪，更多指令待开发...
 
-### 属性
+### <danmaku-player/>标签属性
 | 属性     | 描述  | 
 | :------------- | :------------- | 
 | src         | 必须，视频的播放地址，目前支持mp4      | 
 | poster         | 不必须，视频海报      | 
-| autoplay         | 不必须，      | 
-| playbackrate         | 不必须，      | 
-| loop         | 不必须，      |
-| volumn     | 不必须，      | 
+| autoplay         | 不必须， 自动播放，默认是false  | 
+| thumbnail         | 不必须，视频缩略图  | 
+| thumbnailtile    |不必须，视频缩略图横向分割数量
+| loop         | 不必须， 循环播放，默认是false     |
 
-### 事件
+### 相关属性&方法
+| 属性或方法     | 描述  | 
+| :------------- | :------------- | 
+| loop         | 不必须，循环播放，默认是false     | 
+| autoplay         | 不必须， 自动播放，默认是false  | 
+| loop         | 不必须， 循环播放，默认是false     |
+| playbackrate | 不必须，播放速度，默认是1.0
+| enableSendDanmaku | 不必须，发送弹幕的按钮显示，默认是false
+| enableSwitchDanmaku | 不必须，切换弹幕的显示与隐藏，默认是false
+| play()     | 播放
+| pause()    | 暂停
+| sendDanmaku() | 发送弹幕，参数(text='',option={})
+
+
+### 相关事件
 | 事件名     | 描述  | 
 | :------------- | :------------- | 
+
+
 
 ### 你想问
 #### 为什么不要在全屏模式下使用#xxx特效指令
