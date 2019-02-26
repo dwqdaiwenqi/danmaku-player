@@ -106,6 +106,7 @@ render(){
 | thumbnail         | 不必须，视频缩略图  | 
 | thumbnailtile    |不必须，视频缩略图横向分割数量
 | loop         | 不必须， 循环播放，默认是false     |
+| danmakuapi | 不必须，弹幕的资源列表获取
 
 ### 相关属性&方法
 | 属性或方法     | 描述  | 
