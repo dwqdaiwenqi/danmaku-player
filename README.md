@@ -134,11 +134,18 @@ render(){
 
 
 #### .sendDanmaku(text='',options={})
-
-
-#### danmakuapi格式
 ```js
-//弹幕资源的格式是个json
+$player.sendDanmaku('弹幕文字。。。',{
+  fill:'blue', // 弹幕颜色
+  mode:'linear', // 弹幕运动模式有 linear|fixed|curve ,线性|上方固定|曲线
+  fontSize：20,// 弹幕字体大小
+  alpha:1 // 弹幕透明度
+})
+```
+
+#### danmakuapi
+```js
+//danmakuapi返回的格式如下
 {
   //视频的第0秒
   0:{
@@ -172,10 +179,8 @@ render(){
 ffmpeg -i Galileo.mp4 -frames 1 -vf "select=not(mod(n\,48)),scale=160:90,tile=90*1" assets/thumbnail-tile-90X1-scale-160X90.png
 ```
 
-## 欢迎I
+## 欢迎帮填坑，欢迎Pull Request
 ## 待完成...
-
-## comming soon ......
 
 ## License
 
