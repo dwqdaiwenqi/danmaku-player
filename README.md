@@ -142,9 +142,10 @@ render(){
 #### 视频的缩略图怎么获得
 如果要生成90张合并缩略图，视频时长是180秒(3*60),2(180/90)秒截图一张图,fps是24，每隔48（24*2）帧截图一张宽高是160*90的图。
 
-那么就执行如下的ffpmeg命令，这也是demo中的缩略图获得方式
-
-`ffmpeg -i Galileo.mp4 -frames 1 -vf "select=not(mod(n\,48)),scale=160:90,tile=90*1" assets/thumbnail-tile-90X1-scale-160X90.png`
+那么就执行如下的ffpmeg命令
+```js
+ffmpeg -i Galileo.mp4 -frames 1 -vf "select=not(mod(n\,48)),scale=160:90,tile=90*1" assets/thumbnail-tile-90X1-scale-160X90.png
+```
 
 ## 待完成...
 
