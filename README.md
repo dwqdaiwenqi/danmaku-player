@@ -10,13 +10,13 @@
 → Demo located at https://dwqdaiwenqi.github.io/danmaku-player/example/    
 
 ## 截图
-<img src="./preview11.jpg" style="margin:0 auto; width:699px;">
+<img src="https://raw.githubusercontent.com/dwqdaiwenqi/danmaku-player/master/preview11.jpg" style="margin:0 auto; width:699px;">
 
-<img src="./preview22.jpg" style="margin:0 auto; width:699px;">
+<img src="https://raw.githubusercontent.com/dwqdaiwenqi/danmaku-player/master/preview22.jpg"" style="margin:0 auto; width:699px;">
 
-<img src="./preview33.jpg" style="margin:0 auto; width:699px;">
+<img src="https://raw.githubusercontent.com/dwqdaiwenqi/danmaku-player/master/preview33.jpg"" style="margin:0 auto; width:699px;">
 
-<img src="./preview44.jpg" style="margin:0 auto; width:699px;">
+<img src="https://raw.githubusercontent.com/dwqdaiwenqi/danmaku-player/master/preview44.jpg"" style="margin:0 auto; width:699px;">
 
 
 ## Usage
