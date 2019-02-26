@@ -179,6 +179,7 @@ $player.sendDanmaku('弹幕文字。。。',{
 ffmpeg -i Galileo.mp4 -frames 1 -vf "select=not(mod(n\,48)),scale=160:90,tile=90*1" assets/thumbnail-tile-90X1-scale-160X90.png
 ```
 
+
 ## 欢迎帮填坑，欢迎Pull Request
 ## 待完成...
 
