@@ -133,10 +133,10 @@ render(){
 | senddanmaku | 用户发送了一条弹幕
 
 
-## .sendDanmaku(text='',options={})
+#### .sendDanmaku(text='',options={})
 
 
-## danmakuapi格式
+#### danmakuapi格式
 ```js
 //弹幕资源的格式是个json
 {
