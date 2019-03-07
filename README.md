@@ -9,7 +9,7 @@
 
 → Demo located at https://dwqdaiwenqi.github.io/danmaku-player/example/    
 
-## 截图
+## 截图   
 <img src="https://raw.githubusercontent.com/dwqdaiwenqi/danmaku-player/master/preview11.jpg" style="margin:0 auto; width:699px;"/>
 
 <img src="https://raw.githubusercontent.com/dwqdaiwenqi/danmaku-player/master/preview7.jpg" style="margin:0 auto; width:699px;"/>
