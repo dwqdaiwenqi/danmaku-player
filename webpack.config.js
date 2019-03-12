@@ -7,7 +7,7 @@ const pkg = require('./package.json')
    
 var filename
 var publicPath
-
+  
 switch(ENV){
   case 'dev':
     filename = 'scripts/danmaku-player.js'
