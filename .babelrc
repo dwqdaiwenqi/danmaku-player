@@ -1,8 +1,8 @@
 {
   "presets": [
-    "env",
+    "env", 
     "stage-1", 
-    "omi"
+    "omi"   
   ],
 
   "plugins": [
