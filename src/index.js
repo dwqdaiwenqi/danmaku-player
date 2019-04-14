@@ -7,7 +7,7 @@ import './fullscreen-api-polyfill'
 import './control-wrap'
 import { version } from 'core-js'
 import {mmss} from './util'
-
+    
 var mediaEvents = [
   'loadeddata', 'loadstart', 'canplay', 'timeupdate', 'play', 'playing',
   'pause', 'error', 'ended', 'waiting', 'progress', 'abort'
