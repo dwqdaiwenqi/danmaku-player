@@ -3,7 +3,7 @@
 	"rules": {
 		"one-var": 0,
 		"no-mixed-operators": 0,
-		"standard/no-callback-literal": 0,
+		"standard/no-callback-literal": 0,      
 		"new-cap": 0,
 		"no-tabs": 0,
 		"camelcase": 0,
