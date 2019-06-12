@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@tweenjs/tween.js": "^17.2.0",
+    
     "@webcomponents/webcomponentsjs": "^2.2.1",
     "babel-eslint": "^10.0.1",
     "babel-plugin-htm": "^1.0.1",
