@@ -2,7 +2,7 @@
 融合了WebGl和Web Componet的实时图像处理弹幕播放器        
 
 ## 特征
-* 基于Web Components ，拥抱Web Components标准，内部使用的 [omi](https://github.com/Tencent/omi) 作为开发Web Components的开发框架，[omi](https://github.com/Tencent/omi)是个非常棒的现代框架，强力推荐！  
+* 基于Web Components ，拥抱Web Components标准，内部使用的 [omi](https://github.com/Tencent/omi) 作为开发Web Components的开发框架，[omi](https://github.com/Tencent/omi)是个非常棒的现代框架，强力推荐！        
 * 高性能的，使用WebGl进行渲染，同频弹幕数达到5000+，fps依旧坚挺  
 * 想比传统的弹幕显示运动方式，添加了曲线模式的弹幕发送 
 * 内置实时图像处理的特效指令（切勿在全屏模式下使用），当前有#护眼、#下雪等 - 未来将支持更多的特效指令 
