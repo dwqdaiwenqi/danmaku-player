@@ -3,7 +3,7 @@
 
 ## 特征
 * 基于Web Components ，拥抱Web Components标准，内部使用的 [omi](https://github.com/Tencent/omi) 作为开发Web Components的开发框架，[omi](https://github.com/Tencent/omi)是个非常棒的现代框架，强力推荐！        
-* 高性能的，使用WebGl进行渲染，同频弹幕数达到5000+，fps依旧坚挺  
+* 高性能的，使用WebGl进行渲染，同频弹幕数达到5000+，fps依旧坚挺             
 * 想比传统的弹幕显示运动方式，添加了曲线模式的弹幕发送        
 * 内置实时图像处理的特效指令（切勿在全屏模式下使用），当前有#护眼、#下雪等 - 未来将支持更多的特效指令      
 
@@ -178,14 +178,3 @@ $player.sendDanmaku('弹幕文字。。。',{
 如果要生成一张由90张小图横向合并的缩略图，视频时长是180秒，2(180/90)秒截图一张图，fps是24，每隔48（24`*`2）帧截取一张宽高是160`*`90的图。
 
 那么就可以执行如下的ffpmeg命令
-```js
-ffmpeg -i Galileo.mp4 -frames 1 -vf "select=not(mod(n\,48)),scale=160:90,tile=90*1" assets/thumbnail-tile-90X1-scale-160X90.png
-```
-
-
-## 欢迎帮填坑，欢迎Pull Request
-## 待完成...
-
-## License
-
-MIT
