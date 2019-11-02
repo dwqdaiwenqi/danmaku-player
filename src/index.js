@@ -489,7 +489,7 @@ customElements.define('danmaku-player', class extends HTMLElement{
        // })
       }
     } else {
-      console.log(`没有obj这个attr:${name}`)
+      console.log(`obj没有这个attr:${name}`)
     }
   }
 })
