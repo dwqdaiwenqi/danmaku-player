@@ -178,3 +178,7 @@ $player.sendDanmaku('弹幕文字。。。',{
 如果要生成一张由90张小图横向合并的缩略图，视频时长是180秒，2(180/90)秒截图一张图，fps是24，每隔48（24`*`2）帧截取一张宽高是160`*`90的图。
 
 那么就可以执行如下的ffpmeg命令
+```js
+ffmpeg -i Galileo.mp4 -frames 1 -vf "select=not(mod(n\,48)),scale=160:90,tile=90*1" assets/thumbnail-tile-90X1-scale-160X90.png
+      
+```
