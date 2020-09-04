@@ -16,7 +16,7 @@
     "@polymer/lit-element": "^0.6.5",
     "@tweenjs/tween.js": "^17.2.0",
     "classnames": "^2.2.6",
-    "marked": "^0.5.1",
+    "marked": "^1.1.1",
     "mobx-preact": "^1.1.0",
     "pixi.js": "^4.8.3",
     "raw-loader": "^0.5.1"
